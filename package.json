@@ -1,5 +1,27 @@
 {
-  "dependencies": {
+  "name": "cluster-one-web",
+  "version": "1.0.0",
+  "description": "Frontend for ClusterOne Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "run_test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mbaez97/cluster-one-web.git"
+  },
+  "keywords": [
+    "CL1"
+  ],
+  "author": "Marcelo Baez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mbaez97/cluster-one-web/issues"
+  },
+  "homepage": "https://github.com/Mbaez97/cluster-one-web#readme",
+  "devDependencies": {
     "cytoscape": "^3.23.0",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1"
   }
 }
