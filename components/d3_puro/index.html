@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dibujando un grafo con D3</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <input type="file" id="file-input">
+    <div id="graph"></div>
+    <script>
+        // Esta función se encarga de dibujar el grafo en la pantalla.
+        function drawGraph(data) {
+            // Se crea un objeto "force" para calcular las posiciones de los nodos.
+            const force = d3.forceSimulation(data.nodes)
+                .force("link", d3.forceLink(data.links).distance(50))
+                .force("charge", d3.forceManyBody().strength(-100))
+                .force("center", d3.forceCenter(400, 250));
+
+            // Se crean los elementos "line" que representan las conexiones entre nodos.
+            const link = d3.select("#graph").selectAll("line")
+                .data(data.links)
+                .enter().append("line")
+                .attr("stroke", "#999")
+                .attr("stroke-opacity", 0.6)
+                .attr("stroke-width", d => Math.sqrt(d.value));
+
+            // Se crean los elementos "circle" que representan los nodos.
+            const node = d3.select("#graph").selectAll("circle")
+                .data(data.nodes)
+                .enter().append("circle")
+                .attr("r", 10)
+                .attr("fill", "#000");
+
+            // Se añaden los eventos de arrastre a los nodos.
+            node.call(drag(force));
+
+            // Se actualiza la posición de los elementos en cada iteración del objeto "force".
+            force.on("tick", () => {
+                link.attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                node.attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+            });
+        }
+
+        // Esta función se encarga de leer el archivo de texto y llamar a la función "drawGraph".
+        function readFile() {
+            const fileInput = document.getElementById("file-input");
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const text = event.target.result;
+                
+                const data = processData(text);
+                drawGraph(data);
+            };
+            reader.readAsText(file);
+        }
+
+        // Esta función se encarga de procesar los datos del archivo de texto y convertirlos en el formato que necesita la función "drawGraph".
+        function processData(text) {
+            const nodes = [];
+            const links = [];
+            const lines = text.split("\n");
+            for (let i = 0; i < lines.length; i++) {
+                const values = lines[i].split(" ");
+                nodes.push({id: i});
+                for (let j = 0; j < values.length; j++) {
+                    const value = parseInt(values[j]);
+                    if (!isNaN(value) && value !== i) {
+                        links.push({source: i, target: value});
+                    }
+                }
+            }
+            return {nodes: nodes, links: links};
+        }
+
+        // Esta función se encarga de definir el comportamiento de arrastre de los nodos.
+        function drag(force) {
+            function dragstarted(event) {
+                if (!event.active) force.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) force.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
+
+        // Se añade el evento "change" al elemento "input" para que se llame a la función "readFile" cuando se seleccione un archivo.
+        const fileInput = document.getElementById("file-input");
+        fileInput.addEventListener("change", readFile);
+    </script>
+</body>
+</html>
+
