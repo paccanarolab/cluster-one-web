@@ -6,6 +6,7 @@
   "scripts": {
     "test": "run_test",
     "build": "webpack --mode=production",
+    "build_dev": "webpack --mode=development --config webpack.config.dev.js",
     "dev": "webpack serve --mode=development",
     "build:watch": "webpack --mode=development --watch --config webpack.config.dev.js"
   },
@@ -27,6 +28,7 @@
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "babel-loader": "^9.1.2",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "cytoscape": "^3.23.0",
     "dotenv-webpack": "^8.0.1",

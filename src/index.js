@@ -1,11 +1,14 @@
 /* global Promise, fetch, window, cytoscape, document, tippy, _ */
+import './styles/main.css';
+import cytoscape from './libs/cytoscape.min.js';
+
 
 Promise.all([
-  fetch('./styles/cy-style.json')
+  fetch('./cy-style.json')
     .then(function(res) {
       return res.json();
     }),
-  fetch('../public/inputs/data.json')
+  fetch('./inputs/data_little_example.json')
     .then(function(res) {
       return res.json();
     })
@@ -241,3 +244,6 @@ Promise.all([
     });
 
   });
+
+
+

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotEnv = require('dotenv-webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -11,11 +12,12 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js'],
-        alias: {
-            '@components': path.resolve(__dirname, 'src/components/'),
-            '@cy': path.resolve(__dirname, 'src/utils_cy/'),
-            '@styles': path.resolve(__dirname, 'src/styles/'),
-        }
+        // alias: {
+        //     '@components': path.resolve(__dirname, 'src/components/'),
+        //     // '@cy': path.resolve(__dirname, 'src/utils_cy/'),
+        //     '@styles': path.resolve(__dirname, 'src/styles/'),
+        //     '@libs': path.resolve(__dirname, 'src/libs/'),
+        // }
     },
     mode: 'development',
     devtool: 'source-map',
@@ -49,6 +51,22 @@ module.exports = {
         }),
         new MiniCssExtractPlugin(),
         new DotEnv(),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "src", "styles/cy-style.json"),
+                    to: "cy-style.json"
+                },
+                {
+                    from: path.resolve(__dirname, "public", "inputs/"),
+                    to: "./inputs/"
+                },
+                {
+                    from: path.resolve(__dirname, "src", "libs/"),
+                    to: "./libs/"
+                }
+            ]
+        })
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
