@@ -5,7 +5,7 @@ Promise.all([
     .then(function(res) {
       return res.json();
     }),
-  fetch('../public/inputs/data_collins_2.json')
+  fetch('../public/inputs/data.json')
     .then(function(res) {
       return res.json();
     })
