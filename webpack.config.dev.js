@@ -61,10 +61,10 @@ module.exports = {
                     from: path.resolve(__dirname, "public", "inputs/"),
                     to: "./inputs/"
                 },
-                {
-                    from: path.resolve(__dirname, "src", "libs/"),
-                    to: "./libs/"
-                }
+                // {
+                //     from: path.resolve(__dirname, "src", "libs/"),
+                //     to: "./libs/"
+                // }
             ]
         })
     ],

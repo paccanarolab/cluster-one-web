@@ -1,8 +1,6 @@
 /* global Promise, fetch, window, cytoscape, document, tippy, _ */
 import './main.css';
-// import cytoscape from './libs/cytoscape.min.js';
 import cytoscape from 'cytoscape';
-// import cola from 'cytoscape-cola';
 
 Promise.all([
   fetch('./cy-style.json')
