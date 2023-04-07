@@ -6,9 +6,8 @@
   "scripts": {
     "test": "run_test",
     "build": "webpack --mode=production",
-    "build_dev": "webpack --mode=development --config webpack.config.dev.js",
-    "dev": "webpack serve --mode=development",
-    "build:watch": "webpack --mode=development --watch --config webpack.config.dev.js"
+    "dev": "webpack --mode=development --config webpack.config.dev.js",
+    "build-dev": "webpack --config webpack.config.dev.js --mode=development"
   },
   "repository": {
     "type": "git",
@@ -31,6 +30,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "cytoscape": "^3.23.0",
+    "cytoscape-cola": "^2.5.1",
     "dotenv-webpack": "^8.0.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",

@@ -68,9 +68,9 @@ module.exports = {
             ]
         })
     ],
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 4200
-    }
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'dist'),
+    //     compress: true,
+    //     port: 4200
+    // }
 };

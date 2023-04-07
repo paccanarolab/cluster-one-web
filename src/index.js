@@ -1,7 +1,8 @@
 /* global Promise, fetch, window, cytoscape, document, tippy, _ */
-import './styles/main.css';
-import cytoscape from './libs/cytoscape.min.js';
-
+import './main.css';
+// import cytoscape from './libs/cytoscape.min.js';
+import cytoscape from 'cytoscape';
+// import cola from 'cytoscape-cola';
 
 Promise.all([
   fetch('./cy-style.json')
@@ -44,15 +45,17 @@ Promise.all([
       elements: dataArray[1],
       layout: { name: 'random' }
     });
-
+    
+    // cy.use( cola );
     var params = {
-      name: 'cola',
+      name: 'random',
       nodeSpacing: 5,
       edgeLengthVal: 45,
       animate: true,
       randomize: false,
       maxSimulationTime: 1500
     };
+    
     var layout = makeLayout();
 
     layout.run();
@@ -62,7 +65,7 @@ Promise.all([
     }, []);
 
     var $config = $('#config');
-
+    
     $config.appendChild( $btnParam );
 
     var sliders = [
@@ -81,7 +84,7 @@ Promise.all([
       }
     ];
 
-    var buttons = [
+    var layoutButtons = [
       {
         label: h('span', { 'class': 'fa fa-random' }, []),
         layoutOpts: {
@@ -90,26 +93,27 @@ Promise.all([
         }
       },
 
-      // {
-      //   label: h('span', { 'class': 'fa fa-long-arrow-down' }, []),
-      //   layoutOpts: {
-      //     flow: { axis: 'y', minSeparation: 30 }
-      //   }
-      // },
       {
-        label: h('span', { 'class': 'fa fa-file' }, []),
+        label: h('span', { 'class': 'fa fa-long-arrow-down' }, []),
         layoutOpts: {
-          // set to upload file
-
-
+          flow: { axis: 'y', minSeparation: 30 }
         }
-      }
+      },
+      
 
     ];
 
+    var uploadButton = [
+      {
+        label: h('span', { 'class': 'fa fa-file' }, []),
+      }
+    ]
+
     sliders.forEach( makeSlider );
 
-    buttons.forEach( makeButton );
+    layoutButtons.forEach( makeButton );
+
+    uploadButton.forEach( makeButtonToUpload );
 
     function makeLayout( opts ){
       params.randomize = false;
@@ -166,6 +170,34 @@ Promise.all([
 
         layout = makeLayout( opts.layoutOpts );
         layout.run();
+      });
+    }
+
+    function makeButtonToUpload( opts ){
+      var $button = h('button', { 'class': 'btn btn-default' }, [ opts.label ]);
+      var $input = h('input', { type: 'file', id: 'file', style: 'display: none' }, []);
+
+      $btnParam.appendChild( $button );
+
+      $button.addEventListener('click', function(){
+        console.log("upload");
+        $input.click();
+      });
+
+      $input.addEventListener('change', function(){
+        var file = $input.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var contents = e.target.result;
+          var data = JSON.parse(contents);
+          console.log(data);
+          cy.elements().remove();
+          cy.add(data);
+        };
+        reader.readAsText(file);
+        // console.log("upload", file);
+        // TODO: send to endpoint API for processing and change the graph
+
       });
     }
 
