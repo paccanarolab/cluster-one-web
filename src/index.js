@@ -1,11 +1,11 @@
 /* global Promise, fetch, window, cytoscape, document, tippy, _ */
 
 Promise.all([
-  fetch('cy-style.json')
+  fetch('./utils_cy/cy-style.json')
     .then(function(res) {
       return res.json();
     }),
-  fetch('data.json')
+  fetch('../public/inputs/data.json')
     .then(function(res) {
       return res.json();
     })
@@ -232,5 +232,3 @@ Promise.all([
     });
 
   });
-
-

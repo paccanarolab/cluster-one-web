@@ -72,7 +72,7 @@
       "name": "RAD9B",
       "score": 0.0026928704785200708,
       "query": false,
-      "gene": true
+      "gene": false
     },
     "position": {
       "x": 363.1144068403203,
