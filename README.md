@@ -1,6 +1,6 @@
 # Cluster One Web App (ALPHA 1.0) 🧬🧬
 
-Graph Interface for CL1-API.
+Graph Interface for CL1-API (Pure Node.Js for now 👀... React soon).
 
 In this app you can upload your PPI network and get the results of the analysis by CL1-API.
 
@@ -13,6 +13,9 @@ TODO:
 - Selection of the PPI network (In database) to visualize.
 - Show protein panel with the information of the protein.
 - Click on the protein in protein panel to zoom node on graph interface.
+- Adapt the app to React.
+- Dockerize the app.
+- Deploy the app.
 
 ## Prerequisites 📋
 
