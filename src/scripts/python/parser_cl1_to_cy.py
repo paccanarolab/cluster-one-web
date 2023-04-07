@@ -4,7 +4,7 @@ import json
 import random
 
 
-def parse_cl1_to_cy(cl1_file_path: str, cy_file_output_path: str):
+def parse_cl1_csv_to_cy(cl1_file_path: str, cy_file_output_path: str):
     """
     Parsea un archivo de CL1 a formato de Cytoscape.
     :param cl1_file_path: Ruta del archivo de CL1.
@@ -42,7 +42,7 @@ def parse_dataset_to_cy(dataset_file_path: str, cy_file_output_path: str):
         try:
             _origen = _row[0]
             _destino = _row[1]
-            _peso = _row[2]
+            _peso = _row[2].replace("\n", "")
         except IndexError:
             breakpoint()
 
@@ -80,11 +80,9 @@ def parse_dataset_to_cy(dataset_file_path: str, cy_file_output_path: str):
             "group": "nodes",
             "classes": "fn7921"
         }
-        if _origen not in _list_nodes:
-            # TODO: Generar el nodo en el formato de Cytoscape
+        if _origen_node not in _list_nodes:
             _list_nodes.append(_origen_node)
-        if _destino not in _list_nodes:
-            # TODO: Generar el nodo en el formato de Cytoscape
+        if _destino_node not in _list_nodes:
             _list_nodes.append(_destino_node)
 
         _edge = {
@@ -109,7 +107,70 @@ def parse_dataset_to_cy(dataset_file_path: str, cy_file_output_path: str):
     cy.write(json.dumps(_net))
     cy.close()
 
+
+def parse_cl1_txt_to_cy(cl1_file_path: str, cy_file_output_path: str):
+    data = lee_txt(cl1_file_path)
+    cy = open(cy_file_output_path, 'w')
+    _net = []
+    _list_nodes = []
+    _edges = []
+    for row in data:
+        _row = row.split("\t")
+        for _protein in _row:
+            _protein_node = {
+                "data": {
+                    "id": _protein,
+                    "name": _protein,
+                    "protein": "true"
+                },
+                "position": {
+                    "x": random.randint(800, 1000),
+                    "y": random.randint(0, 100)
+                },
+                "selected": False,
+                "selectable": True,
+                "locked": False,
+                "grabbable": True,
+                "group": "nodes",
+            }
+            if _protein_node not in _list_nodes:
+                _list_nodes.append(_protein_node)
+            else:
+                # TODO: Debo de tener una forma de validar cual es el complejo proteico
+                # Y a este asignarle un atributo que distinga a los demas
+                # Además de un color caractersitico
+                pass
+        # Todos tienen edges entre si de pesos 1 por ahora
+        for _protein in _row:
+            for _protein2 in _row:
+                if _protein != _protein2:
+                    _edge = {
+                        "data": {
+                            "source": _protein,
+                            "target": _protein2,
+                            "weight": 1,
+                            "interaction": "pp",
+                            "id": _protein + "_" + _protein2
+                        },
+                        "position": {},
+                        "selected": False,
+                        "selectable": True,
+                        "locked": False,
+                        "grabbable": True,
+                        "group": "edges",
+                        "classes": "pp"
+                    }
+                    _edges.append(_edge)
+
+    _net = _list_nodes + _edges
+    cy.write(json.dumps(_net))
+    cy.close()
+
+
 # parse_cl1_to_cy(sys.argv[1], sys.argv[2])
 
 
-parse_dataset_to_cy(sys.argv[1], sys.argv[2])
+# parse_dataset_to_cy(sys.argv[1], sys.argv[2])
+
+
+parse_cl1_txt_to_cy(sys.argv[1], sys.argv[2])
