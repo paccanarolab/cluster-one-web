@@ -1,4 +1,4 @@
-# cluster-one-web
+# Cluster One Web App Prototype 🧬🧬
 
 Prototype Graph Interface for CL1-API
 
