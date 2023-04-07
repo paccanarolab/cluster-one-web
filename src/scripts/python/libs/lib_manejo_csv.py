@@ -21,5 +21,4 @@ def lee_csv(archivo, delimiter=","):
 
 def lee_txt(archivo, delimiter="\n"):
     with open(archivo, "r") as in_file:
-
-        return in_file.read().split(delimiter)
+        return in_file.readlines()
