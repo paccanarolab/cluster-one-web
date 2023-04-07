@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "run_test",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "dev": "webpack serve --mode=development"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
     "cytoscape": "^3.23.0",
+    "dotenv-webpack": "^8.0.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",
     "webpack": "^5.78.0",

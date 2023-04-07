@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DotEnv = require('dotenv-webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -9,7 +10,12 @@ module.exports = {
         filename: 'main.js'
     },
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js'],
+        alias: {
+            '@components': path.resolve(__dirname, 'src/components/'),
+            '@cy': path.resolve(__dirname, 'src/utils_cy/'),
+            '@styles': path.resolve(__dirname, 'src/styles/'),
+        }
     },
     module: {
         rules: 
@@ -39,5 +45,6 @@ module.exports = {
             filename: './index.html'
         }),
         new MiniCssExtractPlugin(),
+        new DotEnv(),
     ]
 };
