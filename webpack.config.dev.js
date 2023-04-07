@@ -48,5 +48,10 @@ module.exports = {
         }),
         new MiniCssExtractPlugin(),
         new DotEnv(),
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 4200
+    }
 };
