@@ -1,11 +1,11 @@
 /* global Promise, fetch, window, cytoscape, document, tippy, _ */
 
 Promise.all([
-  fetch('./utils_cy/cy-style.json')
+  fetch('./styles/cy-style.json')
     .then(function(res) {
       return res.json();
     }),
-  fetch('../public/inputs/data.json')
+  fetch('../public/inputs/data_collins_2.json')
     .then(function(res) {
       return res.json();
     })
@@ -87,12 +87,21 @@ Promise.all([
         }
       },
 
+      // {
+      //   label: h('span', { 'class': 'fa fa-long-arrow-down' }, []),
+      //   layoutOpts: {
+      //     flow: { axis: 'y', minSeparation: 30 }
+      //   }
+      // },
       {
-        label: h('span', { 'class': 'fa fa-long-arrow-down' }, []),
+        label: h('span', { 'class': 'fa fa-file' }, []),
         layoutOpts: {
-          flow: { axis: 'y', minSeparation: 30 }
+          // set to upload file
+
+
         }
       }
+
     ];
 
     sliders.forEach( makeSlider );

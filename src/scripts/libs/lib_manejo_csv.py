@@ -17,3 +17,9 @@ def lee_csv(archivo, delimiter=","):
     with open(archivo, "r", newline="") as in_file:
         reader = csv.reader(in_file, delimiter=delimiter)
         return list(reader)[1:]
+
+
+def lee_txt(archivo, delimiter="\n"):
+    with open(archivo, "r") as in_file:
+
+        return in_file.read().split(delimiter)
