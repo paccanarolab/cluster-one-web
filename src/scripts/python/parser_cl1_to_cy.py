@@ -4,6 +4,17 @@ import json
 import random
 
 
+def get_random_color():
+    r1 = random.randint(0, 255)
+    r2 = random.randint(0, 255)
+    r3 = random.randint(0, 255)
+    return '#%02X%02X%02X' % (r1, r2, r3)
+
+
+def get_complex_protein_color():
+    return '#%02X%02X%02X' % (255, 0, 0)
+
+
 def parse_cl1_csv_to_cy(cl1_file_path: str, cy_file_output_path: str):
     """
     Parsea un archivo de CL1 a formato de Cytoscape.
@@ -132,13 +143,27 @@ def parse_cl1_txt_to_cy(cl1_file_path: str, cy_file_output_path: str):
                 "locked": False,
                 "grabbable": True,
                 "group": "nodes",
+                "style": {
+                    "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+                    "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+                    "content": "data(name)",
+                    "font-size": "12px",
+                    "text-valign": "center",
+                    "text-halign": "center",
+                    "background-color": get_random_color(),
+                    "text-outline-color": "#555",
+                    "text-outline-width": "2px",
+                    "color": "#fff",
+                    "overlay-padding": "6px",
+                    "z-index": "10"
+                }
             }
             if _protein_node not in _list_nodes:
                 _list_nodes.append(_protein_node)
             else:
                 # TODO: Debo de tener una forma de validar cual es el complejo proteico
                 # Y a este asignarle un atributo que distinga a los demas
-                # Además de un color caractersitico
+                # Además de un color caractersitico funcion get_complex_protein_color
                 pass
         # Todos tienen edges entre si de pesos 1 por ahora
         for _protein in _row:
