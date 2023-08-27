@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotEnv = require('dotenv-webpack');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -11,37 +10,46 @@ module.exports = {
         filename: 'main.js'
     },
     resolve: {
-        extensions: ['.js'],
-        // alias: {
-        //     '@components': path.resolve(__dirname, 'src/components/'),
-        //     // '@cy': path.resolve(__dirname, 'src/utils_cy/'),
-        //     '@styles': path.resolve(__dirname, 'src/styles/'),
-        //     '@libs': path.resolve(__dirname, 'src/libs/'),
-        // }
+        extensions: ['.js', '.jsx'],
+        alias: {
+            '@components': path.resolve(__dirname, 'src/components/'),
+            '@cy': path.resolve(__dirname, 'src/utils_cy/'),
+            '@styles': path.resolve(__dirname, 'src/styles/'),
+        }
     },
     mode: 'development',
-    devtool: 'source-map',
-    watch: true,
     module: {
         rules: 
             [
                 {
-                    test: /\.js?$/,
+                    test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
                             loader: 'babel-loader'
                         }
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.html$/,
                     use: [
                         {
-                            loader: MiniCssExtractPlugin.loader
-                        },
-                        'css-loader'
+                            loader: 'html-loader'
+                        }
+                    ]
+                },
+                {
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
                     ]
                 },
             ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3006,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -49,24 +57,9 @@ module.exports = {
             template: './public/index.html',
             filename: './index.html'
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
         new DotEnv(),
-        new CopyPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, "src", "styles/cy-style.json"),
-                    to: "cy-style.json"
-                },
-                {
-                    from: path.resolve(__dirname, "public", "inputs/"),
-                    to: "./inputs/"
-                }
-            ]
-        })
-    ],
-    // devServer: {
-    //     contentBase: path.join(__dirname, 'dist'),
-    //     compress: true,
-    //     port: 4200
-    // }
+    ]
 };

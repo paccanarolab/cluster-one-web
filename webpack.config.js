@@ -1,21 +1,26 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotEnv = require('dotenv-webpack');
+const CssMiniMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js'
+        filename: 'main.js',
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
-            '@cy': path.resolve(__dirname, 'src/utils_cy/'),
             '@styles': path.resolve(__dirname, 'src/styles/'),
         }
     },
+    mode: 'production',
     module: {
         rules: 
             [
@@ -33,13 +38,16 @@ module.exports = {
                             loader: 'html-loader'
                         }
                     ]
-                }
+                },
+                {
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                },
             ]
-    },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 3006,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -47,7 +55,17 @@ module.exports = {
             template: './public/index.html',
             filename: './index.html'
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
         new DotEnv(),
-    ]
+        new CleanWebpackPlugin(),
+    ],
+    optmization: {
+        minimize: true,
+        minimizer: [
+            new CssMiniMinimizerPlugin(),
+            new TerserPlugin(),
+        ]
+    }
 };
