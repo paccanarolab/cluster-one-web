@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotEnv = require('dotenv-webpack');
 
 module.exports = {
@@ -10,7 +9,7 @@ module.exports = {
         filename: 'main.js'
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.jsx'],
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
             '@cy': path.resolve(__dirname, 'src/utils_cy/'),
@@ -21,22 +20,26 @@ module.exports = {
         rules: 
             [
                 {
-                    test: /\.js?$/,
+                    test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
                             loader: 'babel-loader'
                         }
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.html$/,
                     use: [
                         {
-                            loader: MiniCssExtractPlugin.loader
-                        },
-                        'css-loader'
+                            loader: 'html-loader'
+                        }
                     ]
-                },
+                }
             ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3006,
     },
     plugins: [
         new HtmlWebpackPlugin({
