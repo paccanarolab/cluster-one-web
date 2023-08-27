@@ -1,4 +1,5 @@
 import React from "react";
+import { ProteinFilter } from "./ProteinFilter.jsx";
 
 const proteinComplexStyle = {
     width: "100",
