@@ -20,10 +20,10 @@ body {
 
 .config {
     position: absolute;
-    right: 3;
-    top: 0;
-    bottom: 0;
-    /* width: 17em; */
+    left: 0;
+    top: 0em;
+    bottom: 0em;
+    width: 17em;
     background: rgba(0, 0, 0, 0.666);
     box-sizing: border-box;
     padding: 1em;
@@ -61,6 +61,8 @@ a:hover {
 
 .label {
     display: block;
+    font-weight: bold;
+    top: 0.5em;
 }
 
 .slider {
@@ -71,8 +73,8 @@ a:hover {
 
 .config-toggle {
     position: absolute;
-    right: 0;
-    top: 0;
+    left: 180px;
+    top: 0.1em;
     padding: 1em;
     margin: 0.2em;
     cursor: pointer;
