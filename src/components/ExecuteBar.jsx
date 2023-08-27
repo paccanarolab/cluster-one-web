@@ -1,5 +1,3 @@
-import React from "react";
-
 const ExecuteBar = () => {
     return (
         <div className="execute-bar">

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Cy = (protein) => {
     return (
             <div id="cy">
