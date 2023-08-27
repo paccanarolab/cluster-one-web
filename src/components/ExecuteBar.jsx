@@ -7,7 +7,13 @@ const ExecuteBar = () => {
                 <span className="label label-default">ClusterONE WEB</span>
                 <p>Manipulation and Analysis clusters</p>       
                 <ul>
-                        <button className="btn btn-default" id="quick_run">
+                        <button 
+                            className="btn btn-default"
+                            id="quick_run"
+                            onClick={
+                                () => {console.log("Quick Run");}
+                            }
+                        >
                             <span className="fa fa-play"></span>
                             Quick Run
                         </button>
