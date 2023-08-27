@@ -2,25 +2,25 @@ import React from "react";
 
 const ExecuteBar = () => {
     return (
-        <div className="execute-bar">
-            <span className="fa fa-bars config-toggle" id="config-toggle"></span>
             <div className="config" id="config">
-                <span className="label label-default">Cluster One Web</span>
-                <p> Cluster ONE WEB Manipulation and Analysis clusters </p>
-                <button className="btn btn-default" id="execute">
-                    <span className="fa fa-play"></span>
-                    Execute
-                </button>
-                <button className="btn btn-default" id="stop">
-                    <span className="fa fa-stop"></span>
-                    Stop
-                </button>
-                <button className="btn btn-default" id="reset">
-                    <span className="fa fa-refresh"></span>
-                    Reset
-                </button>
+                <span className="fa fa-bars config-toggle" id="config-toggle"></span>
+                <span className="label label-default">ClusterONE WEB</span>
+                <p>Manipulation and Analysis clusters</p>       
+                <ul>
+                        <button className="btn btn-default" id="quick_run">
+                            <span className="fa fa-play"></span>
+                            Quick Run
+                        </button>
+                        <button className="btn btn-default" id="run">
+                            <span className="fa fa-play"></span>
+                            Run
+                        </button>
+                        <button className="btn btn-default" id="reset">
+                            <span className="fa fa-refresh"></span>
+                            Reset
+                        </button>
+                </ul>
             </div>
-        </div>
     );
 }
 
