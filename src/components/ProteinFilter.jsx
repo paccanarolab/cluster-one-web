@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ProteinFilter.scss";
 
 const ProteinFilter = () => {
     // Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
@@ -7,21 +8,20 @@ const ProteinFilter = () => {
         setProteinsName(event.target.value);
     }
     return (
-        <div className="proteinfilter" id="pfilter">
-            <input
-                type="text"
-                placeholder="Filter by protein name"
-                value={proteinsName}
-                onChange={handleProteinChange}
-            />
-            <button
-                onClick={() => {
-                    setProteinsName('');
-                }
-                }
+        <div className={"proteinContainer"}>
+            <label htmlFor="proteinSelect" className={"proteinLabel"}>Protein:</label>
+            <select 
+                id="proteinSelect" 
+                value={proteinsName} 
+                onChange={handleProteinChange} 
+                className={"proteinDropdown"}
             >
-                Clear
-            </button>
+                <option value="PROTEIN1">PROTEIN 1</option>
+                <option value="PROTEIN2">PROTEIN 2</option>
+                <option value="PROTEIN3">PROTEIN 3</option>
+                <option value="PROTEIN4">PROTEIN 4</option>
+                {/* Tus opciones aquí */}
+            </select>
         </div>
     );
 }
