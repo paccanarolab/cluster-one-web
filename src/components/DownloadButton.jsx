@@ -1,10 +1,10 @@
 import React from 'react';
-
-const DownloadButton = ({ label, icon, id }) => {
+import "../styles/DownloadButton.scss";
+const DownloadButton = ({ cluster_id }) => {
 
     const downloadFile = async () => {
         try {
-            const response = await fetch(`YOUR_ENDPOINT_URL/${id}`, {
+            const response = await fetch(`YOUR_ENDPOINT_URL/${cluster_id}`, {
                 method: 'GET'
             });
             
@@ -23,9 +23,10 @@ const DownloadButton = ({ label, icon, id }) => {
     }
 
     return (
-        <button onClick={downloadFile}>
-            {icon && <i className={icon}></i>}
-            {label}
+        <button 
+            onClick={downloadFile} 
+            className={'cl1DownloadButton'}
+        >
         </button>
     );
 }

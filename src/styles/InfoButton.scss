@@ -1,0 +1,27 @@
+.cl1InfoButton {
+    display: inline-block;
+    width: 2cm;
+    height: 2cm;
+    background-color: #00a8cc;
+    /* Celeste más oscuro */
+    border-radius: 1cm;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 5%;
+    right: 12%;
+    /* Aumentado para mover el botón más hacia la izquierda */
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.cl1InfoButton:before {
+    content: 'i';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2cm;
+    font-weight: bold;
+    color: #000;
+}

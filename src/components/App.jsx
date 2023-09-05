@@ -1,6 +1,8 @@
 import React from "react";
 import { Cy } from "./CyGraph.jsx";
 import { ExecuteBar } from "./ExecuteBar.jsx";
+import { DownloadButton } from "./DownloadButton.jsx";
+import { InfoButton } from "./InfoButton.jsx";
 
 
 const proteins = [
@@ -22,6 +24,7 @@ const proteins = [
 // El metodo forEach() ejecuta la funcion indicada una vez por cada elemento del array.
 // para cada cy tiene que tener una key unica, react necesita saber que elemento esta cambiando
 const App = () => {
+
     return (
         <React.Fragment>
             <ExecuteBar />
@@ -36,6 +39,9 @@ const App = () => {
                     );
                 })}
             </ul>
+            <DownloadButton />
+            <InfoButton />
+
         </React.Fragment>
     );
 };

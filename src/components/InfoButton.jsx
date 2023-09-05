@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styles/InfoButton.scss";
 
 const InfoButton = ({ data }) => {
     const [showInfo, setShowInfo] = React.useState(false);
@@ -9,8 +10,9 @@ const InfoButton = ({ data }) => {
 
     return (
         <div>
-            <button onClick={toggleInfo}>
-                {showInfo ? 'Ocultar información' : 'Mostrar información'}
+            <button 
+                onClick={toggleInfo} 
+                className={'cl1InfoButton'}>
             </button>
             
             {showInfo && (
