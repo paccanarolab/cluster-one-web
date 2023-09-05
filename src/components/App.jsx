@@ -23,69 +23,75 @@ const clusterOneManual = {
     href: "https://paccanarolab.org/clusterone/",
     label: "ClusterONE Manual"
 };
+const initialGraphData = {
+    nodes: [], 
+    edges: []
+};
+
+const exampleGraphData = {
+    nodes: [
+    { data: { id: "1", label: "IP 1", type: "ip" } },
+    { data: { id: "2", label: "Device 1", type: "device" } },
+    { data: { id: "3", label: "IP 2", type: "ip" } },
+    { data: { id: "4", label: "Device 2", type: "device" } },
+    { data: { id: "5", label: "Device 3", type: "device" } },
+    { data: { id: "6", label: "IP 3", type: "ip" } },
+    { data: { id: "7", label: "Device 5", type: "device" } },
+    { data: { id: "8", label: "Device 6", type: "device" } },
+    { data: { id: "9", label: "Device 7", type: "device" } },
+    { data: { id: "10", label: "Device 8", type: "device" } },
+    { data: { id: "11", label: "Device 9", type: "device" } },
+    { data: { id: "12", label: "IP 3", type: "ip" } },
+    { data: { id: "13", label: "Device 10", type: "device" } }
+    ],
+    edges: [
+    {
+        data: { source: "1", target: "2", label: "Node2" }
+    },
+    {
+        data: { source: "3", target: "4", label: "Node4" }
+    },
+    {
+        data: { source: "3", target: "5", label: "Node5" }
+    },
+    {
+        data: { source: "6", target: "5", label: " 6 -> 5" }
+    },
+    {
+        data: { source: "6", target: "7", label: " 6 -> 7" }
+    },
+    {
+        data: { source: "6", target: "8", label: " 6 -> 8" }
+    },
+    {
+        data: { source: "6", target: "9", label: " 6 -> 9" }
+    },
+    {
+        data: { source: "3", target: "13", label: " 3 -> 13" }
+    }
+    ]
+};
+const initiallayout = {
+    name: "random",
+    fit: true,
+    // circle: true,
+    directed: true,
+    padding: 50,
+    // spacingFactor: 1.5,
+    animate: true,
+    animationDuration: 1000,
+    avoidOverlap: true,
+    nodeDimensionsIncludeLabels: false
+};
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 // El metodo forEach() ejecuta la funcion indicada una vez por cada elemento del array.
 // para cada cy tiene que tener una key unica, react necesita saber que elemento esta cambiando
 const App = () => {
     const [width, setWith] = React.useState("100%");
-    const [height, setHeight] = React.useState("700px");
-    const [graphData, setGraphData] = React.useState({
-        nodes: [
-        { data: { id: "1", label: "IP 1", type: "ip" } },
-        { data: { id: "2", label: "Device 1", type: "device" } },
-        { data: { id: "3", label: "IP 2", type: "ip" } },
-        { data: { id: "4", label: "Device 2", type: "device" } },
-        { data: { id: "5", label: "Device 3", type: "device" } },
-        { data: { id: "6", label: "IP 3", type: "ip" } },
-        { data: { id: "7", label: "Device 5", type: "device" } },
-        { data: { id: "8", label: "Device 6", type: "device" } },
-        { data: { id: "9", label: "Device 7", type: "device" } },
-        { data: { id: "10", label: "Device 8", type: "device" } },
-        { data: { id: "11", label: "Device 9", type: "device" } },
-        { data: { id: "12", label: "IP 3", type: "ip" } },
-        { data: { id: "13", label: "Device 10", type: "device" } }
-        ],
-        edges: [
-        {
-            data: { source: "1", target: "2", label: "Node2" }
-        },
-        {
-            data: { source: "3", target: "4", label: "Node4" }
-        },
-        {
-            data: { source: "3", target: "5", label: "Node5" }
-        },
-        {
-            data: { source: "6", target: "5", label: " 6 -> 5" }
-        },
-        {
-            data: { source: "6", target: "7", label: " 6 -> 7" }
-        },
-        {
-            data: { source: "6", target: "8", label: " 6 -> 8" }
-        },
-        {
-            data: { source: "6", target: "9", label: " 6 -> 9" }
-        },
-        {
-            data: { source: "3", target: "13", label: " 3 -> 13" }
-        }
-        ]
-    });
-
-    const layout = {
-        name: "random",
-        fit: true,
-        // circle: true,
-        directed: true,
-        padding: 50,
-        // spacingFactor: 1.5,
-        animate: true,
-        animationDuration: 1000,
-        avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
-    };
-
+    const [height, setHeight] = React.useState("760px");
+    const [graphData, setGraphData] = React.useState(exampleGraphData);
+    const [layout, setLayout] = React.useState(initiallayout);
+    
     const styleSheet = [
         {
             selector: "node",
@@ -162,15 +168,19 @@ const App = () => {
             />
             <div
                 style={{
-                    border: "1px solid",
-                    backgroundColor: "#f5f6fe"
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    backgroundColor: "white"
                 }}
             >
                 <CytoscapeComponent
                     elements={
                         CytoscapeComponent.normalizeElements(graphData)
                     }
-                    pan={{ x: 200, y: 200 }}
+                    // pan={{ x: 200, y: 200 }}
                     style={{ width: width, height: height }}
                     zoomingEnabled={true}
                     maxZoom={3}

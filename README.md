@@ -34,7 +34,7 @@ npm i
 To run the app-dev with local server:
 
 ```
-npm run dev
+npm run start-dev
 ```
 
 To build the app for production:
