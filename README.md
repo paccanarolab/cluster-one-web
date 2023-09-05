@@ -37,8 +37,3 @@ To build the app for production:
 ```
 npm run build
 ```
-
-Recomend to use Live Server for VSCode to run the app-dev
-
-- Go to dist/index.html
-- Right click and select "Open with Live Server"
