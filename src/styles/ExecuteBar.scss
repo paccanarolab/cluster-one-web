@@ -1,0 +1,60 @@
+.config {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
+    width: 18%;
+    /* Ocupará todo el ancho de la pantalla */
+    background: rgba(0, 0, 0, 0.8);
+    /* Hacemos el fondo más oscuro */
+    box-sizing: border-box;
+    padding: 1em;
+    color: #fff;
+    transition-property: opacity;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+    overflow: auto;
+    z-index: 1;
+}
+
+.config-toggle {
+    position: absolute;
+    left: 200px;
+    top: 0.1em;
+    padding: 1em;
+    margin: 0.2em;
+    cursor: pointer;
+    color: #fff;
+    z-index: 9999999;
+}
+
+.config-toggle.dark-toggle {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Un fondo oscuro para cuando la barra lateral está oculta */
+}
+
+.config-closed .config {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.config-closed #cy {
+    right: 0;
+}
+
+.config-link {
+    display: block;
+    color: #9ed0fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: absolute;
+    /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
+    bottom: 18px;
+    /* Posición desde la parte inferior */
+    left: 20px;
+    /* Posición desde la izquierda */
+
+    &:hover {
+        color: #7fbbe2;
+    }
+}

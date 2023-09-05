@@ -18,22 +18,7 @@ body {
     right: 0;
 }
 
-.config {
-    position: absolute;
-    left: 0;
-    top: 0em;
-    bottom: 0em;
-    width: 17em;
-    background: rgba(0, 0, 0, 0.666);
-    box-sizing: border-box;
-    padding: 1em;
-    color: #fff;
-    transition-property: opacity;
-    transition-duration: 250ms;
-    transition-timing-function: ease-out;
-    overflow: auto;
-    z-index: 1;
-}
+
 
 .param {
     margin-bottom: 1em;
@@ -71,25 +56,8 @@ a:hover {
     margin: 0;
 }
 
-.config-toggle {
-    position: absolute;
-    left: 180px;
-    top: 0.1em;
-    padding: 1em;
-    margin: 0.2em;
-    cursor: pointer;
-    color: #fff;
-    z-index: 9999999;
-}
 
-.config-closed .config {
-    opacity: 0;
-    pointer-events: none;
-}
 
-.config-closed #cy {
-    right: 0;
-}
 
 .tip-link {
     display: block;
