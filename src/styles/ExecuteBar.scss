@@ -58,3 +58,40 @@
         color: #7fbbe2;
     }
 }
+
+.config-dropdown {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    /* Reduce el ancho al 80% de su contenedor */
+    background: rgba(50, 50, 50, 0.75);
+    /* Fondo más claro */
+    color: #fff;
+    /* Color de letra blanco */
+    border: 1px solid #fff;
+    /* Bordes blancos */
+    border-radius: 5px;
+    /* Bordes ligeramente redondeados */
+    padding: 8px;
+    /* Reduce el espaciado interno para el texto/dropdown */
+    font-size: 0.9em;
+    /* Reduce el tamaño de fuente */
+    transition: background-color 0.3s ease;
+    /* Transición suave para el cambio de fondo en hover */
+    margin: auto;
+    /* Centra el dropdown en su contenedor */
+    text-align: center;
+
+    &:hover {
+        background-color: rgba(60, 60, 60, 0.85);
+        /* Cambia el fondo al pasar el cursor */
+    }
+
+    /* Estilo para las opciones del dropdown */
+    option {
+        background: rgba(50, 50, 50, 0.75);
+        /* Fondo igual que el dropdown */
+        color: #fff;
+        /* Color de letra blanco */
+    }
+}

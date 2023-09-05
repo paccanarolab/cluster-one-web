@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ClusterFilter.scss";
 
 const ClusterFilter = () => {
     // Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
@@ -31,57 +32,74 @@ const ClusterFilter = () => {
 
     return (
         <div className="complex" id="cfilter">
+            <div>Complex Filter</div>
+            <button
+                onClick={() => {
+                    setSize('');
+                    setDensity('');
+                    setQuantity('');
+                    setExternalWeight('');
+                    setInternalWeight('');
+                    setClusterCode('');
+                }}
+            >
+                Clear
+            </button>
             <input
-                type="text"
-                placeholder="Filter by cluster code"
-                value={clusterCode}
-                onChange={handleClusterCodeChange}
-            />
-            <input
-                type="text"
-                placeholder="Filter by quantity"
-                value={quantity}
-                onChange={handleQuantityChange}
-            />
-            <input
-                type="text"
-                placeholder="Filter by density"
-                value={density}
-                onChange={handleDensityChange}
-            />
-            <input
-                type="text"
-                placeholder="Filter by size"
+                type="number"
+                placeholder="Size"
+                name="size"
                 value={size}
                 onChange={handleSizeChange}
             />
             <input
-                type="text"
-                placeholder="Filter by external weight"
+                type="number"
+                placeholder="Density"
+                name="density"
+                value={density}
+                onChange={handleDensityChange}
+            />
+    
+            <input
+                type="number"
+                placeholder="Quantity"
+                name="quantity"
+                value={quantity}
+                onChange={handleQuantityChange}
+            />
+    
+            <input
+                type="number"
+                placeholder="External Weight"
+                name="externalWeight"
                 value={externalWeight}
                 onChange={handleExternalWeightChange}
             />
+    
             <input
-                type="text"
-                placeholder="Filter by internal weight"
+                type="number"
+                placeholder="Internal Weight"
+                name="internalWeight"
                 value={internalWeight}
                 onChange={handleInternalWeightChange}
             />
-            <button
-                onClick={() => {
-                    setClusterCode('');
-                    setQuantity('');
-                    setDensity('');
-                    setSize('');
-                    setExternalWeight('');
-                    setInternalWeight('');
-                }
-                }
+            
+            <select 
+                value={clusterCode}
+                onChange={handleClusterCodeChange}
+                className="config-dropdown"
             >
-                Clear
-            </button>
+                <option value="layout1">CODE 1</option>
+                <option value="layout2">CODE 2</option>
+                <option value="layout3">CODE 3</option>
+                <option value="layout4">CODE 5</option>
+                {/* Puedes agregar más opciones si lo necesitas */}
+            </select>
+            
+            
+
         </div>
-    );
+    );    
 }
 
 export { ClusterFilter };
