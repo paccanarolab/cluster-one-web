@@ -23,6 +23,7 @@ const clusterOneManual = {
     href: "https://paccanarolab.org/clusterone/",
     label: "ClusterONE Manual"
 };
+
 const initialGraphData = {
     nodes: [], 
     edges: []
@@ -42,7 +43,7 @@ const exampleGraphData = {
     { data: { id: "10", label: "Device 8", type: "device" } },
     { data: { id: "11", label: "Device 9", type: "device" } },
     { data: { id: "12", label: "IP 3", type: "ip" } },
-    { data: { id: "13", label: "Device 10", type: "device" } }
+    { data: { id: "13", label: "Device 10", type: "device" }, position: { x: 100, y: 100 } },
     ],
     edges: [
     {
@@ -71,6 +72,7 @@ const exampleGraphData = {
     }
     ]
 };
+
 const initiallayout = {
     name: "random",
     fit: true,
@@ -83,72 +85,70 @@ const initiallayout = {
     avoidOverlap: true,
     nodeDimensionsIncludeLabels: false
 };
+
+const styleSheet = [
+    {
+        selector: "node",
+        style: {
+            backgroundColor: "#4a56a6",
+            width: 30,
+            height: 30,
+            label: "data(label)",
+
+            // "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+            // "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+            // "text-valign": "center",
+            // "text-halign": "center",
+            "overlay-padding": "6px",
+            "z-index": "10",
+            //text props
+            "text-outline-color": "#4a56a6",
+            "text-outline-width": "2px",
+            color: "white",
+            fontSize: 20
+        }
+    },
+    {
+        selector: "node:selected",
+        style: {
+            "border-width": "6px",
+            "border-color": "#AAD8FF",
+            "border-opacity": "0.5",
+            "background-color": "#77828C",
+            width: 50,
+            height: 50,
+            //text props
+            "text-outline-color": "#77828C",
+            "text-outline-width": 8
+        }
+    },
+    {
+        selector: "node[type='device']",
+        style: {
+            shape: "rectangle"
+        }
+    },
+    {
+        selector: "edge",
+        style: {
+            width: 3,
+            // "line-color": "#6774cb",
+            "line-color": "#AAD8FF",
+            // "target-arrow-color": "#6774cb",
+            // "target-arrow-shape": "triangle",
+            "curve-style": "bezier"
+        }
+    }
+];
+
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
-// El metodo forEach() ejecuta la funcion indicada una vez por cada elemento del array.
-// para cada cy tiene que tener una key unica, react necesita saber que elemento esta cambiando
 const App = () => {
     const [width, setWith] = React.useState("100%");
     const [height, setHeight] = React.useState("760px");
     const [graphData, setGraphData] = React.useState(exampleGraphData);
     const [layout, setLayout] = React.useState(initiallayout);
-    
-    const styleSheet = [
-        {
-            selector: "node",
-            style: {
-                backgroundColor: "#4a56a6",
-                width: 30,
-                height: 30,
-                label: "data(label)",
 
-                // "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-                // "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-                // "text-valign": "center",
-                // "text-halign": "center",
-                "overlay-padding": "6px",
-                "z-index": "10",
-                //text props
-                "text-outline-color": "#4a56a6",
-                "text-outline-width": "2px",
-                color: "white",
-                fontSize: 20
-            }
-        },
-        {
-            selector: "node:selected",
-            style: {
-                "border-width": "6px",
-                "border-color": "#AAD8FF",
-                "border-opacity": "0.5",
-                "background-color": "#77828C",
-                width: 50,
-                height: 50,
-                //text props
-                "text-outline-color": "#77828C",
-                "text-outline-width": 8
-            }
-        },
-        {
-            selector: "node[type='device']",
-            style: {
-                shape: "rectangle"
-            }
-        },
-        {
-            selector: "edge",
-            style: {
-                width: 3,
-                // "line-color": "#6774cb",
-                "line-color": "#AAD8FF",
-                // "target-arrow-color": "#6774cb",
-                // "target-arrow-shape": "triangle",
-                "curve-style": "bezier"
-            }
-        }
-    ];
-
-    let myCyRef;
-    
+    let myCyRef;    
     return (
         <React.Fragment>
             <ProteinFilter />

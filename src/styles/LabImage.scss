@@ -23,16 +23,11 @@
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
-    object-fit: cover;
     overflow: hidden;
     border: 1px solid #000;
     z-index: 1000;
-    object-fit: cover;
-    object-position: center;
     background-color: #ffffff;
 }
-
-
 
 /* Para pantallas medianas y pequeñas */
 @media (max-width: 768px) {

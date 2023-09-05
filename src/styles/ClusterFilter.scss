@@ -12,10 +12,9 @@
     border: 1px solid #fff;
     border-radius: 4px;
     color: #fff;
-    padding: 0.5em;
-    margin: 5px;
+    padding: 8px;
+    margin: 1px;
     transition: all 0.3s ease;
-    width: 1.2cm;
     /* Reduciendo el ancho */
 }
 
@@ -24,23 +23,24 @@
     outline: none;
 }
 
-/* Tamaños y disposición de los inputs según las instrucciones */
-.complex input[name="size"],
-.complex input[name="density"],
-.complex input[name="quantity"] {
-    height: 0.5cm;
-    /* Reduciendo el alto */
-    display: inline-block;
-}
+// /* Tamaños y disposición de los inputs según las instrucciones */
+// .complex input[name="size"],
+// .complex input[name="density"],
+// .complex input[name="quantity"] {
+// 	width: 1.36cm;
+// 	height: 20px;
+// 	/* Reduciendo el alto */
+// 	display: inline-block;
+// }
 
-.complex input[name="externalWeight"],
-.complex input[name="internalWeight"] {
-    width: 90%;
-    /* Ancho ajustado */
-    height: 0.5cm;
-    /* Reduciendo el alto */
-    display: block;
-}
+// .complex input[name="externalWeight"],
+// .complex input[name="internalWeight"] {
+// 	width: 90%;
+// 	/* Ancho ajustado */
+// 	height: 0.5cm;
+// 	/* Reduciendo el alto */
+// 	display: block;
+// }
 
 /* Estilo para el botón Clear */
 .complex button {
@@ -49,9 +49,6 @@
     border: 1px solid #fff;
     border-radius: 4px;
     color: #fff;
-    /* Letras en blanco */
-    padding: 0.5em 1em;
-    /* Padding ajustado */
     margin: 10px 5px;
     /* Espaciado estándar */
     cursor: pointer;
@@ -61,6 +58,7 @@
     text-align: center;
     display: block;
     width: auto;
+    font-size: large;
     /* Ancho ajustado automáticamente al contenido */
 }
 
