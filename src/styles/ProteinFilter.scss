@@ -1,0 +1,47 @@
+.proteinContainer {
+    display: flex;
+    /* Para alinear elementos horizontalmente */
+    align-items: center;
+    /* Centra verticalmente los elementos */
+    justify-content: center;
+    /* Centra horizontalmente los elementos */
+    position: absolute;
+    /* Posiciona el contenedor en el centro de la ventana/pantalla */
+    top: 10%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.proteinLabel {
+    margin-right: 10px;
+    /* Espacio entre la etiqueta y el desplegable */
+    color: black;
+    font-weight: bold;
+    /* Puedes ajustar esto según tus necesidades */
+}
+
+.proteinDropdown {
+    background-color: white;
+    color: black;
+    width: 7cm;
+    height: 1cm;
+    border-radius: 15px;
+    /* Bordes redondeados */
+    border: 1px solid black;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.3s ease;
+    /* Animación de "zoom" cuando se pasa el mouse por encima */
+}
+
+.proteinDropdown:hover {
+    transform: scale(1.05);
+    /* Aumenta ligeramente el tamaño al pasar el mouse por encima para la animación */
+}
+
+.proteinDropdown option {
+    background-color: white;
+    color: black;
+    text-align: center;
+}

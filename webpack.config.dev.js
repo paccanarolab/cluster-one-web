@@ -10,7 +10,7 @@ module.exports = {
         filename: 'main.js'
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.jsx'],
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
             '@cy': path.resolve(__dirname, 'src/utils_cy/'),
@@ -18,28 +18,40 @@ module.exports = {
         }
     },
     mode: 'development',
-    devtool: 'source-map',
-    watch: true,
     module: {
         rules: 
             [
                 {
-                    test: /\.js?$/,
+                    test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
                             loader: 'babel-loader'
                         }
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.html$/,
                     use: [
                         {
-                            loader: MiniCssExtractPlugin.loader
-                        },
-                        'css-loader'
+                            loader: 'html-loader'
+                        }
+                    ]
+                },
+                {
+                    test: /\.s[ac]ss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
                     ]
                 },
             ]
+    },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 3006,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -47,12 +59,9 @@ module.exports = {
             template: './public/index.html',
             filename: './index.html'
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
         new DotEnv(),
-    ],
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 4200
-    }
+    ]
 };

@@ -1,0 +1,70 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font: 14px helvetica neue, helvetica, arial, sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#cy {
+    position: absolute;
+    left: 17em;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+
+
+.param {
+    margin-bottom: 1em;
+}
+
+.preamble {
+    margin-bottom: 2em;
+}
+
+p {
+    margin: 0.5em 0;
+    font-size: 0.8em;
+}
+
+.param button {
+    width: 3em;
+    margin-right: 0.25em;
+    text-align: center;
+}
+
+a,
+a:hover {
+    color: #8BB0D0;
+}
+
+.label {
+    display: block;
+    font-weight: bold;
+    top: 0.5em;
+}
+
+.slider {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+
+
+
+.tip-link {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    #cy {
+        right: 0;
+    }
+}

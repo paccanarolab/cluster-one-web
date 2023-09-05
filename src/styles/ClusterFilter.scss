@@ -1,0 +1,76 @@
+/* Título para el filtro complejo */
+.complex-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Estilo base para los inputs del filtro */
+.complex input[type="number"] {
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #fff;
+    border-radius: 4px;
+    color: #fff;
+    padding: 0.5em;
+    margin: 5px;
+    transition: all 0.3s ease;
+    width: 1.2cm;
+    /* Reduciendo el ancho */
+}
+
+.complex input[type="number"]:focus {
+    border-color: #66afe9;
+    outline: none;
+}
+
+/* Tamaños y disposición de los inputs según las instrucciones */
+.complex input[name="size"],
+.complex input[name="density"],
+.complex input[name="quantity"] {
+    height: 0.5cm;
+    /* Reduciendo el alto */
+    display: inline-block;
+}
+
+.complex input[name="externalWeight"],
+.complex input[name="internalWeight"] {
+    width: 90%;
+    /* Ancho ajustado */
+    height: 0.5cm;
+    /* Reduciendo el alto */
+    display: block;
+}
+
+/* Estilo para el botón Clear */
+.complex button {
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Haciendo el fondo un poco más oscuro que el input */
+    border: 1px solid #fff;
+    border-radius: 4px;
+    color: #fff;
+    /* Letras en blanco */
+    padding: 0.5em 1em;
+    /* Padding ajustado */
+    margin: 10px 5px;
+    /* Espaciado estándar */
+    cursor: pointer;
+    /* Cambio de cursor al pasar sobre él */
+    transition: all 0.3s ease;
+    /* Transición suave para los efectos hover y active */
+    text-align: center;
+    display: block;
+    width: auto;
+    /* Ancho ajustado automáticamente al contenido */
+}
+
+/* Efecto hover para el botón, para que se ilumine ligeramente cuando se pasa el cursor sobre él */
+.complex button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Efecto active para el botón, para que tenga una sensación de "pulsado" */
+.complex button:active {
+    transform: scale(0.95);
+    /* Se reduce ligeramente el tamaño al presionar */
+}

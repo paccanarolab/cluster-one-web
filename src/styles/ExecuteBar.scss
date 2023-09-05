@@ -1,0 +1,72 @@
+.config {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
+    width: 18%;
+    /* Ocupará todo el ancho de la pantalla */
+    background: rgba(0, 0, 0, 0.8);
+    /* Hacemos el fondo más oscuro */
+    box-sizing: border-box;
+    padding: 1em;
+    color: #fff;
+    transition-property: opacity;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+    overflow: auto;
+    z-index: 1;
+}
+
+.config-link {
+    display: block;
+    color: #9ed0fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: absolute;
+    /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
+    bottom: 18px;
+    /* Posición desde la parte inferior */
+    left: 20px;
+    /* Posición desde la izquierda */
+
+    &:hover {
+        color: #7fbbe2;
+    }
+}
+
+.config-dropdown {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* Reduce el ancho al 80% de su contenedor */
+    background: rgba(50, 50, 50, 0.75);
+    /* Fondo más claro */
+    color: #fff;
+    /* Color de letra blanco */
+    border: 1px solid #fff;
+    /* Bordes blancos */
+    border-radius: 5px;
+    /* Bordes ligeramente redondeados */
+    padding: 8px;
+    /* Reduce el espaciado interno para el texto/dropdown */
+    font-size: 0.9em;
+    /* Reduce el tamaño de fuente */
+    transition: background-color 0.3s ease;
+    /* Transición suave para el cambio de fondo en hover */
+    margin: auto;
+    /* Centra el dropdown en su contenedor */
+    text-align: center;
+
+    &:hover {
+        background-color: rgba(60, 60, 60, 0.85);
+        /* Cambia el fondo al pasar el cursor */
+    }
+
+    /* Estilo para las opciones del dropdown */
+    option {
+        background: rgba(50, 50, 50, 0.75);
+        /* Fondo igual que el dropdown */
+        color: #fff;
+        /* Color de letra blanco */
+    }
+}
