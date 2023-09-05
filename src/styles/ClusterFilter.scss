@@ -28,23 +28,16 @@
 .complex input[name="size"],
 .complex input[name="density"],
 .complex input[name="quantity"] {
-    height: 0.8cm;
+    height: 0.5cm;
     /* Reduciendo el alto */
     display: inline-block;
 }
 
-.complex input[name="externalWeight"] {
-    width: calc(3.6cm + 10px);
-    /* Ancho ajustado */
-    height: 0.8cm;
-    /* Reduciendo el alto */
-    display: block;
-}
-
+.complex input[name="externalWeight"],
 .complex input[name="internalWeight"] {
-    width: calc(3.6cm + 10px);
+    width: 90%;
     /* Ancho ajustado */
-    height: 0.8cm;
+    height: 0.5cm;
     /* Reduciendo el alto */
     display: block;
 }

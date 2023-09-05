@@ -1,7 +1,7 @@
 .explorePpiButton {
     background-color: transparent;
     color: white;
-    text-align: right;
+    text-align: left;
     border: 1px solid black;
     border-radius: 5px;
     /* Puedes ajustar este valor para hacer las esquinas más o menos redondeadas */
@@ -13,6 +13,7 @@
     /* Cambia el cursor a una mano cuando se pasa por encima */
     transition: transform 0.3s ease-in-out;
     /* Anima el botón cuando se pasa el ratón por encima */
+
 }
 
 .explorePpiButton:hover {
@@ -53,6 +54,7 @@
     /* Para asegurar que el ícono y el texto estén alineados correctamente */
     justify-content: space-between;
     /* Separa el ícono y el texto en extremos opuestos */
+    width: 90%;
 }
 
 .runClusterOneButton:hover {

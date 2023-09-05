@@ -10,6 +10,7 @@
     top: 10%;
     left: 33%;
     transform: translate(-50%, -50%);
+    z-index: 1000;
 }
 
 .proteinLabel {
@@ -21,7 +22,7 @@
 }
 
 .proteinDropdown {
-    background-color: transparent;
+    background-color: white;
     color: black;
     width: 7cm;
     height: 1cm;

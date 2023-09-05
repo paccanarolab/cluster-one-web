@@ -17,31 +17,6 @@
     z-index: 1;
 }
 
-.config-toggle {
-    position: absolute;
-    left: 200px;
-    top: 0.1em;
-    padding: 1em;
-    margin: 0.2em;
-    cursor: pointer;
-    color: #fff;
-    z-index: 9999999;
-}
-
-.config-toggle.dark-toggle {
-    background-color: rgba(0, 0, 0, 0.7);
-    /* Un fondo oscuro para cuando la barra lateral está oculta */
-}
-
-.config-closed .config {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.config-closed #cy {
-    right: 0;
-}
-
 .config-link {
     display: block;
     color: #9ed0fa;
@@ -62,7 +37,7 @@
 .config-dropdown {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 100%;
     /* Reduce el ancho al 80% de su contenedor */
     background: rgba(50, 50, 50, 0.75);
     /* Fondo más claro */
