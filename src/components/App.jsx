@@ -4,6 +4,7 @@ import { ExecuteBar } from "./ExecuteBar.jsx";
 import { DownloadButton } from "./DownloadButton.jsx";
 import { InfoButton } from "./InfoButton.jsx";
 import { LabImage } from "./LabImage.jsx";
+import { ProteinFilter } from "./ProteinFilter.jsx";
 
 
 const paccaLabImage = {
@@ -25,6 +26,7 @@ const App = () => {
     return (
         <React.Fragment>
             <ExecuteBar  href={'https://paccanarolab.org/clusterone/'} label={'ClusterONE Manual'}/>
+            <ProteinFilter />
             <LabImage 
                 image={paccaLabImage.image}
                 url={paccaLabImage.url}
