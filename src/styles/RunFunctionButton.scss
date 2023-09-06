@@ -13,6 +13,11 @@
     /* Cambia el cursor a una mano cuando se pasa por encima */
     transition: transform 0.3s ease-in-out;
     /* Anima el botón cuando se pasa el ratón por encima */
+    display: flex;
+    /* Para asegurar que el ícono y el texto estén alineados correctamente */
+    justify-content: space-between;
+    /* Separa el ícono y el texto en extremos opuestos */
+    width: 90%;
 }
 
 .explorePpiButton:hover {
@@ -33,8 +38,8 @@
 }
 
 .runClusterOneButton {
-    background-color: transparent;
-    color: white;
+    background-color: whitesmoke;
+    color: black;
     text-align: left;
     border: 2px solid white;
     border-radius: 30px;
