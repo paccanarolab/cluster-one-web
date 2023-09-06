@@ -1,56 +1,5 @@
 import React from "react";
 
-
-const exampleGraphData = {
-    nodes: [
-    { data: { id: "1", label: "IP 1", type: "ip" } },
-    { data: { id: "2", label: "Device 1", type: "device" } },
-    { data: { id: "3", label: "IP 2", type: "ip" } },
-    { data: { id: "4", label: "Device 2", type: "device" } },
-    { data: { id: "5", label: "Device 3", type: "device" } },
-    { data: { id: "6", label: "IP 3", type: "ip" } },
-    { data: { id: "7", label: "Device 5", type: "device" } },
-    { data: { id: "8", label: "Device 6", type: "device" } },
-    { data: { id: "9", label: "Device 7", type: "device" } },
-    { data: { id: "10", label: "Device 8", type: "device" } },
-    { data: { id: "11", label: "Device 9", type: "device" } },
-    { data: { id: "12", label: "IP 3", type: "ip" } },
-    { data: { id: "13", label: "Device 10", type: "device" }, position: { x: 100, y: 100 } },
-    ],
-    edges: [
-    {
-        data: { source: "1", target: "2", label: "Node2" }
-    },
-    {
-        data: { source: "3", target: "4", label: "Node4" }
-    },
-    {
-        data: { source: "3", target: "5", label: "Node5" }
-    },
-    {
-        data: { source: "6", target: "5", label: " 6 -> 5" }
-    },
-    {
-        data: { source: "6", target: "7", label: " 6 -> 7" }
-    },
-    {
-        data: { source: "6", target: "8", label: " 6 -> 8" }
-    },
-    {
-        data: { source: "6", target: "9", label: " 6 -> 9" }
-    },
-    {
-        data: { source: "3", target: "13", label: " 3 -> 13" }
-    }
-    ],
-    code: "COMPLEJO 1",
-    size: 13,
-    density: "2",
-    quantity: 13,
-    externalWeight: "5",
-    internalWeight: "6"
-};
-
 const AppContext = React.createContext();
 
 function AppContextProvider ({ children }) {
@@ -154,14 +103,15 @@ function AppContextProvider ({ children }) {
     // States
     const [width, setWith] = React.useState("100%");
     const [height, setHeight] = React.useState("760px");
-    const [graphList, setGraphList] = React.useState([initialGraphData, exampleGraphData]);
+    const [graphList, setGraphList] = React.useState([initialGraphData]); // Cluster List
+    const [ppiList, setPpiList] = React.useState([]);
     const [layout, setLayout] = React.useState(initiallayout);
     const [size, setSize] = React.useState("");
     const [density, setDensity] = React.useState("");
     const [quantity, setQuantity] = React.useState("");
     const [externalWeight, setExternalWeight] = React.useState("");
     const [internalWeight, setInternalWeight] = React.useState("");
-    const [ppiId, setPpiId] = React.useState("1");
+    const [ppiId, setPpiId] = React.useState("2");
     const [proteinId, setProteinId] = React.useState("");
     const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
 
@@ -180,14 +130,14 @@ function AppContextProvider ({ children }) {
     
     // Call API functions
     const uploadFilePpi = async (inputElement) => {
+        // This function is called when the user uploads a file and charges it to the API
+        // The API returns the id of the PPI and we save it in setPpiId state
         const file = inputElement.files[0];
-    
         if (file) {
             const formData = new FormData();
             formData.append("file", file);
-        
             try {
-                const response = await fetch("YOUR_ENDPOINT_URL", {
+                const response = await fetch("http://localhost:8203/v1/api/graph/ppi/", {
                     method: "POST",
                     body: formData,
                 });
@@ -200,31 +150,48 @@ function AppContextProvider ({ children }) {
     };
 
     const quickRunClusterOne = async (ppi_id) => {
+        // Uses the ppi_id state to call the API and get the clusters
         try {
             const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
                 method: 'POST'
             });
             const data = await response.json();
-            console.log(data);
+            setGraphList(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
     }
     
-    
-    const IdPpi = async () => {
+    const getAllPpi = async () => {
+        // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`YOUR_ENDPOINT_URL/${ppiId}`, {
+            const response = await fetch(`http://localhost:8203/v1/api/graph/ppi/all/`, {
                 method: 'GET'
             });
             
+            const data = await response.json();
+            setPpiList(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+      
+    const getProteinDataByCluster = async (clusterId) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`YOUR_ENDPOINT_URL/${clusterId}`, {
+                method: 'GET'
+            });
+
             const data = await response.json();
             console.log(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
     }
-      
+
+
+
     // Call LocalStorage functions
 
 
@@ -261,6 +228,8 @@ function AppContextProvider ({ children }) {
             clearProteinFilter,
             uploadFilePpi,
             quickRunClusterOne,
+            getAllPpi,
+            getProteinDataByCluster,
         }}>
             {children}
         </AppContext.Provider>
