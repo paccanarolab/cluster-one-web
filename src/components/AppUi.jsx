@@ -13,13 +13,13 @@ import "../styles/global.scss"
 const AppUi = () => {
     const { 
         width, 
-        height, 
-        graphData, 
+        height,
         layout, 
         styleSheet, 
         paccaLabImage,
         fundacionImage,
-        clusterOneManual
+        clusterOneManual,
+        graphList
     } = React.useContext(AppContext);
     console.log("AppContext", AppContext);
     let myCyRef; 
@@ -42,43 +42,44 @@ const AppUi = () => {
             />
             <div
                 style={{
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    top: "0px",
-                    left: "0px",
-                    backgroundColor: "white"
-                }}
-            >
-                <CytoscapeComponent
-                    elements={
-                        CytoscapeComponent.normalizeElements(graphData)
-                    }
-                    // pan={{ x: 200, y: 200 }}
-                    style={{ width: width, height: height }}
-                    zoomingEnabled={true}
-                    maxZoom={3}
-                    minZoom={0.1}
-                    autounselectify={false}
-                    boxSelectionEnabled={true}
-                    layout={layout}
-                    stylesheet={styleSheet}
-                    cy={
-                        cy => {
-                            myCyRef = cy;
-                            console.log("CY object", cy);
-                            cy.on("tap", "node", evt => {
-                                var node = evt.target;
-                                console.log("EVT", evt);
-                                console.log("TARGET", node.data());
-                                console.log("TARGET TYPE", typeof node[0]);
-                            });
-                            }
-                    }
-                    abc={console.log("myCyRef", myCyRef)}
-                />
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                backgroundColor: "white"
+            }}>
+                {graphList.map((graphData) => (
+                    <CytoscapeComponent
+                        elements={
+                            CytoscapeComponent.normalizeElements(graphData)
+                        }
+                        // pan={{ x: 200, y: 200 }}
+                        style={{ width: width, height: height }}
+                        zoomingEnabled={true}
+                        maxZoom={3}
+                        minZoom={0.1}
+                        autounselectify={false}
+                        boxSelectionEnabled={true}
+                        layout={layout}
+                        stylesheet={styleSheet}
+                        cy={
+                            cy => {
+                                myCyRef = cy;
+                                console.log("CY object", cy);
+                                cy.on("tap", "node", evt => {
+                                    var node = evt.target;
+                                    console.log("EVT", evt);
+                                    console.log("TARGET", node.data());
+                                    console.log("TARGET TYPE", typeof node[0]);
+                                });
+                                }
+                        }
+                        abc={console.log("myCyRef", myCyRef)} 
+                        key={graphData.code} 
+                    />
+                ))}
             </div>
-            
             <DownloadButton />
             <InfoButton />
         </React.Fragment>
