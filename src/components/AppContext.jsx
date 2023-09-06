@@ -179,7 +179,40 @@ function AppContextProvider ({ children }) {
     };
     
     // Call API functions
-
+    const uploadFilePpi = async (inputElement) => {
+        const file = inputElement.files[0];
+    
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+        
+            try {
+                const response = await fetch("YOUR_ENDPOINT_URL", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                console.log(data); // esto guardaremos en el local storage
+            } catch (error) {
+                console.error("There was an error uploading the file:", error);
+            }
+        }
+    };
+    
+    
+    const IdPpi = async () => {
+        try {
+            const response = await fetch(`YOUR_ENDPOINT_URL/${ppiId}`, {
+                method: 'GET'
+            });
+            
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+      
     // Call LocalStorage functions
 
 
@@ -214,6 +247,7 @@ function AppContextProvider ({ children }) {
             setPpiId,
             setPpiCodLocalStorage,
             clearProteinFilter,
+            uploadFilePpi,
         }}>
             {children}
         </AppContext.Provider>

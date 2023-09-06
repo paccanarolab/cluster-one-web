@@ -5,8 +5,10 @@ import { RunFunctionButton } from "./RunFunctionButton.jsx";
 
 
 import "../styles/ExecuteBar.scss";
+import { AppContext } from "./AppContext.jsx";
 
 const ExecuteBar = ({ href, label }) => {
+    const { uploadFilePpi } = React.useContext(AppContext);
 	return (
 		<div className="config" id="config">
 			<div
@@ -68,7 +70,13 @@ const ExecuteBar = ({ href, label }) => {
 			<RunFunctionButton
 				label="Use your PPI"
 				icon="fa fa-upload"
-				onClickFunction={() => console.log("Explore PPI")}
+				onClickFunction={() => {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = '.csv, .txt';
+                    fileInput.onchange = () => uploadFilePpi(fileInput);
+                    fileInput.click();
+                }}
 				classname={"explorePpiButton"}
 			/>
             <ClusterFilter />
