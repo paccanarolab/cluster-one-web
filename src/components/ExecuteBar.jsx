@@ -8,8 +8,13 @@ import "../styles/ExecuteBar.scss";
 import { AppContext } from "./AppContext.jsx";
 
 const ExecuteBar = ({ href, label }) => {
-    const { uploadFilePpi } = React.useContext(AppContext);
-	return (
+    const { 
+        uploadFilePpi,
+        quickRunClusterOne,
+        ppiId
+    } = React.useContext(AppContext);
+	
+    return (
 		<div className="config" id="config">
 			<div
 				style={{
@@ -25,15 +30,6 @@ const ExecuteBar = ({ href, label }) => {
 					}}>
 					ClusterONE WEB
 				</span>
-				{/*<p style={
-                    {
-                        fontSize: "18px",
-                        marginBottom: "17px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }
-                }>Manipulation and Analysis clusters</p>*/}
 			</div>
             <div>
                 <p style={
@@ -51,7 +47,9 @@ const ExecuteBar = ({ href, label }) => {
 			<RunFunctionButton
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
-				onClickFunction={() => console.log("Quick Run ClusterONE")}
+				onClickFunction={() => {
+                    quickRunClusterOne(ppiId);
+                }}
 				classname={"runClusterOneButton"}
 			/>
 			<RunFunctionButton

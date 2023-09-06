@@ -161,7 +161,7 @@ function AppContextProvider ({ children }) {
     const [quantity, setQuantity] = React.useState("");
     const [externalWeight, setExternalWeight] = React.useState("");
     const [internalWeight, setInternalWeight] = React.useState("");
-    const [ppiId, setPpiId] = React.useState("");
+    const [ppiId, setPpiId] = React.useState("1");
     const [proteinId, setProteinId] = React.useState("");
     const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
 
@@ -192,12 +192,24 @@ function AppContextProvider ({ children }) {
                     body: formData,
                 });
                 const data = await response.json();
-                console.log(data); // esto guardaremos en el local storage
+                setPpiId(data.id); // esto guardaremos en el local storage
             } catch (error) {
                 console.error("There was an error uploading the file:", error);
             }
         }
     };
+
+    const quickRunClusterOne = async (ppi_id) => {
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
+                method: 'POST'
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
     
     
     const IdPpi = async () => {
@@ -248,6 +260,7 @@ function AppContextProvider ({ children }) {
             setPpiCodLocalStorage,
             clearProteinFilter,
             uploadFilePpi,
+            quickRunClusterOne,
         }}>
             {children}
         </AppContext.Provider>
