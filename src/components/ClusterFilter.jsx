@@ -1,14 +1,24 @@
 import React from "react";
 import "../styles/ClusterFilter.scss";
+import { AppContext } from "./AppContext.jsx";
 
 const ClusterFilter = () => {
 	// Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
-	const [clusterCode, setClusterCode] = React.useState("");
-	const [quantity, setQuantity] = React.useState("");
-	const [density, setDensity] = React.useState("");
-	const [size, setSize] = React.useState("");
-	const [externalWeight, setExternalWeight] = React.useState("");
-	const [internalWeight, setInternalWeight] = React.useState("");
+	const {
+		size,
+		setSize,
+		density,
+		setDensity,
+		quantity,
+		setQuantity,
+		externalWeight,
+		setExternalWeight,
+		internalWeight,
+		setInternalWeight,
+		clusterCode,
+		setClusterCode,
+        clearClusterFilter
+	} = React.useContext(AppContext);
 
 	const handleClusterCodeChange = (event) => {
 		setClusterCode(event.target.value);
@@ -43,14 +53,7 @@ const ClusterFilter = () => {
 			</div>
 			<button
 				style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
-				onClick={() => {
-					setSize("");
-					setDensity("");
-					setQuantity("");
-					setExternalWeight("");
-					setInternalWeight("");
-					setClusterCode("");
-				}}>
+				onClick={clearClusterFilter}>
 				Clear
 			</button>
 			<div style={{ display: "flex", width: "100%", gap: "5px" }}>

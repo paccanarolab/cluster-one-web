@@ -3,6 +3,7 @@ import { Layout } from "./Layout.jsx";
 import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
 
+
 import "../styles/ExecuteBar.scss";
 
 const ExecuteBar = ({ href, label }) => {
@@ -10,8 +11,8 @@ const ExecuteBar = ({ href, label }) => {
 		<div className="config" id="config">
 			<div
 				style={{
-					fontSize: "18px",
-					marginBottom: "15px"
+					fontSize: "20px",
+					marginBottom: "17px"
 				}}>
 				{/* Centrar el titulo */}
 				<span
@@ -22,14 +23,32 @@ const ExecuteBar = ({ href, label }) => {
 					}}>
 					ClusterONE WEB
 				</span>
-				<p>Manipulation and Analysis clusters</p>
+				{/*<p style={
+                    {
+                        fontSize: "18px",
+                        marginBottom: "17px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }
+                }>Manipulation and Analysis clusters</p>*/}
 			</div>
-			<Layout classname="config-dropdown" />
+            <div>
+                <p style={
+                    {
+                        fontSize: "18px",
+                        marginBottom: "17px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }
+                }>Select Layout</p>
+                <Layout classname="config-dropdown" />
+            </div>
 			<ClusterFilter />
-
 			<RunFunctionButton
 				label="Quick Run ClusterONE"
-				icon="fa fa-play"
+				icon="fa fa-forward"
 				onClickFunction={() => console.log("Quick Run ClusterONE")}
 				classname={"runClusterOneButton"}
 			/>
