@@ -68,7 +68,7 @@ function AppContextProvider ({ children }) {
         nodeDimensionsIncludeLabels: false
     };
     
-    const initialstyleSheet = [
+    const stylesheet = [
         {
             selector: "node",
             style: {
@@ -156,7 +156,6 @@ function AppContextProvider ({ children }) {
     const [height, setHeight] = React.useState("760px");
     const [graphList, setGraphList] = React.useState([initialGraphData, exampleGraphData]);
     const [layout, setLayout] = React.useState(initiallayout);
-    const [stylesheet, setStylesheet] = React.useState(initialstyleSheet);
     const [size, setSize] = React.useState("");
     const [density, setDensity] = React.useState("");
     const [quantity, setQuantity] = React.useState("");
@@ -215,7 +214,6 @@ function AppContextProvider ({ children }) {
             setPpiId,
             setPpiCodLocalStorage,
             clearProteinFilter,
-            setStylesheet,
         }}>
             {children}
         </AppContext.Provider>

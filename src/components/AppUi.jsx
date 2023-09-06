@@ -15,13 +15,12 @@ const AppUi = () => {
         width, 
         height,
         layout, 
-        styleSheet, 
+        stylesheet, 
         paccaLabImage,
         fundacionImage,
         clusterOneManual,
         graphList
     } = React.useContext(AppContext);
-    console.log("AppContext", AppContext);
     let myCyRef; 
     return (
         <React.Fragment>
@@ -62,7 +61,7 @@ const AppUi = () => {
                         autounselectify={false}
                         boxSelectionEnabled={true}
                         layout={layout}
-                        stylesheet={styleSheet}
+                        stylesheet={stylesheet}
                         cy={
                             cy => {
                                 myCyRef = cy;
