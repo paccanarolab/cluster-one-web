@@ -22,14 +22,11 @@ const ClusterFilter = () => {
 	
 	const validateClusterFilter = (excludeIndex) => {
 		const params = [quantity, density, size, externalWeight, internalWeight];
-		console.log("params before", params);
 		// Si excludeIndex es un número válido, eliminamos el elemento en esa posición
 		if (typeof excludeIndex === 'number' && excludeIndex >= 0 && excludeIndex < params.length) {
 		  params.splice(excludeIndex, 1);
 		}
 		// Verificar que todos los elementos restantes cumplen con la condición
-		console.log("params after", params);
-		console.log("params.every", params.every(param => param && param !== "0" && param !== 0));
 		return params.every(param => param && param !== "0" && param !== 0);
 	};
 	

@@ -48,6 +48,7 @@ const ExecuteBar = ({ href, label }) => {
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
 				onClickFunction={() => {
+                    console.log("Quick Run ClusterONE");
                     quickRunClusterOne(ppiId);
                 }}
 				classname={"runClusterOneButton"}
