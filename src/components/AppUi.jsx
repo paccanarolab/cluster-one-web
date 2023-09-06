@@ -65,7 +65,7 @@ const AppUi = () => {
                         cy={
                             cy => {
                                 myCyRef = cy;
-                                console.log("CY object", cy);
+                                // cuando hacemos click en un nodo, se imprime en consola el nodo y su tipo
                                 cy.on("tap", "node", evt => {
                                     var node = evt.target;
                                     console.log("EVT", evt);
