@@ -1,3 +1,16 @@
+.complex {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    padding: 10px;
+    /* Espaciado estándar */
+    margin: 10px 0;
+    /* Espaciado estándar */
+    transition: all 0.3s ease;
+    /* Transición suave para los efectos hover y active */
+}
+
 /* Título para el filtro complejo */
 .complex-title {
     font-size: 1.5em;

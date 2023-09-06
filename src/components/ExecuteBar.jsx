@@ -45,7 +45,7 @@ const ExecuteBar = ({ href, label }) => {
                 }>Select Layout</p>
                 <Layout classname="config-dropdown" />
             </div>
-			<ClusterFilter />
+			
 			<RunFunctionButton
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
@@ -71,6 +71,7 @@ const ExecuteBar = ({ href, label }) => {
 				onClickFunction={() => console.log("Explore PPI")}
 				classname={"explorePpiButton"}
 			/>
+            <ClusterFilter />
 			<a href={href} className="config-link">
 				{label}
 			</a>
