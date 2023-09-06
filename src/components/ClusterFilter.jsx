@@ -3,42 +3,166 @@ import "../styles/ClusterFilter.scss";
 import { AppContext } from "./AppContext.jsx";
 
 const ClusterFilter = () => {
-	// Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
 	const {
 		size,
-		setSize,
 		density,
-		setDensity,
 		quantity,
-		setQuantity,
 		externalWeight,
-		setExternalWeight,
 		internalWeight,
+		graphList,
+		setSize,
+		setDensity,
+		setQuantity,
+		setExternalWeight,
 		setInternalWeight,
-		clusterCode,
-		setClusterCode,
-        clearClusterFilter
+        clearClusterFilter,
+		setGraphList,
 	} = React.useContext(AppContext);
 
-	const handleClusterCodeChange = (event) => {
-		setClusterCode(event.target.value);
+	
+	const validateClusterFilter = (excludeIndex) => {
+		const params = [quantity, density, size, externalWeight, internalWeight];
+		console.log("params before", params);
+		// Si excludeIndex es un número válido, eliminamos el elemento en esa posición
+		if (typeof excludeIndex === 'number' && excludeIndex >= 0 && excludeIndex < params.length) {
+		  params.splice(excludeIndex, 1);
+		}
+		// Verificar que todos los elementos restantes cumplen con la condición
+		console.log("params after", params);
+		console.log("params.every", params.every(param => param && param !== "0" && param !== 0));
+		return params.every(param => param && param !== "0" && param !== 0);
 	};
+	
+	// Tengo que ver la forma de persistir la lista de grafos
+	const handleClusterCodeChange = (event) => {
+		setGraphList([JSON.parse(event.target.value)]);
+	};
+	  		
 	const handleQuantityChange = (event) => {
 		setQuantity(event.target.value);
-	};
-	const handleDensityChange = (event) => {
-		setDensity(event.target.value);
-	};
-	const handleSizeChange = (event) => {
-		setSize(event.target.value);
-	};
-	const handleExternalWeightChange = (event) => {
-		setExternalWeight(event.target.value);
-	};
-	const handleInternalWeightChange = (event) => {
-		setInternalWeight(event.target.value);
+		if (!validateClusterFilter(0)){
+			setGraphList(graphList);
+		}else{
+			console.log("Podemos filtrar por cantidad");
+			let auxfilter = graphList.filter(
+				(graphData) => {
+					graphData.quantity === event.target.value 
+					&& graphData.density === density 
+					&& graphData.size === size
+					&& graphData.externalWeight === externalWeight
+					&& graphData.internalWeight === internalWeight
+				}
+			);
+			if (auxfilter.length === 0 || auxfilter === undefined) {
+				console.log("No hay grafos con esos parametros");
+				setGraphList(graphList);
+			}else{
+				console.log("Hay grafos con esos parametros");
+				setGraphList(auxfilter);
+			}
+		}
 	};
 
+	const handleDensityChange = (event) => {
+		setDensity(event.target.value);
+		if (!validateClusterFilter(1)){
+			setGraphList(graphList);
+		}else{
+			console.log("Podemos filtrar por densidad");
+			let auxfilter = graphList.filter(
+				(graphData) => {
+					graphData.density === event.target.value 
+					&& graphData.quantity === quantity 
+					&& graphData.size === size
+					&& graphData.externalWeight === externalWeight
+					&& graphData.internalWeight === internalWeight
+				}
+			);
+			if (auxfilter.length === 0 || auxfilter === undefined) {
+				console.log("No hay grafos con esos parametros");
+				setGraphList(graphList);
+			}else{
+				console.log("Hay grafos con esos parametros");
+				setGraphList(auxfilter);
+			}
+		}
+	};
+
+	const handleSizeChange = (event) => {
+		setSize(event.target.value);
+		if (!validateClusterFilter(2)){
+			setGraphList(graphList);
+		}else{
+			console.log("Podemos filtrar por size");
+			let auxfilter = graphList.filter(
+				(graphData) => {
+					graphData.size === event.target.value 
+					&& graphData.quantity === quantity 
+					&& graphData.density === density
+					&& graphData.externalWeight === externalWeight
+					&& graphData.internalWeight === internalWeight
+				}
+			);
+			if (auxfilter.length === 0 || auxfilter === undefined) {
+				console.log("No hay grafos con esos parametros");
+				setGraphList(graphList);
+			}else{
+				console.log("Hay grafos con esos parametros");
+				setGraphList(auxfilter);
+			}
+		}
+	};
+
+	const handleExternalWeightChange = (event) => {
+		setExternalWeight(event.target.value);
+		if (!validateClusterFilter(3)){
+			setGraphList(graphList);
+		}else{
+			console.log("Podemos filtrar por externalWeight");
+			let auxfilter = graphList.filter(
+				(graphData) => {
+					graphData.externalWeight === event.target.value 
+					&& graphData.quantity === quantity 
+					&& graphData.density === density
+					&& graphData.size === size
+					&& graphData.internalWeight === internalWeight
+				}
+			);
+			if (auxfilter.length === 0 || auxfilter === undefined) {
+				console.log("No hay grafos con esos parametros");
+				setGraphList(graphList);
+			}else{
+				console.log("Hay grafos con esos parametros");
+				setGraphList(auxfilter);
+			}
+		}
+	};
+
+	const handleInternalWeightChange = (event) => {
+		setInternalWeight(event.target.value);
+		if (!validateClusterFilter(4)){
+			setGraphList(graphList);
+		}else{
+			console.log("Podemos filtrar por internalWeight");
+			let auxfilter = graphList.filter(
+				(graphData) => {
+					graphData.internalWeight === event.target.value 
+					&& graphData.quantity === quantity 
+					&& graphData.density === density
+					&& graphData.size === size
+					&& graphData.externalWeight === externalWeight
+				}
+			);
+			if (auxfilter.length === 0 || auxfilter === undefined) {
+				console.log("No hay grafos con esos parametros");
+				setGraphList(graphList);
+			}else{
+				console.log("Hay grafos con esos parametros");
+				setGraphList(auxfilter);
+			}
+		}
+	};
+	
 	return (
 		<div className="complex" id="cfilter">
 			<div
@@ -102,15 +226,16 @@ const ClusterFilter = () => {
 			/>
 
 			<select
-				value={clusterCode}
 				onChange={handleClusterCodeChange}
 				style={{ marginBottom: "15px", width: "100%" }}
-				className="config-dropdown">
-				<option value="layout1">CODE 1</option>
-				<option value="layout2">CODE 2</option>
-				<option value="layout3">CODE 3</option>
-				<option value="layout4">CODE 5</option>
-				{/* Puedes agregar más opciones si lo necesitas */}
+				className="config-dropdown"
+			>
+				{graphList.map((graphData, index) => (
+					console.log("graphData", graphData),
+					<option key={index} value={JSON.stringify(graphData)}>
+						{graphData.code}
+					</option>
+				))}
 			</select>
 		</div>
 	);
