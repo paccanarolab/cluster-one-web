@@ -1,12 +1,6 @@
 import React from "react";
 
 
-
-const initialGraphData = {
-    nodes: [], 
-    edges: []
-};
-
 const exampleGraphData = {
     nodes: [
     { data: { id: "1", label: "IP 1", type: "ip" } },
@@ -48,101 +42,98 @@ const exampleGraphData = {
     {
         data: { source: "3", target: "13", label: " 3 -> 13" }
     }
-    ]
+    ],
+    code: "COMPLEJO 1",
+    size: 13,
+    density: "2",
+    quantity: 13,
+    externalWeight: "5",
+    internalWeight: "6"
 };
-
-const initiallayout = {
-    name: "random",
-    fit: true,
-    // circle: true,
-    directed: true,
-    padding: 50,
-    // spacingFactor: 1.5,
-    animate: true,
-    animationDuration: 1000,
-    avoidOverlap: true,
-    nodeDimensionsIncludeLabels: false
-};
-
-const initialstyleSheet = [
-    {
-        selector: "node",
-        style: {
-            backgroundColor: "#4a56a6",
-            width: 30,
-            height: 30,
-            label: "data(label)",
-
-            // "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-            // "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-            // "text-valign": "center",
-            // "text-halign": "center",
-            "overlay-padding": "6px",
-            "z-index": "10",
-            //text props
-            "text-outline-color": "#4a56a6",
-            "text-outline-width": "2px",
-            color: "white",
-            fontSize: 20
-        }
-    },
-    {
-        selector: "node:selected",
-        style: {
-            "border-width": "6px",
-            "border-color": "#AAD8FF",
-            "border-opacity": "0.5",
-            "background-color": "#77828C",
-            width: 50,
-            height: 50,
-            //text props
-            "text-outline-color": "#77828C",
-            "text-outline-width": 8
-        }
-    },
-    {
-        selector: "node[type='device']",
-        style: {
-            shape: "rectangle"
-        }
-    },
-    {
-        selector: "edge",
-        style: {
-            width: 3,
-            // "line-color": "#6774cb",
-            "line-color": "#AAD8FF",
-            // "target-arrow-color": "#6774cb",
-            // "target-arrow-shape": "triangle",
-            "curve-style": "bezier"
-        }
-    }
-];
-
-
-
 
 const AppContext = React.createContext();
 
 function AppContextProvider ({ children }) {
-    // Call API and chanche the state
-    // Call LocalStorage and chanche the state
-    const [width, setWith] = React.useState("100%");
-    const [height, setHeight] = React.useState("760px");
-    const [graphData, setGraphData] = React.useState(exampleGraphData);
-    const [layout, setLayout] = React.useState(initiallayout);
-    const [size, setSize] = React.useState(0);
-    const [density, setDensity] = React.useState(0);
-    const [quantity, setQuantity] = React.useState(0);
-    const [externalWeight, setExternalWeight] = React.useState(0);
-    const [internalWeight, setInternalWeight] = React.useState(0);
-    const [complex, setComplex] = React.useState(0);
-    const [ppiId, setPpiId] = React.useState(0);
-    const [proteinId, setProteinId] = React.useState(0);
-    const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState(0);
-    const [proteinCodLocalStorage, setProteinCodLocalStorage] = React.useState(0);
-    const [stylesheet, setStylesheet] = React.useState(initialstyleSheet);
-
+    // Constants and initial values
+    const initiallayout = {
+        name: "random",
+        fit: true,
+        // circle: true,
+        directed: true,
+        padding: 50,
+        // spacingFactor: 1.5,
+        animate: true,
+        animationDuration: 1000,
+        avoidOverlap: true,
+        nodeDimensionsIncludeLabels: false
+    };
+    
+    const initialstyleSheet = [
+        {
+            selector: "node",
+            style: {
+                backgroundColor: "#4a56a6",
+                width: 30,
+                height: 30,
+                label: "data(label)",
+    
+                // "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+                // "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
+                // "text-valign": "center",
+                // "text-halign": "center",
+                "overlay-padding": "6px",
+                "z-index": "10",
+                //text props
+                "text-outline-color": "#4a56a6",
+                "text-outline-width": "2px",
+                color: "white",
+                fontSize: 20
+            }
+        },
+        {
+            selector: "node:selected",
+            style: {
+                "border-width": "6px",
+                "border-color": "#AAD8FF",
+                "border-opacity": "0.5",
+                "background-color": "#77828C",
+                width: 50,
+                height: 50,
+                //text props
+                "text-outline-color": "#77828C",
+                "text-outline-width": 8
+            }
+        },
+        {
+            selector: "node[type='device']",
+            style: {
+                shape: "rectangle"
+            }
+        },
+        {
+            selector: "edge",
+            style: {
+                width: 3,
+                // "line-color": "#6774cb",
+                "line-color": "#AAD8FF",
+                // "target-arrow-color": "#6774cb",
+                // "target-arrow-shape": "triangle",
+                "curve-style": "bezier"
+            }
+        }
+    ];
+    
+    const initialGraphData = {
+        nodes: [], 
+        edges: [],
+        code: "",
+        size: "",
+        density: "",
+        quantity: "",
+        externalWeight: "",
+        internalWeight: ""
+    };
+    
     const paccaLabImage = {
         image: "https://paccanarolab.org/wp-content/uploads/2023/02/Logo-v2.png",
         url: "https://www.paccanarolab.org/",
@@ -160,50 +151,71 @@ function AppContextProvider ({ children }) {
         label: "ClusterONE Manual"
     };
 
-    
+    // States
+    const [width, setWith] = React.useState("100%");
+    const [height, setHeight] = React.useState("760px");
+    const [graphList, setGraphList] = React.useState([initialGraphData, exampleGraphData]);
+    const [layout, setLayout] = React.useState(initiallayout);
+    const [stylesheet, setStylesheet] = React.useState(initialstyleSheet);
+    const [size, setSize] = React.useState("");
+    const [density, setDensity] = React.useState("");
+    const [quantity, setQuantity] = React.useState("");
+    const [externalWeight, setExternalWeight] = React.useState("");
+    const [internalWeight, setInternalWeight] = React.useState("");
+    const [ppiId, setPpiId] = React.useState("");
+    const [proteinId, setProteinId] = React.useState("");
+    const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
+
+    // Clear functions
     const clearClusterFilter = () => {
         setSize("");
         setDensity("");
         setQuantity("");
         setExternalWeight("");
         setInternalWeight("");
-        setComplex("");
     };
-    
+
     const clearProteinFilter = () => {
-        setProteinCodLocalStorage("");
         setProteinId("");
     };
-    // debo agregar la logica de cambios de estado combinando los parametros de la API y el LocalStorage
+    
+    // Call API functions
+
+    // Call LocalStorage functions
+
+
     return (
         <AppContext.Provider value={{
             width,
-            setWith,
             height,
-            setHeight,
-            graphData,
-            setGraphData,
+            graphList,
             layout,
-            setLayout,
             size,
             density,
             quantity,
             externalWeight,
             internalWeight,
-            complex,
-            clearClusterFilter,
             ppiId,
-            setPpiId,
             proteinId,
             ppiCodLocalStorage,
-            setPpiCodLocalStorage,
-            proteinCodLocalStorage,
-            clearProteinFilter,
             stylesheet,
-            setStylesheet,
             paccaLabImage,
             fundacionImage,
-            clusterOneManual
+            clusterOneManual,
+            setWith,
+            setHeight,
+            setGraphList,
+            setLayout,
+            setSize,
+            setDensity,
+            setQuantity,
+            setExternalWeight,
+            setInternalWeight,
+            clearClusterFilter,
+            setPpiId,
+            setPpiCodLocalStorage,
+            clearProteinFilter,
+            setStylesheet,
         }}>
             {children}
         </AppContext.Provider>
