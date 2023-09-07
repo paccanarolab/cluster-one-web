@@ -6,6 +6,7 @@ import { LabImage } from "./LabImage.jsx";
 import { ProteinFilter } from "./ProteinFilter.jsx";
 import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
+import { Loading } from "./Loading.jsx";
 
 import "../styles/global.scss"
 
@@ -19,9 +20,10 @@ const AppUi = () => {
         paccaLabImage,
         fundacionImage,
         clusterOneManual,
-        graphList
+        cyGraph,
+        loading,
     } = React.useContext(AppContext);
-    let myCyRef; 
+    let myCyRef;
     return (
         <React.Fragment>
             <ProteinFilter />
@@ -48,37 +50,40 @@ const AppUi = () => {
                 left: "0px",
                 backgroundColor: "white"
             }}>
-                {graphList.map((graphData) => (
-                    <CytoscapeComponent
-                        elements={
-                            CytoscapeComponent.normalizeElements(graphData)
-                        }
-                        // pan={{ x: 200, y: 200 }}
-                        style={{ width: width, height: height }}
-                        zoomingEnabled={true}
-                        maxZoom={3}
-                        minZoom={0.1}
-                        autounselectify={false}
-                        boxSelectionEnabled={true}
-                        layout={layout}
-                        stylesheet={stylesheet}
-                        cy={
-                            cy => {
-                                myCyRef = cy;
-                                // cuando hacemos click en un nodo, se imprime en consola el nodo y su tipo
-                                cy.on("tap", "node", evt => {
-                                    var node = evt.target;
-                                    console.log("EVT", evt);
-                                    console.log("TARGET", node.data());
-                                    console.log("TARGET TYPE", typeof node[0]);
+                <CytoscapeComponent
+                    elements={
+                        CytoscapeComponent.normalizeElements(cyGraph)
+                    }
+                    pan={{ x: 100, y: 100 }}
+                    style={{ width: width, height: height}}
+                    zoomingEnabled={true}
+                    maxZoom={3}
+                    minZoom={0.1}
+                    autounselectify={false}
+                    boxSelectionEnabled={true}
+                    layout={layout}
+                    stylesheet={stylesheet}
+                    cy={
+                        cy => {
+                            myCyRef = cy;
+                            // cuando hacemos click en un nodo, se imprime en consola el nodo y su tipo
+                            cy.on("tap", "node", evt => {
+                                var node = evt.target;
+                                // double click and zoom in
+                                node.on("dblclick", function(evt) {
+                                    console.log("double click");
+                                    cy.zoom({
+                                        level: 2,
+                                        position: { x: 100, y: 100 }
+                                    });
                                 });
-                                }
-                        }
-                        abc={console.log("myCyRef", myCyRef)} 
-                        key={graphData.code} 
-                    />
-                ))}
+                            });
+                            }
+                    }
+                    abc={console.log("myCyRef", myCyRef)} 
+                />
             </div>
+            {loading && <Loading />}
             <DownloadButton />
             <InfoButton />
         </React.Fragment>

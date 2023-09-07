@@ -11,7 +11,8 @@ const ExecuteBar = ({ href, label }) => {
     const { 
         uploadFilePpi,
         quickRunClusterOne,
-        ppiId
+        ppiId,
+		setLoading,
     } = React.useContext(AppContext);
 	
     return (
@@ -49,21 +50,27 @@ const ExecuteBar = ({ href, label }) => {
 				icon="fa fa-forward"
 				onClickFunction={() => {
                     console.log("Quick Run ClusterONE");
-                    quickRunClusterOne(ppiId);
+                    setLoading(true);
+                    quickRunClusterOne(ppiId); 
                 }}
 				classname={"runClusterOneButton"}
 			/>
 			<RunFunctionButton
 				label="Run ClusterONE"
 				icon="fa fa-play"
-				onClickFunction={() => console.log("Run ClusterONE")}
+				onClickFunction={() => {
+                    setLoading(true);
+                    console.log("Run ClusterONE")
+                }}
 				classname={"runClusterOneButton"}
 			/>
 
 			<RunFunctionButton
 				label="Select our PPI"
 				icon="fa fa-search"
-				onClickFunction={() => console.log("Explore PPI")}
+				onClickFunction={
+                    () => console.log("Explore PPI")
+                }
 				classname={"explorePpiButton"}
 			/>
 			<RunFunctionButton
