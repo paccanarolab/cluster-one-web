@@ -103,9 +103,11 @@ function AppContextProvider ({ children }) {
     // States
     const [width, setWith] = React.useState("100%");
     const [height, setHeight] = React.useState("760px");
-    const [graphList, setGraphList] = React.useState([initialGraphData]); // Cluster List
-    const [ppiList, setPpiList] = React.useState([]);
+    const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
+    const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
+    const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
     const [layout, setLayout] = React.useState(initiallayout);
+    const [loading, setLoading] = React.useState(false); // Loading state
     const [size, setSize] = React.useState("");
     const [density, setDensity] = React.useState("");
     const [quantity, setQuantity] = React.useState("");
@@ -156,9 +158,12 @@ function AppContextProvider ({ children }) {
                 method: 'POST'
             });
             const data = await response.json();
-            setGraphList(data);
+            setComplexList(data);
+            setCyGraph(data[0]);
+            setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
+            setLoading(false);
         }
     }
     
@@ -199,7 +204,7 @@ function AppContextProvider ({ children }) {
         <AppContext.Provider value={{
             width,
             height,
-            graphList,
+            cyGraph,
             layout,
             size,
             density,
@@ -213,9 +218,11 @@ function AppContextProvider ({ children }) {
             paccaLabImage,
             fundacionImage,
             clusterOneManual,
+            ppiList,
+            complexList,
+            loading,
             setWith,
             setHeight,
-            setGraphList,
             setLayout,
             setSize,
             setDensity,
@@ -230,6 +237,8 @@ function AppContextProvider ({ children }) {
             quickRunClusterOne,
             getAllPpi,
             getProteinDataByCluster,
+            setCyGraph,
+            setLoading,
         }}>
             {children}
         </AppContext.Provider>
