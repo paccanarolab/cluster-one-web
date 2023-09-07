@@ -37,6 +37,7 @@
     "cytoscape": "^3.23.0",
     "cytoscape-cola": "^2.5.1",
     "dotenv-webpack": "^8.0.1",
+    "framer-motion": "^10.16.4",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",

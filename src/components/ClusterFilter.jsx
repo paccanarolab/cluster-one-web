@@ -9,42 +9,37 @@ const ClusterFilter = () => {
 		quantity,
 		externalWeight,
 		internalWeight,
-		graphList,
+		complexList,
 		setSize,
 		setDensity,
 		setQuantity,
 		setExternalWeight,
 		setInternalWeight,
         clearClusterFilter,
-		setGraphList,
+		setCyGraph,
+		cyGraph,
 	} = React.useContext(AppContext);
 
 	
 	const validateClusterFilter = (excludeIndex) => {
 		const params = [quantity, density, size, externalWeight, internalWeight];
-		console.log("params before", params);
 		// Si excludeIndex es un número válido, eliminamos el elemento en esa posición
 		if (typeof excludeIndex === 'number' && excludeIndex >= 0 && excludeIndex < params.length) {
 		  params.splice(excludeIndex, 1);
 		}
 		// Verificar que todos los elementos restantes cumplen con la condición
-		console.log("params after", params);
-		console.log("params.every", params.every(param => param && param !== "0" && param !== 0));
 		return params.every(param => param && param !== "0" && param !== 0);
 	};
 	
 	// Tengo que ver la forma de persistir la lista de grafos
 	const handleClusterCodeChange = (event) => {
-		setGraphList([JSON.parse(event.target.value)]);
+		setCyGraph(JSON.parse(event.target.value));
 	};
 	  		
 	const handleQuantityChange = (event) => {
 		setQuantity(event.target.value);
-		if (!validateClusterFilter(0)){
-			setGraphList(graphList);
-		}else{
-			console.log("Podemos filtrar por cantidad");
-			let auxfilter = graphList.filter(
+		setTimeout(() => {
+			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.quantity === event.target.value 
 					&& graphData.density === density 
@@ -54,47 +49,40 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
-				setGraphList(graphList);
+				window.alert("COMPLEX Not Found");
+				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
-				setGraphList(auxfilter);
+				setCyGraph(auxfilter[0]);
 			}
-		}
-	};
+		}, 1000);
+};
 
 	const handleDensityChange = (event) => {
 		setDensity(event.target.value);
-		if (!validateClusterFilter(1)){
-			setGraphList(graphList);
-		}else{
-			console.log("Podemos filtrar por densidad");
-			let auxfilter = graphList.filter(
+		setTimeout(() => {
+			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.density === event.target.value 
-					&& graphData.quantity === quantity 
+					graphData.density === event.target.value
+					&& graphData.quantity === quantity
 					&& graphData.size === size
 					&& graphData.externalWeight === externalWeight
 					&& graphData.internalWeight === internalWeight
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
-				setGraphList(graphList);
+				window.alert("COMPLEX Not Found");
+				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
-				setGraphList(auxfilter);
+				setCyGraph(auxfilter[0]);
 			}
-		}
+		}, 1000);
 	};
+
 
 	const handleSizeChange = (event) => {
 		setSize(event.target.value);
-		if (!validateClusterFilter(2)){
-			setGraphList(graphList);
-		}else{
-			console.log("Podemos filtrar por size");
-			let auxfilter = graphList.filter(
+		setTimeout(() => {
+			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.size === event.target.value 
 					&& graphData.quantity === quantity 
@@ -104,22 +92,18 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
-				setGraphList(graphList);
+				window.alert("COMPLEX Not Found");
+				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
-				setGraphList(auxfilter);
+				setCyGraph(auxfilter[0]);
 			}
-		}
+		}, 1000);
 	};
 
 	const handleExternalWeightChange = (event) => {
 		setExternalWeight(event.target.value);
-		if (!validateClusterFilter(3)){
-			setGraphList(graphList);
-		}else{
-			console.log("Podemos filtrar por externalWeight");
-			let auxfilter = graphList.filter(
+		setTimeout(() => {
+			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.externalWeight === event.target.value 
 					&& graphData.quantity === quantity 
@@ -129,22 +113,19 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
-				setGraphList(graphList);
+				window.alert("COMPLEX Not Found");
+				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
-				setGraphList(auxfilter);
+				setCyGraph(auxfilter[0]);
 			}
 		}
+		, 1000);
 	};
 
 	const handleInternalWeightChange = (event) => {
 		setInternalWeight(event.target.value);
-		if (!validateClusterFilter(4)){
-			setGraphList(graphList);
-		}else{
-			console.log("Podemos filtrar por internalWeight");
-			let auxfilter = graphList.filter(
+		setTimeout(() => {
+			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.internalWeight === event.target.value 
 					&& graphData.quantity === quantity 
@@ -154,13 +135,13 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
-				setGraphList(graphList);
+				window.alert("COMPLEX Not Found");
+				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
-				setGraphList(auxfilter);
+				setCyGraph(auxfilter[0]);
 			}
 		}
+		, 1000);
 	};
 	
 	return (
@@ -175,11 +156,17 @@ const ClusterFilter = () => {
 				}}>
 				Complex Filter
 			</div>
-			<button
-				style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
-				onClick={clearClusterFilter}>
-				Clear
-			</button>
+			<select
+				onChange={handleClusterCodeChange}
+				style={{ marginBottom: "15px", width: "100%" }}
+				className="config-dropdown"
+			>
+				{complexList.map((graphData, index) => (
+					<option key={index} value={JSON.stringify(graphData)}>
+						{graphData.code ? ("COMPLEX - " + graphData.code) : "NO COMPLEX"}
+					</option>
+				))}
+			</select>
 			<div style={{ display: "flex", width: "100%", gap: "5px" }}>
 				<input
 					type="number"
@@ -225,18 +212,13 @@ const ClusterFilter = () => {
 				onChange={handleInternalWeightChange}
 			/>
 
-			<select
-				onChange={handleClusterCodeChange}
-				style={{ marginBottom: "15px", width: "100%" }}
-				className="config-dropdown"
-			>
-				{graphList.map((graphData, index) => (
-					console.log("graphData", graphData),
-					<option key={index} value={JSON.stringify(graphData)}>
-						{graphData.code}
-					</option>
-				))}
-			</select>
+			
+
+			<button
+				style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
+				onClick={clearClusterFilter}>
+				Clear
+			</button>
 		</div>
 	);
 };

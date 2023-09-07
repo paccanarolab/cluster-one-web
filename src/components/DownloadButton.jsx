@@ -1,10 +1,13 @@
 import React from 'react';
+import { AppContext } from "./AppContext.jsx";
 import "../styles/DownloadButton.scss";
-const DownloadButton = ({ cluster_id }) => {
 
+
+const DownloadButton = () => {
+    const { cyGraph, ppiId } = React.useContext(AppContext);
     const downloadFile = async () => {
         try {
-            const response = await fetch(`YOUR_ENDPOINT_URL/${cluster_id}`, {
+            const response = await fetch(`http://localhost:8203/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`, {
                 method: 'GET'
             });
             
@@ -13,7 +16,7 @@ const DownloadButton = ({ cluster_id }) => {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'filename.csv';  // Puedes ajustar el nombre del archivo aquí
+            a.download = `clustersOne_results_by_ppi_${ppiId}.csv`;  // Puedes ajustar el nombre del archivo aquí
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
