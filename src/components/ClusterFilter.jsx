@@ -184,7 +184,7 @@ const ClusterFilter = () => {
 			>
 				{complexList.map((graphData, index) => (
 					<option key={index} value={JSON.stringify(graphData)}>
-						COMPLEX - {graphData.code}
+						{graphData.code ? ("COMPLEX - " + graphData.code) : "NO COMPLEX"}
 					</option>
 				))}
 			</select>

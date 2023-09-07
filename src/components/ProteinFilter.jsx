@@ -1,26 +1,42 @@
 import React from "react";
+import { AppContext } from "./AppContext.jsx";
 import "../styles/ProteinFilter.scss";
 
 const ProteinFilter = () => {
     // Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
-    const [proteinsName, setProteinsName] = React.useState('');
+    const {
+        complexProteinList,
+        showComplexList,
+        setProteinId
+    } = React.useContext(AppContext);
+    
     const handleProteinChange = (event) => {
-        setProteinsName(event.target.value);
+        if (event.target.value === "0") {
+            return;
+        }
+        setProteinId(event.target.value);
     }
+    
     return (
         <div className={"proteinContainer"}>
             <label htmlFor="proteinSelect" className={"proteinLabel"}>Protein:</label>
             <select 
-                id="proteinSelect" 
-                value={proteinsName} 
+                id="proteinSelect"
                 onChange={handleProteinChange} 
                 className={"proteinDropdown"}
             >
-                <option value="PROTEIN1">PROTEIN 1</option>
-                <option value="PROTEIN2">PROTEIN 2</option>
-                <option value="PROTEIN3">PROTEIN 3</option>
-                <option value="PROTEIN4">PROTEIN 4</option>
-                {/* Tus opciones aquí */}
+                {
+                    showComplexList ?
+                        complexProteinList.map((protein) => (
+                            <option value={protein.id} key={protein.id}>
+                                {protein.name}
+                            </option>
+                        ))
+                    :
+                        <option value={0} key={0}>
+                            NO PROTEINS
+                        </option>
+                }
             </select>
         </div>
     );

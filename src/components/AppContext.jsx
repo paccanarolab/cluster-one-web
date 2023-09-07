@@ -82,6 +82,13 @@ function AppContextProvider ({ children }) {
         externalWeight: "",
         internalWeight: ""
     };
+    const initialProteinData = {
+        id: 32,
+        name: "YIR010W",
+        description: "Automatic node created from PPI file",
+        url_info: "www.ebi.ac.uk/proteins/api/proteins/YIR010W",
+        score: 0.0
+    };
     
     const paccaLabImage = {
         image: "https://paccanarolab.org/wp-content/uploads/2023/02/Logo-v2.png",
@@ -104,8 +111,12 @@ function AppContextProvider ({ children }) {
     const [width, setWith] = React.useState("100%");
     const [height, setHeight] = React.useState("760px");
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
-    const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
+    const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
+    const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
+    const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
+    const [ppiId, setPpiId] = React.useState("2");
+    const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
     const [loading, setLoading] = React.useState(false); // Loading state
     const [size, setSize] = React.useState("");
@@ -113,8 +124,6 @@ function AppContextProvider ({ children }) {
     const [quantity, setQuantity] = React.useState("");
     const [externalWeight, setExternalWeight] = React.useState("");
     const [internalWeight, setInternalWeight] = React.useState("");
-    const [ppiId, setPpiId] = React.useState("2");
-    const [proteinId, setProteinId] = React.useState("");
     const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
 
     // Clear functions
@@ -184,20 +193,31 @@ function AppContextProvider ({ children }) {
     const getProteinDataByCluster = async (clusterId) => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`YOUR_ENDPOINT_URL/${clusterId}`, {
+            const response = await fetch(`http://localhost:8203/v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
 
             const data = await response.json();
-            console.log(data);
+            return data.proteins;
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
     }
 
 
-
-    // Call LocalStorage functions
+    // Use Effects
+    React.useEffect(() => {
+        if (cyGraph.code === "") {
+            return;
+        }
+        getProteinDataByCluster(cyGraph.code).then(
+            (data) => {
+                setComplexProteinList(data);
+                console.log("Protein List: ", data);
+            }
+        );
+        setShowComplexList(true);
+    }, [cyGraph]);
 
 
     return (
@@ -221,6 +241,8 @@ function AppContextProvider ({ children }) {
             ppiList,
             complexList,
             loading,
+            complexProteinList,
+            showComplexList,
             setWith,
             setHeight,
             setLayout,
