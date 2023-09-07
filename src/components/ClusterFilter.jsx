@@ -17,6 +17,7 @@ const ClusterFilter = () => {
 		setInternalWeight,
         clearClusterFilter,
 		setCyGraph,
+		cyGraph,
 	} = React.useContext(AppContext);
 
 	
@@ -37,11 +38,7 @@ const ClusterFilter = () => {
 	  		
 	const handleQuantityChange = (event) => {
 		setQuantity(event.target.value);
-		if (!validateClusterFilter(0)){
-			window.alert("No se puede filtrar por cantidad");
-			setCyGraph(complexList[0]);
-		}else{
-			console.log("Podemos filtrar por cantidad");
+		setTimeout(() => {
 			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.quantity === event.target.value 
@@ -52,48 +49,39 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
+				window.alert("COMPLEX Not Found");
 				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
 				setCyGraph(auxfilter[0]);
 			}
-		}
-	};
+		}, 1000);
+};
 
 	const handleDensityChange = (event) => {
 		setDensity(event.target.value);
-		if (!validateClusterFilter(1)){
-			window.alert("No se puede filtrar por densidad");
-			setCyGraph(complexList[0]);
-		}else{
-			console.log("Podemos filtrar por densidad");
+		setTimeout(() => {
 			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.density === event.target.value 
-					&& graphData.quantity === quantity 
+					graphData.density === event.target.value
+					&& graphData.quantity === quantity
 					&& graphData.size === size
 					&& graphData.externalWeight === externalWeight
 					&& graphData.internalWeight === internalWeight
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
+				window.alert("COMPLEX Not Found");
 				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
 				setCyGraph(auxfilter[0]);
 			}
-		}
+		}, 1000);
 	};
+
 
 	const handleSizeChange = (event) => {
 		setSize(event.target.value);
-		if (!validateClusterFilter(2)){
-			window.alert("No se puede filtrar por size");
-			setCyGraph(complexList[0]);
-		}else{
-			console.log("Podemos filtrar por size");
+		setTimeout(() => {
 			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.size === event.target.value 
@@ -104,22 +92,17 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
+				window.alert("COMPLEX Not Found");
 				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
 				setCyGraph(auxfilter[0]);
 			}
-		}
+		}, 1000);
 	};
 
 	const handleExternalWeightChange = (event) => {
 		setExternalWeight(event.target.value);
-		if (!validateClusterFilter(3)){
-			window.alert("No se puede filtrar por externalWeight");
-			setCyGraph(complexList[0]);
-		}else{
-			console.log("Podemos filtrar por externalWeight");
+		setTimeout(() => {
 			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.externalWeight === event.target.value 
@@ -130,22 +113,18 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
+				window.alert("COMPLEX Not Found");
 				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
 				setCyGraph(auxfilter[0]);
 			}
 		}
+		, 1000);
 	};
 
 	const handleInternalWeightChange = (event) => {
 		setInternalWeight(event.target.value);
-		if (!validateClusterFilter(4)){
-			window.alert("No se puede filtrar por internalWeight");
-			setCyGraph(complexList[0]);
-		}else{
-			console.log("Podemos filtrar por internalWeight");
+		setTimeout(() => {
 			let auxfilter = complexList.filter(
 				(graphData) => {
 					graphData.internalWeight === event.target.value 
@@ -156,13 +135,13 @@ const ClusterFilter = () => {
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				console.log("No hay grafos con esos parametros");
+				window.alert("COMPLEX Not Found");
 				setCyGraph(complexList[0]);
 			}else{
-				console.log("Hay grafos con esos parametros");
 				setCyGraph(auxfilter[0]);
 			}
 		}
+		, 1000);
 	};
 	
 	return (

@@ -54,11 +54,12 @@ const AppUi = () => {
                     elements={
                         CytoscapeComponent.normalizeElements(cyGraph)
                     }
-                    pan={{ x: 150, y: 100 }}
+                    pan={{ x: 0, y: 0 }}
                     style={{ width: width, height: height}}
                     zoomingEnabled={true}
                     maxZoom={3}
                     minZoom={0.1}
+                    zoom={1}
                     autounselectify={false}
                     boxSelectionEnabled={true}
                     layout={layout}
@@ -77,7 +78,7 @@ const AppUi = () => {
                                     });
                                 });
                                 node.on("click", function(evt) {
-                                    console.log("Node: ", node);
+                                    console.log("Node: ", node); //show node info
                                 });
                             });
                         }

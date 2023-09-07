@@ -14,7 +14,6 @@ function AppContextProvider ({ children }) {
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: false
     };
-    
     const stylesheet = [
         {
             selector: "node",
@@ -217,7 +216,7 @@ function AppContextProvider ({ children }) {
         );
         setShowComplexList(true);
     }, [cyGraph]);
-    
+
     React.useEffect(() => {
         if (proteinId === "" || cyEvent === "") {
             return;
@@ -236,6 +235,13 @@ function AppContextProvider ({ children }) {
         });
         cyEvent.center(node[0]);
     }, [proteinId]);
+
+    React.useEffect(() => {
+        if (cyGraph.code === "") {
+            return;
+        }
+        setLayout(initiallayout);
+    }, [cyGraph]);
 
 
     return (
