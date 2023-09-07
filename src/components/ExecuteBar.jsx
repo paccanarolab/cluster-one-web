@@ -86,6 +86,9 @@ const ExecuteBar = ({ href, label }) => {
 				classname={"explorePpiButton"}
 			/>
             <ClusterFilter />
+			<a className="config-ppi">
+				PPI ID SELECTED: {ppiId}
+			</a>
 			<a href={href} className="config-link">
 				{label}
 			</a>

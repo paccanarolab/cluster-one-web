@@ -5,12 +5,10 @@ const AppContext = React.createContext();
 function AppContextProvider ({ children }) {
     // Constants and initial values
     const initiallayout = {
-        name: "random",
+        name: "circle",
         fit: true,
-        // circle: true,
-        directed: true,
-        padding: 50,
-        // spacingFactor: 1.5,
+        padding: 30,
+        sort: function(a, b){ return a.degree() - b.degree(); },
         animate: true,
         animationDuration: 1000,
         avoidOverlap: true,
@@ -115,7 +113,8 @@ function AppContextProvider ({ children }) {
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
     const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
-    const [ppiId, setPpiId] = React.useState("2");
+    const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
+    const [ppiId, setPpiId] = React.useState("");
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
     const [loading, setLoading] = React.useState(false); // Loading state
@@ -218,6 +217,25 @@ function AppContextProvider ({ children }) {
         );
         setShowComplexList(true);
     }, [cyGraph]);
+    
+    React.useEffect(() => {
+        if (proteinId === "" || cyEvent === "") {
+            return;
+        }
+        console.log("Protein ID: ", proteinId);
+        // get node by id 
+        let node = cyEvent.nodes().filter(
+            (node) => {
+                return node.data().id === proteinId;
+            }
+        );
+        console.log("Node: ", node);
+        cyEvent.zoom({
+            level: 2,
+            position: { x: node[0].position().x, y: node[0].position().y }
+        });
+        cyEvent.center(node[0]);
+    }, [proteinId]);
 
 
     return (
@@ -243,6 +261,7 @@ function AppContextProvider ({ children }) {
             loading,
             complexProteinList,
             showComplexList,
+            cyEvent,
             setWith,
             setHeight,
             setLayout,
@@ -261,6 +280,8 @@ function AppContextProvider ({ children }) {
             getProteinDataByCluster,
             setCyGraph,
             setLoading,
+            setProteinId,
+            setCyEvent,
         }}>
             {children}
         </AppContext.Provider>

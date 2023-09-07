@@ -22,8 +22,8 @@ const AppUi = () => {
         clusterOneManual,
         cyGraph,
         loading,
+        setCyEvent,
     } = React.useContext(AppContext);
-    let myCyRef;
     return (
         <React.Fragment>
             <ProteinFilter />
@@ -54,7 +54,7 @@ const AppUi = () => {
                     elements={
                         CytoscapeComponent.normalizeElements(cyGraph)
                     }
-                    pan={{ x: 100, y: 100 }}
+                    pan={{ x: 150, y: 100 }}
                     style={{ width: width, height: height}}
                     zoomingEnabled={true}
                     maxZoom={3}
@@ -65,22 +65,23 @@ const AppUi = () => {
                     stylesheet={stylesheet}
                     cy={
                         cy => {
-                            myCyRef = cy;
-                            // cuando hacemos click en un nodo, se imprime en consola el nodo y su tipo
+                            setCyEvent(cy);
                             cy.on("tap", "node", evt => {
                                 var node = evt.target;
-                                // double click and zoom in
+                                var nodePosition = node.position();
                                 node.on("dblclick", function(evt) {
-                                    console.log("double click");
+                                    console.log("Node: ", node);
                                     cy.zoom({
                                         level: 2,
-                                        position: { x: 100, y: 100 }
+                                        position: { x: nodePosition.x, y: nodePosition.y } // node.position.x, node.position.y
                                     });
                                 });
+                                node.on("click", function(evt) {
+                                    console.log("Node: ", node);
+                                });
                             });
-                            }
+                        }
                     }
-                    abc={console.log("myCyRef", myCyRef)} 
                 />
             </div>
             {loading && <Loading />}

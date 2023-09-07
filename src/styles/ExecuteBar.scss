@@ -34,6 +34,19 @@
     }
 }
 
+.config-ppi {
+    display: block;
+    position: absolute;
+    /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
+    bottom: 40px;
+    /* Posición desde la parte inferior */
+    left: 20px;
+    /* Posición desde la derecha */
+    color: #47ab36;
+    font-size: 0.9em;
+    /* Reduce el tamaño de fuente */
+}
+
 .config-dropdown {
     margin-left: auto;
     margin-right: auto;
