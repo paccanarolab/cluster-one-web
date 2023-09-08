@@ -14,6 +14,7 @@ function AppContextProvider ({ children }) {
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: false
     };
+
     const stylesheet = [
         {
             selector: "node",
@@ -74,11 +75,12 @@ function AppContextProvider ({ children }) {
         edges: [],
         code: "",
         size: "",
-        density: "",
-        quantity: "",
+        minDensity: "",
+        minQuality: "",
         externalWeight: "",
         internalWeight: ""
     };
+
     const initialProteinData = {
         id: 32,
         name: "YIR010W",
@@ -104,33 +106,36 @@ function AppContextProvider ({ children }) {
         label: "ClusterONE Manual"
     };
 
-    // States
-    const [width, setWith] = React.useState("100%");
-    const [height, setHeight] = React.useState("760px");
+    // Graph States
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
+    const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
-    const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
-    const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
     const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
-    const [ppiId, setPpiId] = React.useState("");
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
+    
+    // Protein Filter States
+    const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
+    const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
+    const [ppiId, setPpiId] = React.useState("");
     const [loading, setLoading] = React.useState(false); // Loading state
-    const [size, setSize] = React.useState("");
-    const [density, setDensity] = React.useState("");
-    const [quantity, setQuantity] = React.useState("");
-    const [externalWeight, setExternalWeight] = React.useState("");
-    const [internalWeight, setInternalWeight] = React.useState("");
-    const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
+
+    // Cluster Filter States
+    const [minsize, setMinSize] = React.useState("");
+    const [maxsize, setMaxSize] = React.useState("");
+    const [minDensity, setMinDensity] = React.useState("");
+    const [maxDensity, setMaxDensity] = React.useState("");
+    const [minQuality, setMinQuality] = React.useState("");
+    const [maxQuality, setMaxQuality] = React.useState("");
+    const [minExternalWeight, setMinExternalWeight] = React.useState("");
+    const [maxExternalWeight, setMaxExternalWeight] = React.useState("");
+    const [minInternalWeight, setMinInternalWeight] = React.useState("");
+    const [maxInternalWeight, setMaxInternalWeight] = React.useState("");
 
     // Clear functions
     const clearClusterFilter = () => {
-        setSize("");
-        setDensity("");
-        setQuantity("");
-        setExternalWeight("");
-        setInternalWeight("");
+        setComplexList(cyGraphList);
     };
 
     const clearProteinFilter = () => {
@@ -166,6 +171,7 @@ function AppContextProvider ({ children }) {
             });
             const data = await response.json();
             setComplexList(data);
+            setCyGraphList(data);
             setCyGraph(data[0]);
             setLoading(false);
         } catch (error) {
@@ -243,51 +249,37 @@ function AppContextProvider ({ children }) {
         setLayout(initiallayout);
     }, [cyGraph]);
 
-
+    
     return (
         <AppContext.Provider value={{
-            width,
-            height,
-            cyGraph,
-            layout,
-            size,
-            density,
-            quantity,
-            externalWeight,
-            internalWeight,
-            ppiId,
-            proteinId,
-            ppiCodLocalStorage,
             stylesheet,
             paccaLabImage,
             fundacionImage,
             clusterOneManual,
+            layout,
+            ppiId,
+            proteinId,
+            cyGraph,
+            cyEvent,
+            loading,
             ppiList,
             complexList,
-            loading,
             complexProteinList,
             showComplexList,
-            cyEvent,
-            setWith,
-            setHeight,
-            setLayout,
-            setSize,
-            setDensity,
-            setQuantity,
-            setExternalWeight,
-            setInternalWeight,
+            cyGraphList,
             clearClusterFilter,
-            setPpiId,
-            setPpiCodLocalStorage,
             clearProteinFilter,
             uploadFilePpi,
             quickRunClusterOne,
-            getAllPpi,
             getProteinDataByCluster,
+            setLayout,
+            setPpiId,
+            getAllPpi,
             setCyGraph,
             setLoading,
             setProteinId,
             setCyEvent,
+            setCyGraphList,
         }}>
             {children}
         </AppContext.Provider>

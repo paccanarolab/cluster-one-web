@@ -4,146 +4,71 @@ import { AppContext } from "./AppContext.jsx";
 
 const ClusterFilter = () => {
 	const {
-		size,
-		density,
-		quantity,
-		externalWeight,
-		internalWeight,
 		complexList,
-		setSize,
-		setDensity,
-		setQuantity,
-		setExternalWeight,
-		setInternalWeight,
+		setComplexList,
+		cyGraphList,
         clearClusterFilter,
 		setCyGraph,
-		cyGraph,
 	} = React.useContext(AppContext);
 
-	
-	const validateClusterFilter = (excludeIndex) => {
-		const params = [quantity, density, size, externalWeight, internalWeight];
-		// Si excludeIndex es un número válido, eliminamos el elemento en esa posición
-		if (typeof excludeIndex === 'number' && excludeIndex >= 0 && excludeIndex < params.length) {
-		  params.splice(excludeIndex, 1);
-		}
-		// Verificar que todos los elementos restantes cumplen con la condición
-		return params.every(param => param && param !== "0" && param !== 0);
-	};
 	
 	// Tengo que ver la forma de persistir la lista de grafos
 	const handleClusterCodeChange = (event) => {
 		setCyGraph(JSON.parse(event.target.value));
 	};
-	  		
-	const handleQuantityChange = (event) => {
-		setQuantity(event.target.value);
-		setTimeout(() => {
+
+	const handleSignificancePvalueChange = (event) => {
+		var valuePvalue = event.target.value;
+		if (valuePvalue === "p > 0.05") {
 			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.quantity === event.target.value 
-					&& graphData.density === density 
-					&& graphData.size === size
-					&& graphData.externalWeight === externalWeight
-					&& graphData.internalWeight === internalWeight
+					graphData.pvalue > 0.05
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				window.alert("COMPLEX Not Found");
-				setCyGraph(complexList[0]);
+				setComplexList(cyGraphList);
 			}else{
-				setCyGraph(auxfilter[0]);
+				setComplexList(auxfilter);
 			}
-		}, 1000);
-};
-
-	const handleDensityChange = (event) => {
-		setDensity(event.target.value);
-		setTimeout(() => {
+		} else if (valuePvalue === "p <= 0.05") {
 			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.density === event.target.value
-					&& graphData.quantity === quantity
-					&& graphData.size === size
-					&& graphData.externalWeight === externalWeight
-					&& graphData.internalWeight === internalWeight
+					graphData.pvalue <= 0.05
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				window.alert("COMPLEX Not Found");
-				setCyGraph(complexList[0]);
+				setComplexList(cyGraphList);
 			}else{
-				setCyGraph(auxfilter[0]);
+				setComplexList(auxfilter);
 			}
-		}, 1000);
-	};
-
-
-	const handleSizeChange = (event) => {
-		setSize(event.target.value);
-		setTimeout(() => {
+		} else if (valuePvalue === "p <= 0.01") {
 			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.size === event.target.value 
-					&& graphData.quantity === quantity 
-					&& graphData.density === density
-					&& graphData.externalWeight === externalWeight
-					&& graphData.internalWeight === internalWeight
+					graphData.pvalue <= 0.01
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				window.alert("COMPLEX Not Found");
-				setCyGraph(complexList[0]);
+				setComplexList(cyGraphList);
 			}else{
-				setCyGraph(auxfilter[0]);
-			}
-		}, 1000);
-	};
-
-	const handleExternalWeightChange = (event) => {
-		setExternalWeight(event.target.value);
-		setTimeout(() => {
-			let auxfilter = complexList.filter(
-				(graphData) => {
-					graphData.externalWeight === event.target.value 
-					&& graphData.quantity === quantity 
-					&& graphData.density === density
-					&& graphData.size === size
-					&& graphData.internalWeight === internalWeight
-				}
-			);
-			if (auxfilter.length === 0 || auxfilter === undefined) {
-				window.alert("COMPLEX Not Found");
-				setCyGraph(complexList[0]);
-			}else{
-				setCyGraph(auxfilter[0]);
+				setComplexList(auxfilter);
 			}
 		}
-		, 1000);
-	};
-
-	const handleInternalWeightChange = (event) => {
-		setInternalWeight(event.target.value);
-		setTimeout(() => {
+		else if (valuePvalue === "p <= 0.001") {
 			let auxfilter = complexList.filter(
 				(graphData) => {
-					graphData.internalWeight === event.target.value 
-					&& graphData.quantity === quantity 
-					&& graphData.density === density
-					&& graphData.size === size
-					&& graphData.externalWeight === externalWeight
+					graphData.pvalue <= 0.001
 				}
 			);
 			if (auxfilter.length === 0 || auxfilter === undefined) {
-				window.alert("COMPLEX Not Found");
-				setCyGraph(complexList[0]);
+				setComplexList(cyGraphList);
 			}else{
-				setCyGraph(auxfilter[0]);
+				setComplexList(auxfilter);
 			}
 		}
-		, 1000);
+
 	};
-	
+
+
 	return (
 		<div className="complex" id="cfilter">
 			<div
@@ -167,50 +92,18 @@ const ClusterFilter = () => {
 					</option>
 				))}
 			</select>
-			<div style={{ display: "flex", width: "100%", gap: "5px" }}>
-				<input
-					type="number"
-					placeholder="Size"
-					style={{ marginBottom: "15px", width: "100%" }}
-					name="size"
-					value={size}
-					onChange={handleSizeChange}
-				/>
-				<input
-					type="number"
-					placeholder="Density"
-					name="density"
-					style={{ marginBottom: "15px", width: "100%" }}
-					value={density}
-					onChange={handleDensityChange}
-				/>
+			<select
+				style={{ marginBottom: "15px", width: "100%" }}
+				className="config-dropdown"
+				onChange={handleSignificancePvalueChange}
+			>
+				<option value="p > 0.05">Not significant p-value</option>
+				<option value="p <= 0.05">Significant p-value</option>
+				<option value="p <= 0.01">Very significant p-value</option>
+				<option value="p <= 0.001">Highly significant p-value</option>
+			</select>
 
-				<input
-					type="number"
-					placeholder="Quality"
-					name="quantity"
-					style={{ marginBottom: "15px", width: "100%" }}
-					value={quantity}
-					onChange={handleQuantityChange}
-				/>
-			</div>
-			<input
-				type="number"
-				placeholder="External Weight"
-				name="externalWeight"
-				value={externalWeight}
-				style={{ marginBottom: "15px", width: "91.5%" }}
-				onChange={handleExternalWeightChange}
-			/>
-
-			<input
-				type="number"
-				placeholder="Internal Weight"
-				name="internalWeight"
-				value={internalWeight}
-				style={{ marginBottom: "15px", width: "91.5%" }}
-				onChange={handleInternalWeightChange}
-			/>
+			
 
 			
 

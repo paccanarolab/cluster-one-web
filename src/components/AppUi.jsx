@@ -12,9 +12,7 @@ import "../styles/global.scss"
 
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 const AppUi = () => {
-    const { 
-        width, 
-        height,
+    const {
         layout, 
         stylesheet, 
         paccaLabImage,
