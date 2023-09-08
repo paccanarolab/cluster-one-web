@@ -76,9 +76,8 @@ const ExecuteBar = ({ href, label }) => {
                     quickRunClusterOne(ppiId); 
                 }}
 				classname={"runClusterOneButton"}
+				message={"with default parameters"}
 			/>
-
-			{"with default parameters" /* TODO: Cursiva, achicar el texto*/}
 			<RunFunctionButton
 				label="Run ClusterONE"
 				icon="fa fa-play"
@@ -87,8 +86,8 @@ const ExecuteBar = ({ href, label }) => {
                     console.log("Run ClusterONE")
                 }}
 				classname={"runClusterOneButton"}
+				message={"with custom parameters"}
 			/>
-			{"with custom parameters" /* TODO: Cursiva, achicar el texto*/}
             <ClusterFilter />
 			<a className="config-ppi">
 				PPI ID SELECTED: {ppiId}
