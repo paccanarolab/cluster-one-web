@@ -685,7 +685,7 @@ const ClusterFilter = () => {
 			<Slider
 				defaultValue={minsize}
 				valueLabelDisplay="auto"
-				step={10}
+				step={1}
 				marks={false}
 				min={minsize}
 				max={maxsize}
@@ -725,7 +725,7 @@ const ClusterFilter = () => {
 			<Slider
 				defaultValue={minQuality}
 				valueLabelDisplay="auto"
-				step={0.001}
+				step={0.0001}
 				marks={false}
 				min={minQuality}
 				max={maxQuality}
@@ -745,7 +745,7 @@ const ClusterFilter = () => {
 			<Slider
 				defaultValue={minExternalWeight}
 				valueLabelDisplay="auto"
-				step={10}
+				step={1}
 				marks={false}
 				min={minExternalWeight}
 				max={maxExternalWeight}
@@ -765,7 +765,7 @@ const ClusterFilter = () => {
 			<Slider
 				defaultValue={minInternalWeight}
 				valueLabelDisplay="auto"
-				step={10}
+				step={1}
 				marks={false}
 				min={minInternalWeight}
 				max={maxInternalWeight}
