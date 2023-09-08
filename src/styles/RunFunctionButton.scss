@@ -18,23 +18,41 @@
     justify-content: space-between;
     /* Separa el ícono y el texto en extremos opuestos */
     width: 90%;
+    margin-top: 15px;
+    align-items: center;
+    /* Añade esta línea para centrar verticalmente */
+}
+
+.explorePpiButton .buttonLabel {
+    flex: 1;
+    /* Ocupa todo el espacio posible */
+    text-align: center;
+    /* Centra el texto horizontalmente */
+}
+
+.explorePpiButton .buttonMessage {
+    display: none;
+    /* Estará oculto por defecto */
+    margin-left: 20px;
+    /* Añade un pequeño espacio entre el ícono y el texto */
+    font-style: italic;
+}
+
+.explorePpiButton:hover .buttonMessage {
+    display: inline;
+    /* Se muestra en el hover */
 }
 
 .explorePpiButton:hover {
     transform: scale(1.05);
-    /* Hace el botón ligeramente más grande cuando se pasa el ratón por encima */
 }
 
 .explorePpiButton i {
     margin-left: 10px;
-    /* Espacio a la derecha del ícono */
-    /* Aquí puedes añadir otros estilos que desees aplicar al ícono en particular */
 }
 
-/* Si tienes un tamaño específico para el ícono, puedes especificarlo. Por ejemplo, para un ícono FontAwesome: */
 .explorePpiButton i.fa {
     font-size: 16px;
-    /* Puedes ajustar el tamaño según lo necesites */
 }
 
 .runClusterOneButton {
@@ -58,6 +76,7 @@
     /* Separa el ícono y el texto en extremos opuestos */
     width: 90%;
     margin-top: 15px;
+    align-items: center;
 }
 
 .runClusterOneButton:hover {
@@ -74,4 +93,27 @@
 .runClusterOneButton i.fa {
     font-size: 16px;
     /* Puedes ajustar el tamaño según lo necesites */
+}
+
+
+.runClusterOneButton .buttonLabel {
+    flex: 1;
+    /* Ocupa todo el espacio posible */
+    text-align: center;
+    /* Centra el texto horizontalmente */
+}
+
+.runClusterOneButton .buttonMessage {
+    display: none;
+    /* Estará oculto por defecto */
+    margin-left: 20px;
+    /* Añade un pequeño espacio entre el ícono y el texto */
+    font-style: italic;
+}
+
+.runClusterOneButton:hover .buttonMessage {
+    display: inline;
+    /* Se muestra en el hover */
+    font-style: italic;
+
 }

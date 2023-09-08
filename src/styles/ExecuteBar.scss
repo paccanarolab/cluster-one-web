@@ -15,6 +15,7 @@
     transition-timing-function: ease-out;
     overflow: auto;
     z-index: 1;
+    margin-top: -8px;
 }
 
 .config-link {
@@ -22,7 +23,7 @@
     color: #9ed0fa;
     text-decoration: none;
     transition: color 0.3s ease;
-    position: absolute;
+    // position: absolute;
     /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
     bottom: 18px;
     /* Posición desde la parte inferior */
@@ -36,7 +37,7 @@
 
 .config-ppi {
     display: block;
-    position: absolute;
+    // position: absolute;
     /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
     bottom: 40px;
     /* Posición desde la parte inferior */

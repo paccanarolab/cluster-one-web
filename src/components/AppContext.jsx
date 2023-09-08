@@ -14,6 +14,7 @@ function AppContextProvider ({ children }) {
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: false
     };
+
     const stylesheet = [
         {
             selector: "node",
@@ -51,19 +52,10 @@ function AppContextProvider ({ children }) {
             }
         },
         {
-            selector: "node[type='device']",
-            style: {
-                shape: "rectangle"
-            }
-        },
-        {
             selector: "edge",
             style: {
-                width: 3,
-                // "line-color": "#6774cb",
+                width: 2,
                 "line-color": "#AAD8FF",
-                // "target-arrow-color": "#6774cb",
-                // "target-arrow-shape": "triangle",
                 "curve-style": "bezier"
             }
         }
@@ -74,11 +66,13 @@ function AppContextProvider ({ children }) {
         edges: [],
         code: "",
         size: "",
-        density: "",
-        quantity: "",
+        minDensity: "",
+        minQuality: "",
         externalWeight: "",
-        internalWeight: ""
+        internalWeight: "",
+        p_value: "",
     };
+
     const initialProteinData = {
         id: 32,
         name: "YIR010W",
@@ -100,41 +94,49 @@ function AppContextProvider ({ children }) {
     };
     
     const clusterOneManual = {
-        href: "https://paccanarolab.org/clusterone/",
+        href: "https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html",
         label: "ClusterONE Manual"
     };
 
-    // States
-    const [width, setWith] = React.useState("100%");
-    const [height, setHeight] = React.useState("760px");
+    // Graph States
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
+    const [complexCounter, setComplexCounter] = React.useState(0); // Cluster List
+    const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
-    const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
-    const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
     const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
-    const [ppiId, setPpiId] = React.useState("");
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
+    
+    // Protein Filter States
+    const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
+    const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
+    const [ppiId, setPpiId] = React.useState("");
     const [loading, setLoading] = React.useState(false); // Loading state
+    const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
+
+    // Cluster Filter States
+    const [minsize, setMinSize] = React.useState(0);
+    const [maxsize, setMaxSize] = React.useState(100);
+    const [minDensity, setMinDensity] = React.useState(0);
+    const [maxDensity, setMaxDensity] = React.useState(1);
+    const [minQuality, setMinQuality] = React.useState(0);
+    const [maxQuality, setMaxQuality] = React.useState(1);
+    const [minExternalWeight, setMinExternalWeight] = React.useState(0);
+    const [maxExternalWeight, setMaxExternalWeight] = React.useState(30);
+    const [minInternalWeight, setMinInternalWeight] = React.useState(0);
+    const [maxInternalWeight, setMaxInternalWeight] = React.useState(500);
     const [size, setSize] = React.useState("");
     const [density, setDensity] = React.useState("");
-    const [quantity, setQuantity] = React.useState("");
+    const [quality, setQuality] = React.useState("");
     const [externalWeight, setExternalWeight] = React.useState("");
     const [internalWeight, setInternalWeight] = React.useState("");
-    const [ppiCodLocalStorage, setPpiCodLocalStorage] = React.useState("");
+
 
     // Clear functions
     const clearClusterFilter = () => {
-        setSize("");
-        setDensity("");
-        setQuantity("");
-        setExternalWeight("");
-        setInternalWeight("");
-    };
-
-    const clearProteinFilter = () => {
-        setProteinId("");
+        setComplexList(cyGraphList);
+        setComplexCounter(cyGraphList.length);
     };
     
     // Call API functions
@@ -165,7 +167,29 @@ function AppContextProvider ({ children }) {
                 method: 'POST'
             });
             const data = await response.json();
+            let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
+            let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
+            let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
+            let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
+            let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
+            let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
+            let minExternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.external_weight; }));
+            let maxExternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.external_weight; }));
+            let minInternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.internal_weight; }));
+            let maxInternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.internal_weight; }));
+            setMinSize(minSizeData);
+            setMaxSize(maxSizeData);
+            setMinDensity(minDensityData);
+            setMaxDensity(maxDensityData);
+            setMinQuality(minQualityData);
+            setMaxQuality(maxQualityData);
+            setMinExternalWeight(minExternalWeightData);
+            setMaxExternalWeight(maxExternalWeightData);
+            setMinInternalWeight(minInternalWeightData);
+            setMaxInternalWeight(maxInternalWeightData);
             setComplexList(data);
+            setCyGraphList(data);
+            setComplexCounter(data.length);
             setCyGraph(data[0]);
             setLoading(false);
         } catch (error) {
@@ -243,51 +267,105 @@ function AppContextProvider ({ children }) {
         setLayout(initiallayout);
     }, [cyGraph]);
 
+    React.useEffect(() => {
+		if (complexCounter === 1) {
+			setCyGraph(complexList[0]);
+		}
+	}, [complexCounter]);
+
+    React.useEffect(() => {
+        console.log("Show Highlight: UseEffect", showHighlight);
+        if (cyEvent === "") {
+            return;
+        }
+        if (showHighlight) {
+            let nodes = cyEvent.nodes()
+            let node = nodes.forEach((node) => {
+                if (node.data().overlapping === true) {
+                    node.style(
+                        "background-color", "#ff0000");
+                    node.style(
+                        "width", 50);
+                    node.style(
+                        "height", 50);
+                    node.style(
+                        "text-outline-color", "#ff0000");
+                    node.style(
+                        "text-outline-width", 8);
+                }
+            });
+        } else {
+            let nodes = cyEvent.nodes()
+            let node = nodes.forEach((node) => {
+                if (node.data().overlapping === true) {
+                    node.style(
+                        "background-color", "#4a56a6");
+                    node.style(
+                        "width", 30);
+                    node.style(
+                        "height", 30);
+                    node.style(
+                        "text-outline-color", "#4a56a6");
+                    node.style(
+                        "text-outline-width", 2);
+                }
+            });
+        }
+    }, [showHighlight]);
 
     return (
         <AppContext.Provider value={{
-            width,
-            height,
-            cyGraph,
-            layout,
-            size,
-            density,
-            quantity,
-            externalWeight,
-            internalWeight,
-            ppiId,
-            proteinId,
-            ppiCodLocalStorage,
             stylesheet,
             paccaLabImage,
             fundacionImage,
             clusterOneManual,
+            layout,
+            ppiId,
+            proteinId,
+            cyGraph,
+            cyEvent,
+            loading,
             ppiList,
             complexList,
-            loading,
             complexProteinList,
             showComplexList,
-            cyEvent,
-            setWith,
-            setHeight,
-            setLayout,
-            setSize,
-            setDensity,
-            setQuantity,
-            setExternalWeight,
-            setInternalWeight,
+            cyGraphList,
+            minsize,
+            maxsize,
+            minDensity,
+            maxDensity,
+            minQuality,
+            maxQuality,
+            minExternalWeight,
+            maxExternalWeight,
+            minInternalWeight,
+            maxInternalWeight,
+            complexCounter,
+            size,
+            density,
+            quality,
+            externalWeight,
+            internalWeight,
             clearClusterFilter,
-            setPpiId,
-            setPpiCodLocalStorage,
-            clearProteinFilter,
             uploadFilePpi,
             quickRunClusterOne,
-            getAllPpi,
             getProteinDataByCluster,
+            setLayout,
+            setPpiId,
+            getAllPpi,
             setCyGraph,
             setLoading,
             setProteinId,
             setCyEvent,
+            setCyGraphList,
+            setComplexList,
+            setComplexCounter,
+            setSize,
+            setDensity,
+            setQuality,
+            setExternalWeight,
+            setInternalWeight,
+            setShowHighlight,
         }}>
             {children}
         </AppContext.Provider>
