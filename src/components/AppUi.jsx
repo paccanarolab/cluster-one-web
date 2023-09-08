@@ -8,6 +8,7 @@ import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
 import { Backdrop, CircularProgress } from '@mui/material';
 import { CheckboxLabels } from "./CheckboxLabels.jsx";
+import { Typography } from "@mui/material";
 
 import "../styles/global.scss"
 
@@ -71,14 +72,24 @@ const AppUi = () => {
                                 var node = evt.target;
                                 var nodePosition = node.position();
                                 node.on("dblclick", function(evt) {
-                                    console.log("Node: ", node);
                                     cy.zoom({
                                         level: 2,
                                         position: { x: nodePosition.x, y: nodePosition.y } // node.position.x, node.position.y
                                     });
                                 });
                                 node.on("click", function(evt) {
-                                    console.log("Node: ", node); //show node info
+                                    let connectedEdges = node.connectedEdges();
+                                    connectedEdges.forEach(edge => {
+                                            console.log("Edge: ", edge);
+                                            edge.style("line-color", "red");
+                                            // let actualColor = edge.style("line-color");
+                                            // if (actualColor === "#AAD8FF") {
+                                            //     edge.style("line-color", "red");
+                                            // } else {
+                                            //     edge.style("line-color", "#AAD8FF");
+                                            // }
+                                        }
+                                    );
                                 });
                             });
                         }
@@ -86,10 +97,43 @@ const AppUi = () => {
                 />
             </div>
             {loading && <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={
+                    { 
+                        color: '#fff',
+                        zIndex: (theme) => theme.zIndex.drawer + 1 
+                    }
+                }
                 open={loading}
               >
-                <CircularProgress color="inherit" />
+                <CircularProgress color="inherit" style={
+                    {
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        marginTop: -12,
+                        marginLeft: -12,
+                    }
+                } />
+                <Typography 
+                    variant="h6" 
+                    component="div" 
+                    sx={
+                        { 
+                            paddingTop: 2, 
+                            textAlign: 'center',
+                        }
+                    }
+                    style={
+                        {
+                            position: 'absolute',
+                            top: '60%',
+                            left: '51.5%',
+                            transform: 'translate(-50%, -50%)',
+                        }
+                    }
+                >
+                    Running ClusterONE and storing results...
+                </Typography>
               </Backdrop>
             }
             <DownloadButton />
