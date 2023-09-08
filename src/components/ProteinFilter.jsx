@@ -39,6 +39,7 @@ const ProteinFilter = () => {
                 }
             </select>
         </div>
+        
     );
 }
 

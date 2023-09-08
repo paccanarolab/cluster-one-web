@@ -7,6 +7,7 @@ import { ProteinFilter } from "./ProteinFilter.jsx";
 import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
 import { Backdrop, CircularProgress } from '@mui/material';
+import { CheckboxLabels } from "./CheckboxLabels.jsx";
 
 import "../styles/global.scss"
 
@@ -25,6 +26,7 @@ const AppUi = () => {
     return (
         <React.Fragment>
             <ProteinFilter />
+            <CheckboxLabels />
             <ExecuteBar  
                 href={clusterOneManual.href} 
                 label={clusterOneManual.label}

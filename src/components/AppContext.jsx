@@ -52,19 +52,10 @@ function AppContextProvider ({ children }) {
             }
         },
         {
-            selector: "node[type='device']",
-            style: {
-                shape: "rectangle"
-            }
-        },
-        {
             selector: "edge",
             style: {
-                width: 3,
-                // "line-color": "#6774cb",
+                width: 2,
                 "line-color": "#AAD8FF",
-                // "target-arrow-color": "#6774cb",
-                // "target-arrow-shape": "triangle",
                 "curve-style": "bezier"
             }
         }
@@ -122,6 +113,7 @@ function AppContextProvider ({ children }) {
     const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
     const [ppiId, setPpiId] = React.useState("");
     const [loading, setLoading] = React.useState(false); // Loading state
+    const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
 
     // Cluster Filter States
     const [minsize, setMinSize] = React.useState(0);
@@ -281,6 +273,46 @@ function AppContextProvider ({ children }) {
 		}
 	}, [complexCounter]);
 
+    React.useEffect(() => {
+        console.log("Show Highlight: UseEffect", showHighlight);
+        if (cyEvent === "") {
+            return;
+        }
+        if (showHighlight) {
+            let nodes = cyEvent.nodes()
+            let node = nodes.forEach((node) => {
+                if (node.data().overlapping === true) {
+                    node.style(
+                        "background-color", "#ff0000");
+                    node.style(
+                        "width", 50);
+                    node.style(
+                        "height", 50);
+                    node.style(
+                        "text-outline-color", "#ff0000");
+                    node.style(
+                        "text-outline-width", 8);
+                }
+            });
+        } else {
+            let nodes = cyEvent.nodes()
+            let node = nodes.forEach((node) => {
+                if (node.data().overlapping === true) {
+                    node.style(
+                        "background-color", "#4a56a6");
+                    node.style(
+                        "width", 30);
+                    node.style(
+                        "height", 30);
+                    node.style(
+                        "text-outline-color", "#4a56a6");
+                    node.style(
+                        "text-outline-width", 2);
+                }
+            });
+        }
+    }, [showHighlight]);
+
     return (
         <AppContext.Provider value={{
             stylesheet,
@@ -333,6 +365,7 @@ function AppContextProvider ({ children }) {
             setQuality,
             setExternalWeight,
             setInternalWeight,
+            setShowHighlight,
         }}>
             {children}
         </AppContext.Provider>
