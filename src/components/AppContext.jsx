@@ -109,6 +109,7 @@ function AppContextProvider ({ children }) {
 
     // Graph States
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
+    const [complexCounter, setComplexCounter] = React.useState(0); // Cluster List
     const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
@@ -123,24 +124,27 @@ function AppContextProvider ({ children }) {
     const [loading, setLoading] = React.useState(false); // Loading state
 
     // Cluster Filter States
-    const [minsize, setMinSize] = React.useState("");
-    const [maxsize, setMaxSize] = React.useState("");
-    const [minDensity, setMinDensity] = React.useState("");
-    const [maxDensity, setMaxDensity] = React.useState("");
-    const [minQuality, setMinQuality] = React.useState("");
-    const [maxQuality, setMaxQuality] = React.useState("");
-    const [minExternalWeight, setMinExternalWeight] = React.useState("");
-    const [maxExternalWeight, setMaxExternalWeight] = React.useState("");
-    const [minInternalWeight, setMinInternalWeight] = React.useState("");
-    const [maxInternalWeight, setMaxInternalWeight] = React.useState("");
+    const [minsize, setMinSize] = React.useState(0);
+    const [maxsize, setMaxSize] = React.useState(100);
+    const [minDensity, setMinDensity] = React.useState(0);
+    const [maxDensity, setMaxDensity] = React.useState(1);
+    const [minQuality, setMinQuality] = React.useState(0);
+    const [maxQuality, setMaxQuality] = React.useState(1);
+    const [minExternalWeight, setMinExternalWeight] = React.useState(0);
+    const [maxExternalWeight, setMaxExternalWeight] = React.useState(30);
+    const [minInternalWeight, setMinInternalWeight] = React.useState(0);
+    const [maxInternalWeight, setMaxInternalWeight] = React.useState(500);
+    const [size, setSize] = React.useState("");
+    const [density, setDensity] = React.useState("");
+    const [quality, setQuality] = React.useState("");
+    const [externalWeight, setExternalWeight] = React.useState("");
+    const [internalWeight, setInternalWeight] = React.useState("");
+
 
     // Clear functions
     const clearClusterFilter = () => {
         setComplexList(cyGraphList);
-    };
-
-    const clearProteinFilter = () => {
-        setProteinId("");
+        setComplexCounter(cyGraphList.length);
     };
     
     // Call API functions
@@ -193,6 +197,7 @@ function AppContextProvider ({ children }) {
             setMaxInternalWeight(maxInternalWeightData);
             setComplexList(data);
             setCyGraphList(data);
+            setComplexCounter(data.length);
             setCyGraph(data[0]);
             setLoading(false);
         } catch (error) {
@@ -270,7 +275,12 @@ function AppContextProvider ({ children }) {
         setLayout(initiallayout);
     }, [cyGraph]);
 
-    
+    React.useEffect(() => {
+		if (complexCounter === 1) {
+			setCyGraph(complexList[0]);
+		}
+	}, [complexCounter]);
+
     return (
         <AppContext.Provider value={{
             stylesheet,
@@ -298,8 +308,13 @@ function AppContextProvider ({ children }) {
             maxExternalWeight,
             minInternalWeight,
             maxInternalWeight,
+            complexCounter,
+            size,
+            density,
+            quality,
+            externalWeight,
+            internalWeight,
             clearClusterFilter,
-            clearProteinFilter,
             uploadFilePpi,
             quickRunClusterOne,
             getProteinDataByCluster,
@@ -312,6 +327,12 @@ function AppContextProvider ({ children }) {
             setCyEvent,
             setCyGraphList,
             setComplexList,
+            setComplexCounter,
+            setSize,
+            setDensity,
+            setQuality,
+            setExternalWeight,
+            setInternalWeight,
         }}>
             {children}
         </AppContext.Provider>
