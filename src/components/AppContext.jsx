@@ -258,6 +258,7 @@ function AppContextProvider ({ children }) {
             position: { x: node[0].position().x, y: node[0].position().y }
         });
         cyEvent.center(node[0]);
+        node[0].select();
     }, [proteinId]);
 
     React.useEffect(() => {
