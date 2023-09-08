@@ -78,7 +78,8 @@ function AppContextProvider ({ children }) {
         minDensity: "",
         minQuality: "",
         externalWeight: "",
-        internalWeight: ""
+        internalWeight: "",
+        p_value: "",
     };
 
     const initialProteinData = {
@@ -170,6 +171,26 @@ function AppContextProvider ({ children }) {
                 method: 'POST'
             });
             const data = await response.json();
+            let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
+            let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
+            let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
+            let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
+            let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
+            let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
+            let minExternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.external_weight; }));
+            let maxExternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.external_weight; }));
+            let minInternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.internal_weight; }));
+            let maxInternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.internal_weight; }));
+            setMinSize(minSizeData);
+            setMaxSize(maxSizeData);
+            setMinDensity(minDensityData);
+            setMaxDensity(maxDensityData);
+            setMinQuality(minQualityData);
+            setMaxQuality(maxQualityData);
+            setMinExternalWeight(minExternalWeightData);
+            setMaxExternalWeight(maxExternalWeightData);
+            setMinInternalWeight(minInternalWeightData);
+            setMaxInternalWeight(maxInternalWeightData);
             setComplexList(data);
             setCyGraphList(data);
             setCyGraph(data[0]);
@@ -267,6 +288,16 @@ function AppContextProvider ({ children }) {
             complexProteinList,
             showComplexList,
             cyGraphList,
+            minsize,
+            maxsize,
+            minDensity,
+            maxDensity,
+            minQuality,
+            maxQuality,
+            minExternalWeight,
+            maxExternalWeight,
+            minInternalWeight,
+            maxInternalWeight,
             clearClusterFilter,
             clearProteinFilter,
             uploadFilePpi,
@@ -280,6 +311,7 @@ function AppContextProvider ({ children }) {
             setProteinId,
             setCyEvent,
             setCyGraphList,
+            setComplexList,
         }}>
             {children}
         </AppContext.Provider>

@@ -5,10 +5,20 @@ import { AppContext } from "./AppContext.jsx";
 const ClusterFilter = () => {
 	const {
 		complexList,
-		setComplexList,
 		cyGraphList,
         clearClusterFilter,
+		setComplexList,
 		setCyGraph,
+		minsize,
+		maxsize,
+		minDensity,
+		maxDensity,
+		minQuality,
+		maxQuality,
+		minExternalWeight,
+		maxExternalWeight,
+		minInternalWeight,
+		maxInternalWeight,
 	} = React.useContext(AppContext);
 
 	
@@ -20,48 +30,61 @@ const ClusterFilter = () => {
 	const handleSignificancePvalueChange = (event) => {
 		var valuePvalue = event.target.value;
 		if (valuePvalue === "p > 0.05") {
-			let auxfilter = complexList.filter(
-				(graphData) => {
-					graphData.pvalue > 0.05
+			let auxfilter = [];
+			for (let i = 0; i < complexList.length; i++) {
+				if (complexList[i].p_value > 0.05) {
+					auxfilter.push(complexList[i]);
 				}
-			);
-			if (auxfilter.length === 0 || auxfilter === undefined) {
+			}
+			if (auxfilter.length === 0) {
+				console.log("No hay grafos con p-value > 0.05");
 				setComplexList(cyGraphList);
 			}else{
+				console.log("Hay grafos con p-value > 0.05");
 				setComplexList(auxfilter);
 			}
 		} else if (valuePvalue === "p <= 0.05") {
-			let auxfilter = complexList.filter(
-				(graphData) => {
-					graphData.pvalue <= 0.05
+			let auxfilter = [];
+			for (let i = 0; i < complexList.length; i++) {
+				if (complexList[i].p_value <= 0.05) {
+					auxfilter.push(complexList[i]);
 				}
-			);
-			if (auxfilter.length === 0 || auxfilter === undefined) {
+			}
+			if (auxfilter.length === 0) {
+				console.log("No hay grafos con p-value <= 0.05");
 				setComplexList(cyGraphList);
 			}else{
+				console.log("Hay grafos con p-value <= 0.05");
 				setComplexList(auxfilter);
 			}
 		} else if (valuePvalue === "p <= 0.01") {
-			let auxfilter = complexList.filter(
-				(graphData) => {
-					graphData.pvalue <= 0.01
+			let auxfilter = [];
+			for (let i = 0; i < complexList.length; i++) {
+				if (complexList[i].p_value <= 0.01) {
+					auxfilter.push(complexList[i]);
 				}
-			);
-			if (auxfilter.length === 0 || auxfilter === undefined) {
+			}
+			if (auxfilter.length === 0) {
+				console.log("No hay grafos con p-value <= 0.01");
 				setComplexList(cyGraphList);
 			}else{
+				console.log("Hay grafos con p-value <= 0.01");
 				setComplexList(auxfilter);
 			}
 		}
 		else if (valuePvalue === "p <= 0.001") {
-			let auxfilter = complexList.filter(
-				(graphData) => {
-					graphData.pvalue <= 0.001
+			let auxfilter = [];
+			for (let i = 0; i < complexList.length; i++) {
+				if (complexList[i].p_value <= 0.001) {
+					auxfilter.push(complexList[i]);
 				}
-			);
-			if (auxfilter.length === 0 || auxfilter === undefined) {
+			}
+			if (auxfilter.length === 0) {
+				console.log("No hay grafos con p-value <= 0.001");
 				setComplexList(cyGraphList);
 			}else{
+				console.log("Hay grafos con p-value <= 0.001");
+				console.log(auxfilter);
 				setComplexList(auxfilter);
 			}
 		}
@@ -96,7 +119,8 @@ const ClusterFilter = () => {
 				style={{ marginBottom: "15px", width: "100%" }}
 				className="config-dropdown"
 				onChange={handleSignificancePvalueChange}
-			>
+			>	
+				<option value="clear">All p-values</option>
 				<option value="p > 0.05">Not significant p-value</option>
 				<option value="p <= 0.05">Significant p-value</option>
 				<option value="p <= 0.01">Very significant p-value</option>
