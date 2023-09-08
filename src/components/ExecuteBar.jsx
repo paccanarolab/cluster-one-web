@@ -45,28 +45,10 @@ const ExecuteBar = ({ href, label }) => {
                 <Layout classname="config-dropdown" />
             </div>
 			
-			<RunFunctionButton
-				label="Quick Run ClusterONE"
-				icon="fa fa-forward"
-				onClickFunction={() => {
-                    console.log("Quick Run ClusterONE");
-                    setLoading(true);
-                    quickRunClusterOne(ppiId); 
-                }}
-				classname={"runClusterOneButton"}
-			/>
-			<RunFunctionButton
-				label="Run ClusterONE"
-				icon="fa fa-play"
-				onClickFunction={() => {
-                    setLoading(true);
-                    console.log("Run ClusterONE")
-                }}
-				classname={"runClusterOneButton"}
-			/>
+			
 
 			<RunFunctionButton
-				label="Select our PPI"
+				label="Select an example PPI"
 				icon="fa fa-search"
 				onClickFunction={
                     () => console.log("Explore PPI")
@@ -74,7 +56,7 @@ const ExecuteBar = ({ href, label }) => {
 				classname={"explorePpiButton"}
 			/>
 			<RunFunctionButton
-				label="Use your PPI"
+				label="Load your PPI"
 				icon="fa fa-upload"
 				onClickFunction={() => {
                     const fileInput = document.createElement('input');
@@ -85,6 +67,28 @@ const ExecuteBar = ({ href, label }) => {
                 }}
 				classname={"explorePpiButton"}
 			/>
+			<RunFunctionButton
+				label="Quick Run ClusterONE"
+				icon="fa fa-forward"
+				onClickFunction={() => {
+                    console.log("Quick Run ClusterONE");
+                    setLoading(true);
+                    quickRunClusterOne(ppiId); 
+                }}
+				classname={"runClusterOneButton"}
+			/>
+
+			{"with default parameters" /* TODO: Cursiva, achicar el texto*/}
+			<RunFunctionButton
+				label="Run ClusterONE"
+				icon="fa fa-play"
+				onClickFunction={() => {
+                    setLoading(true);
+                    console.log("Run ClusterONE")
+                }}
+				classname={"runClusterOneButton"}
+			/>
+			{"with custom parameters" /* TODO: Cursiva, achicar el texto*/}
             <ClusterFilter />
 			<a className="config-ppi">
 				PPI ID SELECTED: {ppiId}

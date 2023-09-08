@@ -187,7 +187,7 @@ const ClusterFilter = () => {
 
 				<input
 					type="number"
-					placeholder="Quantity"
+					placeholder="Quality"
 					name="quantity"
 					style={{ marginBottom: "15px", width: "100%" }}
 					value={quantity}

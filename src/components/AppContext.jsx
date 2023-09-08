@@ -100,7 +100,7 @@ function AppContextProvider ({ children }) {
     };
     
     const clusterOneManual = {
-        href: "https://paccanarolab.org/clusterone/",
+        href: "https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html",
         label: "ClusterONE Manual"
     };
 

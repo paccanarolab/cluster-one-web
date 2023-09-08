@@ -6,7 +6,7 @@ import { LabImage } from "./LabImage.jsx";
 import { ProteinFilter } from "./ProteinFilter.jsx";
 import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
-import { Loading } from "./Loading.jsx";
+import { Backdrop, CircularProgress } from '@mui/material';
 
 import "../styles/global.scss"
 
@@ -44,7 +44,7 @@ const AppUi = () => {
             <div
                 style={{
                 width: "100%",
-                height: "100%",
+                height: "100vh",
                 position: "absolute",
                 top: "0px",
                 left: "0px",
@@ -55,7 +55,7 @@ const AppUi = () => {
                         CytoscapeComponent.normalizeElements(cyGraph)
                     }
                     pan={{ x: 0, y: 0 }}
-                    style={{ width: width, height: height}}
+                    style={{ width: "100%", height: "100%"}}
                     zoomingEnabled={true}
                     maxZoom={3}
                     minZoom={0.1}
@@ -85,7 +85,13 @@ const AppUi = () => {
                     }
                 />
             </div>
-            {loading && <Loading />}
+            {loading && <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            }
             <DownloadButton />
             <InfoButton />
         </React.Fragment>
