@@ -122,15 +122,9 @@ function AppContextProvider ({ children }) {
     const [maxDensity, setMaxDensity] = React.useState(1);
     const [minQuality, setMinQuality] = React.useState(0);
     const [maxQuality, setMaxQuality] = React.useState(1);
-    const [minExternalWeight, setMinExternalWeight] = React.useState(0);
-    const [maxExternalWeight, setMaxExternalWeight] = React.useState(30);
-    const [minInternalWeight, setMinInternalWeight] = React.useState(0);
-    const [maxInternalWeight, setMaxInternalWeight] = React.useState(500);
     const [size, setSize] = React.useState("");
     const [density, setDensity] = React.useState("");
     const [quality, setQuality] = React.useState("");
-    const [externalWeight, setExternalWeight] = React.useState("");
-    const [internalWeight, setInternalWeight] = React.useState("");
 
 
     // Clear functions
@@ -173,20 +167,12 @@ function AppContextProvider ({ children }) {
             let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
             let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
             let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
-            let minExternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.external_weight; }));
-            let maxExternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.external_weight; }));
-            let minInternalWeightData = Math.min.apply(Math, data.map(function(o) { return o.internal_weight; }));
-            let maxInternalWeightData = Math.max.apply(Math, data.map(function(o) { return o.internal_weight; }));
             setMinSize(minSizeData);
             setMaxSize(maxSizeData);
             setMinDensity(minDensityData);
             setMaxDensity(maxDensityData);
             setMinQuality(minQualityData);
             setMaxQuality(maxQualityData);
-            setMinExternalWeight(minExternalWeightData);
-            setMaxExternalWeight(maxExternalWeightData);
-            setMinInternalWeight(minInternalWeightData);
-            setMaxInternalWeight(maxInternalWeightData);
             setComplexList(data);
             setCyGraphList(data);
             setComplexCounter(data.length);
@@ -337,16 +323,10 @@ function AppContextProvider ({ children }) {
             maxDensity,
             minQuality,
             maxQuality,
-            minExternalWeight,
-            maxExternalWeight,
-            minInternalWeight,
-            maxInternalWeight,
             complexCounter,
             size,
             density,
             quality,
-            externalWeight,
-            internalWeight,
             clearClusterFilter,
             uploadFilePpi,
             quickRunClusterOne,
@@ -364,8 +344,6 @@ function AppContextProvider ({ children }) {
             setSize,
             setDensity,
             setQuality,
-            setExternalWeight,
-            setInternalWeight,
             setShowHighlight,
         }}>
             {children}
