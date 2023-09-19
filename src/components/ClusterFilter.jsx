@@ -14,32 +14,22 @@ const ClusterFilter = () => {
 		setSize,
 		setDensity,
 		setQuality,
-		setExternalWeight,
-		setInternalWeight,
 		minsize,
 		maxsize,
 		minDensity,
 		maxDensity,
 		minQuality,
 		maxQuality,
-		minExternalWeight,
-		maxExternalWeight,
-		minInternalWeight,
-		maxInternalWeight,
 		complexCounter,
 		size,
 		density,
 		quality,
-		externalWeight,
-		internalWeight,
 	} = React.useContext(AppContext);
 
 	const clearSlider = () => {
-		setSize("");
+		setSize([minsize, maxsize]);
 		setDensity("");
 		setQuality("");
-		setExternalWeight("");
-		setInternalWeight("");
 		setCyGraph(cyGraphList[0]);
 	};
 
@@ -57,12 +47,10 @@ const ClusterFilter = () => {
 				}
 			}
 			if (auxfilter.length === 0) {
-				console.log("No hay grafos con p-value > 0.05");
 				setComplexList(cyGraphList);
 				setComplexCounter(cyGraphList.length);
 				setCyGraph(cyGraphList[0]);
 			}else{
-				console.log("Hay grafos con p-value > 0.05");
 				setComplexList(auxfilter);
 				setComplexCounter(auxfilter.length);
 				setCyGraph(auxfilter[0]);
@@ -75,11 +63,9 @@ const ClusterFilter = () => {
 				}
 			}
 			if (auxfilter.length === 0) {
-				console.log("No hay grafos con p-value <= 0.05");
 				setComplexList(cyGraphList);
 				setCyGraph(cyGraphList[0]);
 			}else{
-				console.log("Hay grafos con p-value <= 0.05");
 				setComplexList(auxfilter);
 				setComplexCounter(auxfilter.length);
 				setCyGraph(auxfilter[0]);
@@ -92,12 +78,10 @@ const ClusterFilter = () => {
 				}
 			}
 			if (auxfilter.length === 0) {
-				console.log("No hay grafos con p-value <= 0.01");
 				setComplexList(cyGraphList);
 				setComplexCounter(cyGraphList.length);
 				setCyGraph(cyGraphList[0]);
 			}else{
-				console.log("Hay grafos con p-value <= 0.01");
 				setComplexList(auxfilter);
 				setComplexCounter(auxfilter.length);
 				setCyGraph(auxfilter[0]);
@@ -111,12 +95,10 @@ const ClusterFilter = () => {
 				}
 			}
 			if (auxfilter.length === 0) {
-				console.log("No hay grafos con p-value <= 0.001");
 				setComplexList(cyGraphList);
 				setComplexCounter(cyGraphList.length);
 				setCyGraph(cyGraphList[0]);
 			}else{
-				console.log("Hay grafos con p-value <= 0.001");
 				console.log(auxfilter);
 				setComplexList(auxfilter);
 				setComplexCounter(auxfilter.length);
@@ -132,86 +114,24 @@ const ClusterFilter = () => {
 
 	const handleSliderSizeChange = (event, newValue) => {
 		setSize(newValue);
+		let minVal = newValue[0];
+		let maxVal = newValue[1];
 		let auxfilter = [];
 		for (let i = 0; i < complexList.length; i++) {
-			if (density === "" && quality === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo size");
-				if (complexList[i].size <= newValue) {
+			if (density === "" && quality === "") {
+				if (complexList[i].size >= minVal && complexList[i].size <= maxVal) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (density !== "" && quality === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo density y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density) {
+			} else if (density !== "" && quality === "") {
+				if (complexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].density <= density) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (density === "" && quality !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo quality y size");
-				if (complexList[i].size <= newValue && complexList[i].quality <= quality) {
+			} else if (density === "" && quality !== "") {
+				if (complexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].quality <= quality) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (density === "" && quality === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo external_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density === "" && quality === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo density, quality y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo density, external_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo density, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density === "" && quality !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo quality, external_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density === "" && quality !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo quality, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density === "" && quality === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo external_weight, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo density, quality, external_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo density, quality, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo density, external_weight, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density === "" && quality !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo quality, external_weight, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (density !== "" && quality !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo density, quality, external_weight, internal_weight y size");
-				if (complexList[i].size <= newValue && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
+			} else if (density !== "" && quality !== "") {
+				if (complexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].density <= density && complexList[i].quality <= quality) {
 					auxfilter.push(complexList[i]);
 				}
 			}
@@ -233,84 +153,24 @@ const ClusterFilter = () => {
 		setDensity(newValue);
 		let auxfilter = [];
 		for (let i = 0; i < complexList.length; i++) {
-			if (size === "" && quality === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo density");
+			if (size === "" && quality === "") {
 				if (complexList[i].density <= newValue) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size !== "" && quality === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo size y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size) {
+			} else if (size !== "" && quality === "") {
+				let minVal = size[0];
+				let maxVal = size[1];
+				if (complexList[i].density >= newValue && complexList[i].size >= minVal && complexList[i].size <= maxVal) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size === "" && quality !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo quality y density");
+			} else if (size === "" && quality !== "") {
 				if (complexList[i].density <= newValue && complexList[i].quality <= quality) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size === "" && quality === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo external_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && quality === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo size, quality y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo size, external_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo size, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && quality !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo quality, external_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && quality !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo quality, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && quality === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo external_weight, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo size, quality, external_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo size, quality, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo size, external_weight, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && quality !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo quality, external_weight, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && quality !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo size, quality, external_weight, internal_weight y density");
-				if (complexList[i].density <= newValue && complexList[i].size <= size && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
+			} else if (size !== "" && quality !== "") {
+				let minVal = size[0];
+				let maxVal = size[1];
+				if (complexList[i].density <= newValue && omplexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].quality <= quality) {
 					auxfilter.push(complexList[i]);
 				}
 			}
@@ -332,84 +192,24 @@ const ClusterFilter = () => {
 		setQuality(newValue);
 		let auxfilter = [];
 		for (let i = 0; i < complexList.length; i++) {
-			if (size === "" && density === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo quality");
+			if (size === "" && density === "") {
 				if (complexList[i].quality <= newValue) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size !== "" && density === "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo size y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size) {
+			} else if (size !== "" && density === "") {
+				let minVal = size[0];
+				let maxVal = size[1];
+				if (complexList[i].quality <= newValue && complexList[i].size >= minVal && complexList[i].size <= maxVal) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size === "" && density !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo density y quality");
+			} else if (size === "" && density !== "") {
 				if (complexList[i].quality <= newValue && complexList[i].density <= density) {
 					auxfilter.push(complexList[i]);
 				}
-			} else if (size === "" && density === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo external_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && externalWeight === "" && internalWeight === "") {
-				console.log("Solo size, density y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].density <= density) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo size, external_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo size, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo density, external_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].density <= density && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo density, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].density <= density && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo external_weight, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && externalWeight !== "" && internalWeight === "") {
-				console.log("Solo size, density, external_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && externalWeight === "" && internalWeight !== "") {
-				console.log("Solo size, density, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo size, external_weight, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo density, external_weight, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].density <= density && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && externalWeight !== "" && internalWeight !== "") {
-				console.log("Solo size, density, external_weight, internal_weight y quality");
-				if (complexList[i].quality <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].external_weight <= externalWeight && complexList[i].internal_weight <= internalWeight) {
+			} else if (size !== "" && density !== "") {
+				let minVal = size[0];
+				let maxVal = size[1];
+				if (complexList[i].quality <= newValue && complexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].density <= density) {
 					auxfilter.push(complexList[i]);
 				}
 			}
@@ -426,205 +226,6 @@ const ClusterFilter = () => {
 			setCyGraph(auxfilter[0]);
 		}
 	};
-
-	const handleSliderExternalWeightChange = (event, newValue) => {
-		setExternalWeight(newValue);
-		let auxfilter = [];
-		for (let i = 0; i < complexList.length; i++) {
-			if (size === "" && density === "" && quality === "" && internalWeight === "") {
-				console.log("Solo external_weight");
-				if (complexList[i].external_weight <= newValue) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality === "" && internalWeight === "") {
-				console.log("Solo size y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality === "" && internalWeight === "") {
-				console.log("Solo density y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].density <= density) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality !== "" && internalWeight === "") {
-				console.log("Solo quality y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality === "" && internalWeight !== "") {
-				console.log("Solo internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality === "" && internalWeight === "") {
-				console.log("Solo size, density y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality !== "" && internalWeight === "") {
-				console.log("Solo size, quality y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality === "" && internalWeight !== "") {
-				console.log("Solo size, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality !== "" && internalWeight === "") {
-				console.log("Solo density, quality y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].density <= density && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality === "" && internalWeight !== "") {
-				console.log("Solo density, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].density <= density && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality !== "" && internalWeight !== "") {
-				console.log("Solo quality, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality !== "" && internalWeight === "") {
-				console.log("Solo size, density, quality y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality === "" && internalWeight !== "") {
-				console.log("Solo size, density, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality !== "" && internalWeight !== "") {
-				console.log("Solo size, quality, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality !== "" && internalWeight !== "") {
-				console.log("Solo density, quality, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality !== "" && internalWeight !== "") {
-				console.log("Solo size, density, quality, internal_weight y external_weight");
-				if (complexList[i].external_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].internal_weight <= internalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			}
-		}
-		if (auxfilter.length === 0) {
-			console.log("No hay grafos con external_weight <= " + newValue);
-			setComplexList(cyGraphList);
-			setComplexCounter(cyGraphList.length);
-			clearSlider();
-		}else{
-			console.log("Hay grafos con external_weight <= " + newValue);
-			setComplexList(auxfilter);
-			setComplexCounter(auxfilter.length);
-			setCyGraph(auxfilter[0]);
-		}
-	};
-
-	const handleSliderInternalWeightChange = (event, newValue) => {
-		setInternalWeight(newValue);
-		let auxfilter = [];
-		for (let i = 0; i < complexList.length; i++) {
-			if (size === "" && density === "" && quality === "" && externalWeight === "") {
-				console.log("Solo internal_weight");
-				if (complexList[i].internal_weight <= newValue) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality === "" && externalWeight === "") {
-				console.log("Solo size y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality === "" && externalWeight === "") {
-				console.log("Solo density y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].density <= density) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality !== "" && externalWeight === "") {
-				console.log("Solo quality y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality === "" && externalWeight !== "") {
-				console.log("Solo external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality === "" && externalWeight === "") {
-				console.log("Solo size, density y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality !== "" && externalWeight === "") {
-				console.log("Solo size, quality y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality === "" && externalWeight !== "") {
-				console.log("Solo size, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality !== "" && externalWeight === "") {
-				console.log("Solo density, quality y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].density <= density && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality === "" && externalWeight !== "") {
-				console.log("Solo density, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].density <= density && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density === "" && quality !== "" && externalWeight !== "") {
-				console.log("Solo quality, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality !== "" && externalWeight === "") {
-				console.log("Solo size, density, quality y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].quality <= quality) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality === "" && externalWeight !== "") {
-				console.log("Solo size, density, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density === "" && quality !== "" && externalWeight !== "") {
-				console.log("Solo size, quality, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size === "" && density !== "" && quality !== "" && externalWeight !== "") {
-				console.log("Solo density, quality, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			} else if (size !== "" && density !== "" && quality !== "" && externalWeight !== "") {
-				console.log("Solo size, density, quality, external_weight y internal_weight");
-				if (complexList[i].internal_weight <= newValue && complexList[i].size <= size && complexList[i].density <= density && complexList[i].quality <= quality && complexList[i].external_weight <= externalWeight) {
-					auxfilter.push(complexList[i]);
-				}
-			}
-		}
-		if (auxfilter.length === 0) {
-			console.log("No hay grafos con internal_weight <= " + newValue);
-			setComplexList(cyGraphList);
-			setComplexCounter(cyGraphList.length);
-			clearSlider();
-		}else{
-			console.log("Hay grafos con internal_weight <= " + newValue);
-			setComplexList(auxfilter);
-			setComplexCounter(auxfilter.length);
-			setCyGraph(auxfilter[0]);
-		}
-	};
-
 
 	return (
 		<div className="complex" id="cfilter">
@@ -666,10 +267,10 @@ const ClusterFilter = () => {
 				onChange={handleSignificancePvalueChange}
 			>	
 				<option value="clear">All p-values</option>
-				<option value="p > 0.05">Not significant p-value</option>
-				<option value="p <= 0.05">Significant p-value</option>
-				<option value="p <= 0.01">Very significant p-value</option>
-				<option value="p <= 0.001">Highly significant p-value</option>
+				<option value="p > 0.05">Not significant p-value {"(p > 0.05)"}</option>
+				<option value="p <= 0.05">Significant p-value {"(p <= 0.05)"}</option>
+				<option value="p <= 0.01">Very significant p-value {"(p <= 0.01)"}</option>
+				<option value="p <= 0.001">Highly significant p-value {"(p <= 0.001)"}</option>
 			</select>
 			
 			<div
@@ -683,15 +284,15 @@ const ClusterFilter = () => {
 				Size
 			</div>
 			<Slider
-				defaultValue={minsize}
-				valueLabelDisplay="auto"
-				step={1}
-				marks={false}
+				getAriaLabel={() => 'Temperature range'}
+				value={size}
 				min={minsize}
 				max={maxsize}
+				step={1}
+				marks={false}
 				onChange={handleSliderSizeChange}
+				valueLabelDisplay="auto"
 			/>
-			
 			<div
 				style={{
 					display: "flex",
@@ -720,7 +321,7 @@ const ClusterFilter = () => {
 					justifyContent: "left",
 					fontSize: "15px"
 				}}>
-				Quality
+				Cohesiveness
 			</div>
 			<Slider
 				defaultValue={minQuality}
@@ -731,47 +332,6 @@ const ClusterFilter = () => {
 				max={maxQuality}
 				onChange={handleSliderQualityChange}
 			/>
-			
-			<div
-				style={{
-					display: "flex",
-					marginTop: "15px",
-					marginBottom: "15px",
-					justifyContent: "left",
-					fontSize: "15px"
-				}}>
-				External Weight
-			</div>
-			<Slider
-				defaultValue={minExternalWeight}
-				valueLabelDisplay="auto"
-				step={1}
-				marks={false}
-				min={minExternalWeight}
-				max={maxExternalWeight}
-				onChange={handleSliderExternalWeightChange}
-			/>
-			
-			<div
-				style={{
-					display: "flex",
-					marginTop: "15px",
-					marginBottom: "15px",
-					justifyContent: "left",
-					fontSize: "15px"
-				}}>
-				Internal Weight
-			</div>
-			<Slider
-				defaultValue={minInternalWeight}
-				valueLabelDisplay="auto"
-				step={1}
-				marks={false}
-				min={minInternalWeight}
-				max={maxInternalWeight}
-				onChange={handleSliderInternalWeightChange}
-			/>
-			
 			<button
 				style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
 				onClick={clearClusterFilter}>

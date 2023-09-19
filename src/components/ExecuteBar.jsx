@@ -2,6 +2,7 @@ import React from "react";
 import { Layout } from "./Layout.jsx";
 import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
+import { ClusterOneParams } from "./ClusterOneParams.jsx";
 
 
 import "../styles/ExecuteBar.scss";
@@ -13,6 +14,8 @@ const ExecuteBar = ({ href, label }) => {
         quickRunClusterOne,
         ppiId,
 		setLoading,
+		clusterOneParam,
+		runClusterOneParams,
     } = React.useContext(AppContext);
 	
     return (
@@ -78,13 +81,9 @@ const ExecuteBar = ({ href, label }) => {
 				classname={"runClusterOneButton"}
 				message={"with default parameters"}
 			/>
-			<RunFunctionButton
+			<ClusterOneParams
 				label="Run ClusterONE"
 				icon="fa fa-play"
-				onClickFunction={() => {
-                    setLoading(true);
-                    console.log("Run ClusterONE")
-                }}
 				classname={"runClusterOneButton"}
 				message={"with custom parameters"}
 			/>
