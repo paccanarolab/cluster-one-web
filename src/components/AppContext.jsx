@@ -133,6 +133,8 @@ function AppContextProvider ({ children }) {
         maxOverlap: "",
         penalty: 2,
     });
+    const [modalOpen, setModalOpen] = React.useState(false);
+
 
 
     // Clear functions
@@ -383,6 +385,7 @@ function AppContextProvider ({ children }) {
             density,
             quality,
             clusterOneParams,
+            modalOpen,
             clearClusterFilter,
             uploadFilePpi,
             quickRunClusterOne,
@@ -403,6 +406,7 @@ function AppContextProvider ({ children }) {
             setShowHighlight,
             setClusterOneParams,
             runClusterOneParams,
+            setModalOpen,
         }}>
             {children}
         </AppContext.Provider>
