@@ -122,9 +122,17 @@ function AppContextProvider ({ children }) {
     const [maxDensity, setMaxDensity] = React.useState(1);
     const [minQuality, setMinQuality] = React.useState(0);
     const [maxQuality, setMaxQuality] = React.useState(1);
-    const [size, setSize] = React.useState("");
+    const [size, setSize] = React.useState([minsize, maxsize]);
     const [density, setDensity] = React.useState("");
     const [quality, setQuality] = React.useState("");
+
+    // Cluster One Execution Params
+    const [clusterOneParams, setClusterOneParams] = React.useState({
+        minSize: "",
+        minDensity: "",
+        maxOverlap: "",
+        penalty: 2,
+    });
 
 
     // Clear functions
@@ -159,6 +167,53 @@ function AppContextProvider ({ children }) {
         try {
             const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
                 method: 'POST'
+            });
+            const data = await response.json();
+            let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
+            let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
+            let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
+            let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
+            let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
+            let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
+            setMinSize(minSizeData);
+            setMaxSize(maxSizeData);
+            setMinDensity(minDensityData);
+            setMaxDensity(maxDensityData);
+            setMinQuality(minQualityData);
+            setMaxQuality(maxQualityData);
+            setComplexList(data);
+            setCyGraphList(data);
+            setComplexCounter(data.length);
+            setCyGraph(data[0]);
+            setLoading(false);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+            setLoading(false);
+        }
+    }
+
+    const runClusterOneParams = async (ppi_id, params) => {
+        // Uses the ppi_id state to call the API and get the clusters
+        var minSizeValue = params.minSize;
+        var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+        var minDensityValue = params.minDensity;
+        var maxOverlapValue = params.maxOverlap;
+        var penaltyValue = params.penalty;
+        if (minSizeValue !== "") {
+            var baseUrl = baseUrl + `&min_size=${minSizeValue}`;
+        }
+        if (minDensityValue !== "") {
+            var baseUrl = baseUrl + `&min_density=${minDensityValue}`;
+        }
+        if (maxOverlapValue !== "") {
+            var baseUrl = baseUrl + `&max_overlap=${maxOverlapValue}`;
+        }
+        if (penaltyValue !== "") {
+            var baseUrl = baseUrl + `&penalty=${penaltyValue}`;
+        }
+        try {
+            const response = await fetch(baseUrl, {
+                method: 'POST',
             });
             const data = await response.json();
             let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
@@ -327,6 +382,7 @@ function AppContextProvider ({ children }) {
             size,
             density,
             quality,
+            clusterOneParams,
             clearClusterFilter,
             uploadFilePpi,
             quickRunClusterOne,
@@ -345,6 +401,8 @@ function AppContextProvider ({ children }) {
             setDensity,
             setQuality,
             setShowHighlight,
+            setClusterOneParams,
+            runClusterOneParams,
         }}>
             {children}
         </AppContext.Provider>
