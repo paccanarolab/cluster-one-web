@@ -7,8 +7,6 @@ You can visualize, filter and manipulate the results in a graph interface. 📊
 TODO: 👨🏼‍🎓
 
 - Show protein panel with the information of the protein.
-- Modal with form to select the parameters of the algorithm.
-- Modal with form to select the PPI.
 - Modal with information of how to use ClusterOne Web.
 - Dockerize the app. 🐳
 - Deploy the app.
