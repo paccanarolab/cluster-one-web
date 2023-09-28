@@ -21,8 +21,10 @@ const AppUi = () => {
         fundacionImage,
         clusterOneManual,
         cyGraph,
+        cyGraphList,
         loading,
         setCyEvent,
+        setCyGraph
     } = React.useContext(AppContext);
     return (
         <React.Fragment>
@@ -55,12 +57,12 @@ const AppUi = () => {
                     elements={
                         CytoscapeComponent.normalizeElements(cyGraph)
                     }
-                    pan={{ x: 0, y: 0 }}
+                    pan={{ x: 30, y: 0 }}
                     style={{ width: "100%", height: "100%"}}
                     zoomingEnabled={true}
                     maxZoom={3}
                     minZoom={0.1}
-                    zoom={1}
+                    zoom={0.5}
                     autounselectify={false}
                     boxSelectionEnabled={true}
                     layout={layout}
@@ -72,22 +74,36 @@ const AppUi = () => {
                                 var node = evt.target;
                                 var nodePosition = node.position();
                                 node.on("dblclick", function(evt) {
-                                    cy.zoom({
-                                        level: 2,
-                                        position: { x: nodePosition.x, y: nodePosition.y } // node.position.x, node.position.y
-                                    });
+                                    if (node.data('type') === "proteinComplex") {
+                                        console.log("Is CLuster!");
+                                        var node_id = node.data('id');
+                                        cyGraphList.forEach((graph) => {
+                                            if (graph.code === node_id) {
+                                                setCyGraph(graph);
+                                            }
+                                        });
+                                    } else {
+                                        // Cuando quiera que sea mas animado el zoom, descomentar esto:
+                                        // console.log("Node: ", node);
+                                        // cy.animate({
+                                        //     fit: {
+                                        //         eles: node,
+                                        //         padding: 50
+                                        //     },
+                                        //     duration: 1000
+                                        // });
+                                        cy.zoom({
+                                            level: 1,
+                                            position: { x: nodePosition.x, y: nodePosition.y }
+                                        });
+                                    }
                                 });
+                                
                                 node.on("click", function(evt) {
                                     let connectedEdges = node.connectedEdges();
                                     connectedEdges.forEach(edge => {
                                             console.log("Edge: ", edge);
-                                            edge.style("line-color", "red");
-                                            // let actualColor = edge.style("line-color");
-                                            // if (actualColor === "#AAD8FF") {
-                                            //     edge.style("line-color", "red");
-                                            // } else {
-                                            //     edge.style("line-color", "#AAD8FF");
-                                            // }
+                                            edge.style("line-color", "#C65151");
                                         }
                                     );
                                 });
@@ -132,7 +148,7 @@ const AppUi = () => {
                         }
                     }
                 >
-                    Running ClusterONE and storing results...
+                    Running ClusterONE and storing results... you can go for a coffee ☕️!
                 </Typography>
               </Backdrop>
             }

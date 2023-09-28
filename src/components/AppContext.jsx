@@ -5,40 +5,51 @@ const AppContext = React.createContext();
 function AppContextProvider ({ children }) {
     // Constants and initial values
     const initiallayout = {
-        name: "circle",
+        name: 'cose',
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
+        // nodeOverlap: 4, 
+        refresh: 20,
         fit: true,
-        padding: 30,
-        sort: function(a, b){ return a.degree() - b.degree(); },
+        padding: 40,
+        randomize: false,
+        componentSpacing: 300,
+        nodeRepulsion: 8000000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0,
         animate: true,
-        animationDuration: 1000,
+        minNodeSpacing: 100,
         avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
     };
 
     const stylesheet = [
         {
-            selector: "node",
+            selector: "node[type='protein']",
             style: {
-                backgroundColor: "#4a56a6",
+                backgroundColor: "#618CB3",
                 width: 30,
                 height: 30,
                 label: "data(label)",
-    
-                // "width": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-                // "height": "mapData(score, 0, 0.006769776522008331, 20, 60)",
-                // "text-valign": "center",
-                // "text-halign": "center",
                 "overlay-padding": "6px",
                 "z-index": "10",
                 //text props
-                "text-outline-color": "#4a56a6",
+                "text-outline-color": "#618CB3",
                 "text-outline-width": "2px",
                 color: "white",
                 fontSize: 20
             }
         },
         {
-            selector: "node:selected",
+            selector: "node[type='protein']:selected",
             style: {
                 "border-width": "6px",
                 "border-color": "#AAD8FF",
@@ -52,11 +63,41 @@ function AppContextProvider ({ children }) {
             }
         },
         {
+            selector: "node[type='proteinComplex']",
+            style: {
+                // shape: "rectangle",
+                width: 120,
+                height: 120,
+                backgroundColor: "#B185B8",
+                label: "data(label)",
+                //text props
+                "text-outline-color": "#B185B8",
+                "text-outline-width": 8,
+                color: "white",
+                fontSize: 20
+            }
+    },
+        {
+            selector: "node[type='proteinComplex']:selected",
+            style: {
+                "border-width": "6px",
+                "border-color": "#AAD8FF",
+                "border-opacity": "0.5",
+                "background-color": "#77828C",
+                width: 180,
+                height: 180,
+                //text props
+                "text-outline-color": "#77828C",
+                "text-outline-width": 8
+            }
+        },
+        {
             selector: "edge",
             style: {
                 width: 2,
-                "line-color": "#AAD8FF",
-                "curve-style": "bezier"
+                "line-color": "#618CB3",
+                "curve-style": "bezier",
+                // label: "data(label)",
             }
         }
     ];
@@ -68,8 +109,6 @@ function AppContextProvider ({ children }) {
         size: "",
         minDensity: "",
         minQuality: "",
-        externalWeight: "",
-        internalWeight: "",
         p_value: "",
     };
 
@@ -224,6 +263,7 @@ function AppContextProvider ({ children }) {
             let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
             let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
             let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
+            // let _data = dataParser(data);
             setMinSize(minSizeData);
             setMaxSize(maxSizeData);
             setMinDensity(minDensityData);
@@ -265,7 +305,24 @@ function AppContextProvider ({ children }) {
             const data = await response.json();
             return data.proteins;
         } catch (error) {
-            console.error("There was an error fetching the data:", error);
+            // search protein by cluster id
+            let graph = cyGraph.nodes.filter(
+                this.data.code === clusterId
+            );
+            let nodes = graph[0].nodes;
+            let proteins = [];
+            nodes.forEach((node) => {
+                if (node.type === "protein") {
+                    proteins.push({
+                        id: node.id,
+                        name: node.label,
+                        description: "Automatic node created from PPI file",
+                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.label}`,
+                    });
+                }
+            }
+            );
+            return proteins;
         }
     }
 
@@ -318,38 +375,37 @@ function AppContextProvider ({ children }) {
 	}, [complexCounter]);
 
     React.useEffect(() => {
-        console.log("Show Highlight: UseEffect", showHighlight);
         if (cyEvent === "") {
             return;
         }
         if (showHighlight) {
             let nodes = cyEvent.nodes()
-            let node = nodes.forEach((node) => {
+            nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
                     node.style(
-                        "background-color", "#ff0000");
+                        "background-color", "#C65151");
                     node.style(
                         "width", 50);
                     node.style(
                         "height", 50);
                     node.style(
-                        "text-outline-color", "#ff0000");
+                        "text-outline-color", "#C65151");
                     node.style(
                         "text-outline-width", 8);
                 }
             });
         } else {
             let nodes = cyEvent.nodes()
-            let node = nodes.forEach((node) => {
+            nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
                     node.style(
-                        "background-color", "#4a56a6");
+                        "background-color", "#618CB3");
                     node.style(
                         "width", 30);
                     node.style(
                         "height", 30);
                     node.style(
-                        "text-outline-color", "#4a56a6");
+                        "text-outline-color", "#618CB3");
                     node.style(
                         "text-outline-width", 2);
                 }

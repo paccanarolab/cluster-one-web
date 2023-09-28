@@ -5,6 +5,12 @@ const AvailableLayouts = [
     {
         name: "random",
         fit: true,
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
         // circle: true,
         directed: true,
         padding: 50,
@@ -31,7 +37,13 @@ const AvailableLayouts = [
         animate: true,
         animationDuration: 1000,
         avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
+        nodeDimensionsIncludeLabels: false,
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
     },
     {
         name: "concentric",
@@ -41,7 +53,13 @@ const AvailableLayouts = [
         animate: true,
         animationDuration: 1000,
         avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
+        nodeDimensionsIncludeLabels: false,
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
     },
     {
         name: "breadthfirst",
@@ -51,18 +69,40 @@ const AvailableLayouts = [
         animate: true,
         animationDuration: 1000,
         avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
+        nodeDimensionsIncludeLabels: false,
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
     },
     {
-        name: "cose",
+        name: 'cose',
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
+        // nodeOverlap: 4, 
+        refresh: 20,
         fit: true,
-        padding: 50,
+        padding: 40,
+        randomize: false,
+        componentSpacing: 300,
+        nodeRepulsion: 8000000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0,
         animate: true,
-        animationDuration: 1000,
+        minNodeSpacing: 100,
         avoidOverlap: true,
-        nodeDimensionsIncludeLabels: false
     },
-   // Puedes agregar más layouts si lo necesitas
 ];
 
 const Layout = ({classname}) => {
