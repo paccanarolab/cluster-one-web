@@ -3,6 +3,7 @@ import { Layout } from "./Layout.jsx";
 import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
 import { ClusterOneParams } from "./ClusterOneParams.jsx";
+import {SelectPPiOptions} from "./SelectPPiOptions.jsx";
 
 
 import "../styles/ExecuteBar.scss";
@@ -13,11 +14,13 @@ const ExecuteBar = ({ href, label }) => {
         uploadFilePpi,
         quickRunClusterOne,
         ppiId,
+		modalOpen,
 		setLoading,
-		clusterOneParam,
-		runClusterOneParams,
+		setModalOpen,
+		getAllPpi,
     } = React.useContext(AppContext);
 	
+
     return (
 		<div className="config" id="config">
 			<div
@@ -48,13 +51,24 @@ const ExecuteBar = ({ href, label }) => {
                 <Layout classname="config-dropdown" />
             </div>
 			
-			
-
-			<RunFunctionButton
+			{/*<RunFunctionButton
 				label="Select an example PPI"
 				icon="fa fa-search"
 				onClickFunction={
                     () => console.log("Explore PPI")
+                }
+				classname={"explorePpiButton"}
+			/>*/}
+			<SelectPPiOptions
+				open={modalOpen}
+				handleClose={() => setModalOpen(false)}
+				label="Select an example PPI"
+				icon="fa fa-search"
+				onClickFunction={
+                    () => {
+						getAllPpi();
+						setModalOpen(true)
+					}
                 }
 				classname={"explorePpiButton"}
 			/>

@@ -5,6 +5,7 @@ const DotEnv = require('dotenv-webpack');
 const CssMiniMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -60,6 +61,14 @@ module.exports = {
         }),
         new DotEnv(),
         new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'public', 'labico.png'),
+                    to: 'favicon.png'
+                }
+            ]
+        })
     ],
     optmization: {
         minimize: true,
