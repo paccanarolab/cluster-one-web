@@ -9,6 +9,7 @@ import { AppContext } from "./AppContext.jsx";
 import { Backdrop, CircularProgress } from '@mui/material';
 import { CheckboxLabels } from "./CheckboxLabels.jsx";
 import { Typography } from "@mui/material";
+import { Enrichment } from "./Enrichment.jsx";
 
 import "../styles/global.scss"
 
@@ -154,6 +155,7 @@ const AppUi = () => {
             }
             <DownloadButton />
             <InfoButton />
+            <Enrichment/>
         </React.Fragment>
     );
 };
