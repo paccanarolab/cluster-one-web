@@ -1,0 +1,15 @@
+.enrichmentContainer {
+    background-color: transparent;
+    color: white;
+    border: 1px solid black;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    /* Sombra ligera */
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.enrichmentContainer:hover {
+    transform: scale(1.05);
+}
