@@ -97,7 +97,7 @@ function AppContextProvider ({ children }) {
                 width: 2,
                 "line-color": "#618CB3",
                 "curve-style": "bezier",
-                // label: "data(label)",
+                label: "data(label)",
             }
         }
     ];
@@ -175,7 +175,6 @@ function AppContextProvider ({ children }) {
     const [modalOpen, setModalOpen] = React.useState(false);
 
 
-
     // Clear functions
     const clearClusterFilter = () => {
         setComplexList(cyGraphList);
@@ -202,6 +201,24 @@ function AppContextProvider ({ children }) {
             }
         }
     };
+
+    const updateRedis = async (ppi_id) => {
+        // This function is called when the user uploads a file and charges it to the API
+        let ppi = ppiList.filter(
+            (ppi) => {
+                return ppi.id === ppi_id;
+            }
+        );
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/graph/ppi/preloaded/update/?file_name=${ppi[0].file_name}`, {
+                method: 'POST'
+            });
+            const data = await response.json();
+            console.log("Data: ", data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
 
     const quickRunClusterOne = async (ppi_id) => {
         // Uses the ppi_id state to call the API and get the clusters
@@ -263,7 +280,6 @@ function AppContextProvider ({ children }) {
             let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
             let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
             let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
-            // let _data = dataParser(data);
             setMinSize(minSizeData);
             setMaxSize(maxSizeData);
             setMinDensity(minDensityData);
@@ -301,28 +317,10 @@ function AppContextProvider ({ children }) {
             const response = await fetch(`http://localhost:8203/v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
-
             const data = await response.json();
             return data.proteins;
         } catch (error) {
-            // search protein by cluster id
-            let graph = cyGraph.nodes.filter(
-                this.data.code === clusterId
-            );
-            let nodes = graph[0].nodes;
-            let proteins = [];
-            nodes.forEach((node) => {
-                if (node.type === "protein") {
-                    proteins.push({
-                        id: node.id,
-                        name: node.label,
-                        description: "Automatic node created from PPI file",
-                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.label}`,
-                    });
-                }
-            }
-            );
-            return proteins;
+            console.error("There was an error fetching the data:", error);   
         }
     }
 
@@ -332,12 +330,22 @@ function AppContextProvider ({ children }) {
         if (cyGraph.code === "") {
             return;
         }
-        getProteinDataByCluster(cyGraph.code).then(
-            (data) => {
-                setComplexProteinList(data);
-                console.log("Protein List: ", data);
+        let nodes = cyGraph.nodes;
+        let proteins = [];
+        nodes.forEach(
+            (node) => {
+                if (node.data.type === "protein") {
+                    proteins.push({
+                        id: node.data.id,
+                        name: node.data.label,
+                        description: "Automatic node created from PPI file",
+                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.data.label}`,
+                    });
+                }
             }
         );
+        console.log("Proteins: ", proteins);
+        setComplexProteinList(proteins);
         setShowComplexList(true);
     }, [cyGraph]);
 
@@ -413,6 +421,13 @@ function AppContextProvider ({ children }) {
         }
     }, [showHighlight]);
 
+    React.useEffect(() => {
+        updateRedis(ppiId).then(
+            () => {
+                console.log("Redis updated!");
+            }
+        );
+    }, [ppiId]);
     return (
         <AppContext.Provider value={{
             stylesheet,
