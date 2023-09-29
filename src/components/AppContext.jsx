@@ -317,28 +317,10 @@ function AppContextProvider ({ children }) {
             const response = await fetch(`http://localhost:8203/v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
-
             const data = await response.json();
             return data.proteins;
         } catch (error) {
-            // search protein by cluster id
-            let graph = cyGraph.nodes.filter(
-                this.data.code === clusterId
-            );
-            let nodes = graph[0].nodes;
-            let proteins = [];
-            nodes.forEach((node) => {
-                if (node.type === "protein") {
-                    proteins.push({
-                        id: node.id,
-                        name: node.label,
-                        description: "Automatic node created from PPI file",
-                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.label}`,
-                    });
-                }
-            }
-            );
-            return proteins;
+            console.error("There was an error fetching the data:", error);   
         }
     }
 
@@ -348,12 +330,22 @@ function AppContextProvider ({ children }) {
         if (cyGraph.code === "") {
             return;
         }
-        getProteinDataByCluster(cyGraph.code).then(
-            (data) => {
-                setComplexProteinList(data);
-                console.log("Protein List: ", data);
+        let nodes = cyGraph.nodes;
+        let proteins = [];
+        nodes.forEach(
+            (node) => {
+                if (node.data.type === "protein") {
+                    proteins.push({
+                        id: node.data.id,
+                        name: node.data.label,
+                        description: "Automatic node created from PPI file",
+                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.data.label}`,
+                    });
+                }
             }
         );
+        console.log("Proteins: ", proteins);
+        setComplexProteinList(proteins);
         setShowComplexList(true);
     }, [cyGraph]);
 
