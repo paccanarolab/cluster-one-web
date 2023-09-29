@@ -12,6 +12,10 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { AppContext } from './AppContext';
+import { HorizontalBar } from './HorizontalBar';
+import "../styles/Enrichment.scss"
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -45,6 +49,7 @@ const Enrichment = () => {
                     fontSize: "15px", // tamaño de la letra
                     fontWeight: "bold", // negrita
                 }}
+                className='enrichmentContainer'
             >
                 Enrichment Analysis COMPLEX - {cyGraph.code}
             </Button>
@@ -75,15 +80,23 @@ const Enrichment = () => {
                     </Toolbar>
                 </AppBar>
                 <List>
-                    <ListItem button>
-                        <ListItemText primary="Phone ringtone" secondary="Titania" />
+                    <ListItem>
+                        <ListItemText primary="Biological Process"/>
+                        <HorizontalBar />
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem>
                         <ListItemText
-                        primary="Default notification ringtone"
-                        secondary="Tethys"
+                        primary="Molecular Function"
                         />
+                        <HorizontalBar />
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                        <ListItemText
+                        primary="Cellular Component"
+                        />
+                        <HorizontalBar />
                     </ListItem>
                 </List>
             </Dialog>

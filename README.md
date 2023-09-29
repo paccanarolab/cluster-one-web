@@ -8,7 +8,6 @@ TODO: 👨🏼‍🎓
 
 - Show protein panel with the information of the protein.
 - Modal with information of how to use ClusterOne Web.
-- Modal with Enrichment Analysis.
 - Dockerize the app. 🐳
 - Deploy the app.
 

@@ -30,6 +30,7 @@
     "@babel/preset-react": "^7.22.5",
     "@mui/icons-material": "^5.14.11",
     "@mui/lab": "^5.0.0-alpha.145",
+    "@mui/x-charts": "^6.0.0-alpha.12",
     "@tippyjs/react": "^4.2.6",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
