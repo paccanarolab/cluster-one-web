@@ -14,8 +14,10 @@ const ExecuteBar = ({ href, label }) => {
         uploadFilePpi,
         quickRunClusterOne,
         ppiId,
+		ppiLabel,
 		modalOpen,
 		setLoading,
+		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
     } = React.useContext(AppContext);
@@ -51,14 +53,6 @@ const ExecuteBar = ({ href, label }) => {
                 <Layout classname="config-dropdown" />
             </div>
 			
-			{/*<RunFunctionButton
-				label="Select an example PPI"
-				icon="fa fa-search"
-				onClickFunction={
-                    () => console.log("Explore PPI")
-                }
-				classname={"explorePpiButton"}
-			/>*/}
 			<SelectPPiOptions
 				open={modalOpen}
 				handleClose={() => setModalOpen(false)}
@@ -88,7 +82,7 @@ const ExecuteBar = ({ href, label }) => {
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
 				onClickFunction={() => {
-                    console.log("Quick Run ClusterONE");
+					setLoadingMessage("Running ClusterONE and storing results... you can go for a coffee ☕️!");
                     setLoading(true);
                     quickRunClusterOne(ppiId); 
                 }}
@@ -103,9 +97,9 @@ const ExecuteBar = ({ href, label }) => {
 			/>
             <ClusterFilter />
 			<a className="config-ppi">
-				PPI ID SELECTED: {ppiId}
+				PPI: {ppiLabel}
 			</a>
-			<a href={href} className="config-link">
+			<a href={href} className="config-link" target="_blank" rel="noopener noreferrer">
 				{label}
 			</a>
 		</div>

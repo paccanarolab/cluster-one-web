@@ -24,6 +24,7 @@ const AppUi = () => {
         cyGraph,
         cyGraphList,
         loading,
+        loadingMessage,
         setCyEvent,
         setCyGraph
     } = React.useContext(AppContext);
@@ -149,7 +150,7 @@ const AppUi = () => {
                         }
                     }
                 >
-                    Running ClusterONE and storing results... you can go for a coffee ☕️!
+                    {loadingMessage}
                 </Typography>
               </Backdrop>
             }

@@ -13,6 +13,7 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
   const {
     setClusterOneParams,
     setLoading,
+    setLoadingMessage,
     runClusterOneParams,
     ppiId,
   } = React.useContext(AppContext);
@@ -41,7 +42,7 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
     };
     setClusterOneParams(formData); // Asumo que quieres setear estos datos al contexto
     setOpen(false);
-    console.log("Run ClusterONE");
+    setLoadingMessage("Running ClusterONE and storing results... you can go for a coffee ☕️!");
     setLoading(true);
     runClusterOneParams(ppiId, formData);
   };

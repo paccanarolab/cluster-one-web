@@ -8,7 +8,7 @@ function AppContextProvider ({ children }) {
         name: 'cose',
         idealEdgeLength: function(edge){
             if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
-                return 500; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+                return 5300; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
             }
             return 200; // o cualquier otro valor por defecto que desees.
         },
@@ -26,7 +26,6 @@ function AppContextProvider ({ children }) {
         initialTemp: 200,
         coolingFactor: 0.95,
         minTemp: 1.0,
-        animate: true,
         minNodeSpacing: 100,
         avoidOverlap: true,
     };
@@ -146,11 +145,13 @@ function AppContextProvider ({ children }) {
     const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
+    const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
     
     // Protein Filter States
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
     const [showComplexList, setShowComplexList] = React.useState(false); // Show or hide the cluster list
     const [ppiId, setPpiId] = React.useState("");
+    const [ppiLabel, setPpiLabel] = React.useState(""); // PPI Label Uses in selected our ppi
     const [loading, setLoading] = React.useState(false); // Loading state
     const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
 
@@ -195,7 +196,8 @@ function AppContextProvider ({ children }) {
                     body: formData,
                 });
                 const data = await response.json();
-                setPpiId(data.id); // esto guardaremos en el local storage
+                setPpiId(data.id);
+                setPpiLabel(data.name);
             } catch (error) {
                 console.error("There was an error uploading the file:", error);
             }
@@ -214,7 +216,7 @@ function AppContextProvider ({ children }) {
                 method: 'POST'
             });
             const data = await response.json();
-            console.log("Data: ", data);
+            return data;
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
@@ -422,12 +424,33 @@ function AppContextProvider ({ children }) {
     }, [showHighlight]);
 
     React.useEffect(() => {
-        updateRedis(ppiId).then(
-            () => {
-                console.log("Redis updated!");
-            }
-        );
+        if (ppiId === "") {
+            return;
+        }
+        setCyGraphList([initialGraphData]);
+        setComplexList([initialGraphData]);
+        setComplexCounter(0);
+        setCyGraph(initialGraphData);
+        setComplexProteinList([initialProteinData]);
+        setLoadingMessage("Processing PPI.. Wait a moment please🧬");
+        updateRedis(ppiId).then(() => {
+            console.log("Update Redis"); 
+        });
+        
+        setLoading(true);
+        console.log("set loading true");
+    
+        // Configura el temporizador para cambiar el estado después de 15 segundos
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 40000);  // 40000 milisegundos
+    
+        // Limpia el temporizador si el componente se desmonta
+        return () => {
+            clearTimeout(timer);
+        };
     }, [ppiId]);
+    
     return (
         <AppContext.Provider value={{
             stylesheet,
@@ -436,6 +459,7 @@ function AppContextProvider ({ children }) {
             clusterOneManual,
             layout,
             ppiId,
+            ppiLabel,
             proteinId,
             cyGraph,
             cyEvent,
@@ -457,6 +481,7 @@ function AppContextProvider ({ children }) {
             quality,
             clusterOneParams,
             modalOpen,
+            loadingMessage,
             clearClusterFilter,
             uploadFilePpi,
             quickRunClusterOne,
@@ -478,6 +503,8 @@ function AppContextProvider ({ children }) {
             setClusterOneParams,
             runClusterOneParams,
             setModalOpen,
+            setLoadingMessage,
+            setPpiLabel,
         }}>
             {children}
         </AppContext.Provider>
