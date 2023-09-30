@@ -13,6 +13,7 @@ const SelectPPiOptions = ({ open, handleClose, label, icon, onClickFunction, cla
     const [isHovered, setIsHovered] = React.useState(false);
     const {
         setPpiId,
+        setPpiLabel,
         ppiList,
     } = React.useContext(AppContext);
     
@@ -24,6 +25,7 @@ const SelectPPiOptions = ({ open, handleClose, label, icon, onClickFunction, cla
     const handleConfirm = () => {
         console.log('Selected Option:', selectedOption);
         setPpiId(selectedOption.id);
+        setPpiLabel(selectedOption.name);
         handleClose();
     };
 
