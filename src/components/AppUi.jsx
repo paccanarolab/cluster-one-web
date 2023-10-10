@@ -26,12 +26,51 @@ const AppUi = () => {
         loading,
         loadingMessage,
         setCyEvent,
-        setCyGraph
+        setCyGraph,
+        setShowHighlight,
+        setShowWeight,
     } = React.useContext(AppContext);
     return (
         <React.Fragment>
             <ProteinFilter />
-            <CheckboxLabels />
+            <CheckboxLabels 
+                label={"Highlight overlapping proteins"}
+                onChangeFunc={
+                    (event) => {
+                        setShowHighlight(event.target.checked)
+                    }
+                }
+                style={
+                    {
+                        position: "absolute",
+                        top: "0px",
+                        right: "0px",
+                        margin: "10px",
+                        zIndex: "1000",
+                        top: "3%",
+                        left: "38%",
+                    }
+                }
+            />
+            <CheckboxLabels
+                label={"Show weight"}
+                onChangeFunc={
+                    (event) => {
+                        setShowWeight(event.target.checked)
+                    }
+                }
+                style={
+                    {
+                        position: "absolute",
+                        top: "0px",
+                        right: "0px",
+                        margin: "10px",
+                        zIndex: "1000",
+                        top: "3%",
+                        left: "55%",
+                    }
+                }
+            />
             <ExecuteBar  
                 href={clusterOneManual.href} 
                 label={clusterOneManual.label}
