@@ -96,7 +96,16 @@ function AppContextProvider ({ children }) {
                 width: 2,
                 "line-color": "#618CB3",
                 "curve-style": "bezier",
-                label: "data(label)",
+                label: "",
+            }
+        },
+        {
+            selector: "edge[type='overlapping']",
+            style: {
+                width: 8,
+                "line-color": "#B185B8",
+                "curve-style": "bezier",
+                label: "",
             }
         }
     ];
@@ -154,6 +163,7 @@ function AppContextProvider ({ children }) {
     const [ppiLabel, setPpiLabel] = React.useState(""); // PPI Label Uses in selected our ppi
     const [loading, setLoading] = React.useState(false); // Loading state
     const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
+    const [showWeight, setShowWeight] = React.useState(false); // Highlight state
 
     // Cluster Filter States
     const [minsize, setMinSize] = React.useState(0);
@@ -376,6 +386,8 @@ function AppContextProvider ({ children }) {
             return;
         }
         setLayout(initiallayout);
+        setShowWeight(false);
+        setShowHighlight(false);
     }, [cyGraph]);
 
     React.useEffect(() => {
@@ -424,31 +436,59 @@ function AppContextProvider ({ children }) {
     }, [showHighlight]);
 
     React.useEffect(() => {
+        if (cyEvent === "") {
+            return;
+        }
+        if (showWeight) {
+            // Change style of edges
+            let edges = cyEvent.edges()
+            edges.forEach((edge) => {
+                edge.style(
+                    "label", edge.data().label
+                );
+            });
+        } else {
+            // Change style of edges
+            let edges = cyEvent.edges()
+            edges.forEach((edge) => {
+                edge.style(
+                    "label", ""
+                );
+            });
+        }
+    }, [showWeight]);
+
+    React.useEffect(() => {
         if (ppiId === "") {
             return;
         }
+        let delayfromEp = 0;
         setCyGraphList([initialGraphData]);
         setComplexList([initialGraphData]);
         setComplexCounter(0);
         setCyGraph(initialGraphData);
         setComplexProteinList([initialProteinData]);
         setLoadingMessage("Processing PPI.. Wait a moment please🧬");
-        updateRedis(ppiId).then(() => {
-            console.log("Update Redis"); 
-        });
+        updateRedis(ppiId).then((data) => {
+            const delayfromEp = data.size * 7;
+            console.log("Delay: ", delayfromEp);
+    
+            setLoading(true);
+            console.log("set loading true");
+    
+            // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
+            const timer = setTimeout(() => {
+                setLoading(false);
+            }, delayfromEp);  
         
-        setLoading(true);
-        console.log("set loading true");
+            // Limpia el temporizador si el componente se desmonta
+            return () => {
+                clearTimeout(timer);
+            };
     
-        // Configura el temporizador para cambiar el estado después de 15 segundos
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 40000);  // 40000 milisegundos
-    
-        // Limpia el temporizador si el componente se desmonta
-        return () => {
-            clearTimeout(timer);
-        };
+        }).catch(error => {
+            console.error("Error al obtener datos:", error);
+        });
     }, [ppiId]);
     
     return (
@@ -505,6 +545,7 @@ function AppContextProvider ({ children }) {
             setModalOpen,
             setLoadingMessage,
             setPpiLabel,
+            setShowWeight,
         }}>
             {children}
         </AppContext.Provider>

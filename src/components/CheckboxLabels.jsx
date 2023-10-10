@@ -2,21 +2,12 @@ import React from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { AppContext } from "./AppContext";
 
-const CheckboxLabels = () => {
-  const { setShowHighlight } = React.useContext(AppContext);
+
+const CheckboxLabels = ({label, onChangeFunc, style}) => {
   return (
     <FormGroup 
-      style={{
-        position: "absolute",
-        top: "0px",
-        right: "0px",
-        margin: "10px",
-        zIndex: "1000",
-        top: "3%",
-        left: "38%",
-      }}
+      style={style}
     >
       <FormControlLabel
         control={
@@ -24,11 +15,8 @@ const CheckboxLabels = () => {
             color="secondary"
           />
         }
-        label="Highlight overlapping proteins"
-        onChange={(event) => {
-          console.log("CheckboxLabels: ", event.target.checked);
-          setShowHighlight(event.target.checked)
-        }}
+        label={label}
+        onChange={onChangeFunc}
       />
     </FormGroup>
   );
