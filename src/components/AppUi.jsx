@@ -10,6 +10,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import { CheckboxLabels } from "./CheckboxLabels.jsx";
 import { Typography } from "@mui/material";
 import { Enrichment } from "./Enrichment.jsx";
+import { ProteinModal } from "./ProteinModal.jsx";
 
 import "../styles/global.scss"
 
@@ -29,6 +30,8 @@ const AppUi = () => {
         setCyGraph,
         setShowHighlight,
         setShowWeight,
+        getProteinInfo,
+        setOpenProteinInfo,
     } = React.useContext(AppContext);
     return (
         <React.Fragment>
@@ -141,9 +144,10 @@ const AppUi = () => {
                                 });
                                 
                                 node.on("click", function(evt) {
+                                    getProteinInfo(node.data('label'));
+                                    setOpenProteinInfo(true);
                                     let connectedEdges = node.connectedEdges();
                                     connectedEdges.forEach(edge => {
-                                            console.log("Edge: ", edge);
                                             edge.style("line-color", "#C65151");
                                         }
                                     );
@@ -196,6 +200,7 @@ const AppUi = () => {
             <DownloadButton />
             <InfoButton />
             <Enrichment/>
+            <ProteinModal/>
         </React.Fragment>
     );
 };
