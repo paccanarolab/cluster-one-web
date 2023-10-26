@@ -155,6 +155,7 @@ function AppContextProvider ({ children }) {
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
     const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
+    const [openAboutModal, setOpenAboutModal] = React.useState(false); // About modal state
     
     // Protein Filter States
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
@@ -539,6 +540,7 @@ function AppContextProvider ({ children }) {
             uploadFilePpi,
             openProteinInfo,
             proteinInfo,
+            openAboutModal,
             quickRunClusterOne,
             getProteinDataByCluster,
             setLayout,
@@ -564,6 +566,7 @@ function AppContextProvider ({ children }) {
             setOpenProteinInfo,
             getProteinInfo,
             setProteinInfo,
+            setOpenAboutModal,
         }}>
             {children}
         </AppContext.Provider>

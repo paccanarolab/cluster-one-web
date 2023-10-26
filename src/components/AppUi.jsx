@@ -11,6 +11,7 @@ import { CheckboxLabels } from "./CheckboxLabels.jsx";
 import { Typography } from "@mui/material";
 import { Enrichment } from "./Enrichment.jsx";
 import { ProteinModal } from "./ProteinModal.jsx";
+import { AboutModal } from "./AboutModal.jsx";
 
 import "../styles/global.scss"
 
@@ -198,6 +199,7 @@ const AppUi = () => {
               </Backdrop>
             }
             <DownloadButton />
+            <AboutModal />
             <InfoButton />
             <Enrichment/>
             <ProteinModal/>
