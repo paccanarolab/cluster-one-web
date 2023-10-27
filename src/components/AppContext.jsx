@@ -155,6 +155,7 @@ function AppContextProvider ({ children }) {
     const [proteinId, setProteinId] = React.useState("");
     const [layout, setLayout] = React.useState(initiallayout);
     const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
+    const [openAboutModal, setOpenAboutModal] = React.useState(false); // About modal state
     
     // Protein Filter States
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
@@ -164,6 +165,8 @@ function AppContextProvider ({ children }) {
     const [loading, setLoading] = React.useState(false); // Loading state
     const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
     const [showWeight, setShowWeight] = React.useState(false); // Highlight state
+    const [openProteinInfo, setOpenProteinInfo] = React.useState(false); // Highlight state
+    const [proteinInfo, setProteinInfo] = React.useState(""); // Highlight state
 
     // Cluster Filter States
     const [minsize, setMinSize] = React.useState(0);
@@ -336,6 +339,19 @@ function AppContextProvider ({ children }) {
         }
     }
 
+    const getProteinInfo = async (proteinLabel) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/protein/${proteinLabel}/uniprot/?protein=${proteinLabel}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            setProteinInfo(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
 
     // Use Effects
     React.useEffect(() => {
@@ -365,14 +381,12 @@ function AppContextProvider ({ children }) {
         if (proteinId === "" || cyEvent === "") {
             return;
         }
-        console.log("Protein ID: ", proteinId);
         // get node by id 
         let node = cyEvent.nodes().filter(
             (node) => {
                 return node.data().id === proteinId;
             }
         );
-        console.log("Node: ", node);
         cyEvent.zoom({
             level: 2,
             position: { x: node[0].position().x, y: node[0].position().y }
@@ -524,6 +538,9 @@ function AppContextProvider ({ children }) {
             loadingMessage,
             clearClusterFilter,
             uploadFilePpi,
+            openProteinInfo,
+            proteinInfo,
+            openAboutModal,
             quickRunClusterOne,
             getProteinDataByCluster,
             setLayout,
@@ -546,6 +563,10 @@ function AppContextProvider ({ children }) {
             setLoadingMessage,
             setPpiLabel,
             setShowWeight,
+            setOpenProteinInfo,
+            getProteinInfo,
+            setProteinInfo,
+            setOpenAboutModal,
         }}>
             {children}
         </AppContext.Provider>
