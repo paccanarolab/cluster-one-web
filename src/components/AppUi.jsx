@@ -145,13 +145,15 @@ const AppUi = () => {
                                 });
                                 
                                 node.on("click", function(evt) {
-                                    getProteinInfo(node.data('label'));
-                                    setOpenProteinInfo(true);
-                                    let connectedEdges = node.connectedEdges();
-                                    connectedEdges.forEach(edge => {
-                                            edge.style("line-color", "#C65151");
-                                        }
-                                    );
+                                    if (node.data('type') !== "proteinComplex") {
+                                        getProteinInfo(node.data('label'));
+                                        setOpenProteinInfo(true);
+                                        let connectedEdges = node.connectedEdges();
+                                        connectedEdges.forEach(edge => {
+                                                edge.style("line-color", "#C65151");
+                                            }
+                                        );
+                                    }
                                 });
                             });
                         }
