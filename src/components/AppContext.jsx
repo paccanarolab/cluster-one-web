@@ -188,6 +188,8 @@ function AppContextProvider ({ children }) {
     });
     const [modalOpen, setModalOpen] = React.useState(false);
 
+    // Enrichment States
+    const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
 
     // Clear functions
     const clearClusterFilter = () => {
@@ -535,6 +537,7 @@ function AppContextProvider ({ children }) {
             quality,
             clusterOneParams,
             modalOpen,
+            enrichmentLoading,
             loadingMessage,
             clearClusterFilter,
             uploadFilePpi,
@@ -567,6 +570,7 @@ function AppContextProvider ({ children }) {
             getProteinInfo,
             setProteinInfo,
             setOpenAboutModal,
+            setEnrichmentLoading,
         }}>
             {children}
         </AppContext.Provider>
