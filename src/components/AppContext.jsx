@@ -190,7 +190,7 @@ function AppContextProvider ({ children }) {
 
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
-    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState([]);
+    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState("");
     const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
     const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);

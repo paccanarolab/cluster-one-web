@@ -36,45 +36,51 @@ const AppUi = () => {
     } = React.useContext(AppContext);
     return (
         <React.Fragment>
-            <ProteinFilter />
-            <CheckboxLabels 
-                label={"Highlight overlapping proteins"}
-                onChangeFunc={
-                    (event) => {
-                        setShowHighlight(event.target.checked)
+            {cyGraph.code && <ProteinFilter />}
+            {
+                cyGraph.code &&
+                <CheckboxLabels 
+                    label={"Highlight overlapping proteins"}
+                    onChangeFunc={
+                        (event) => {
+                            setShowHighlight(event.target.checked)
+                        }
                     }
-                }
-                style={
-                    {
-                        position: "absolute",
-                        top: "0px",
-                        right: "0px",
-                        margin: "10px",
-                        zIndex: "1000",
-                        top: "3%",
-                        left: "38%",
+                    style={
+                        {
+                            position: "absolute",
+                            top: "0px",
+                            right: "0px",
+                            margin: "10px",
+                            zIndex: "1000",
+                            top: "3%",
+                            left: "38%",
+                        }
                     }
-                }
-            />
-            <CheckboxLabels
-                label={"Show weight"}
-                onChangeFunc={
-                    (event) => {
-                        setShowWeight(event.target.checked)
+                />
+            }
+            {
+                cyGraph.code &&
+                <CheckboxLabels
+                    label={"Show weight"}
+                    onChangeFunc={
+                        (event) => {
+                            setShowWeight(event.target.checked)
+                        }
                     }
-                }
-                style={
-                    {
-                        position: "absolute",
-                        top: "0px",
-                        right: "0px",
-                        margin: "10px",
-                        zIndex: "1000",
-                        top: "3%",
-                        left: "55%",
+                    style={
+                        {
+                            position: "absolute",
+                            top: "0px",
+                            right: "0px",
+                            margin: "10px",
+                            zIndex: "1000",
+                            top: "3%",
+                            left: "55%",
+                        }
                     }
-                }
-            />
+                />
+            }
             <ExecuteBar  
                 href={clusterOneManual.href} 
                 label={clusterOneManual.label}
@@ -203,7 +209,7 @@ const AppUi = () => {
             <DownloadButton />
             <AboutModal />
             <InfoButton />
-            <Enrichment/>
+            {cyGraph.code && <Enrichment/>}
             <ProteinModal/>
         </React.Fragment>
     );

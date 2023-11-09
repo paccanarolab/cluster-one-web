@@ -38,7 +38,14 @@ const Enrichment = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const listItemStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        fontSize: '3.052rem',
+        fontWeight: 'bold',
+    };
+    
     return (
         <div>
             <Button 
@@ -128,8 +135,18 @@ const Enrichment = () => {
                     </Backdrop>
                 }
                 <List>
-                    <ListItem>
-                        <ListItemText primary="Biological Process"/>
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }
+                        }
+                    >
+                        <ListItemText 
+                            primary="Biological Process"
+                        />
                         {
                             biologicalProcessDataset && 
                             <HorizontalBar 
@@ -138,9 +155,17 @@ const Enrichment = () => {
                         }
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }
+                        }
+                    >
                         <ListItemText
-                        primary="Molecular Function"
+                            primary="Molecular Function"
                         />
                         {
                             molecularFunctionDataset && 
@@ -150,9 +175,17 @@ const Enrichment = () => {
                         }
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }
+                        }
+                    >
                         <ListItemText
-                        primary="Cellular Component"
+                            primary="Cellular Component"
                         />
                         {
                             cellularComponentDataset &&  
