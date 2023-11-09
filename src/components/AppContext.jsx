@@ -190,6 +190,10 @@ function AppContextProvider ({ children }) {
 
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
+    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState([]);
+    const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
+    const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
+    const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
 
     // Clear functions
     const clearClusterFilter = () => {
@@ -354,6 +358,55 @@ function AppContextProvider ({ children }) {
         }
     }
 
+    const getEnrichmentData = async (clusterId) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            console.log("Enrichment Data: ", data);
+            let biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
+            let molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
+            let cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
+            console.log("Biological Process: ", biologicalProcessDataset);
+            console.log("Molecular Function: ", molecularFunctionDataset);
+            console.log("Cellular Component: ", cellularComponentDataset);
+            let biologicalProcessDatasetParsed = biologicalProcessDataset.map(
+                (item) => {
+                    return {
+                        go_label: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                    }
+                }
+            );
+
+            let molecularFunctionDatasetParsed = molecularFunctionDataset.map(
+                (item) => {
+                    return {
+                        go_label: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                    }
+                }
+            );
+            let cellularComponentDatasetParsed = cellularComponentDataset.map(
+                (item) => {
+                    return {
+                        go_label: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                    }
+                }
+            );
+            setEnrichmentDataBase(data);
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
+            setCellularComponentDataset(cellularComponentDatasetParsed);
+            setEnrichmentLoading(false);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
 
     // Use Effects
     React.useEffect(() => {
@@ -402,6 +455,7 @@ function AppContextProvider ({ children }) {
             return;
         }
         setLayout(initiallayout);
+        getEnrichmentData(cyGraph.code)
         setShowWeight(false);
         setShowHighlight(false);
     }, [cyGraph]);
@@ -538,6 +592,10 @@ function AppContextProvider ({ children }) {
             clusterOneParams,
             modalOpen,
             enrichmentLoading,
+            enrichmentDataBase,
+            biologicalProcessDataset,
+            molecularFunctionDataset,
+            cellularComponentDataset,
             loadingMessage,
             clearClusterFilter,
             uploadFilePpi,
@@ -571,6 +629,7 @@ function AppContextProvider ({ children }) {
             setProteinInfo,
             setOpenAboutModal,
             setEnrichmentLoading,
+            getEnrichmentData,
         }}>
             {children}
         </AppContext.Provider>
