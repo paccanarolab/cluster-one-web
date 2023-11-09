@@ -23,7 +23,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Enrichment = () => {
     const [open, setOpen] = React.useState(false);
-    const { cyGraph, enrichmentLoading } = React.useContext(AppContext);   
+    const { 
+        cyGraph, 
+        enrichmentLoading,
+        biologicalProcessDataset,
+        molecularFunctionDataset,
+        cellularComponentDataset,
+    } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -124,21 +130,36 @@ const Enrichment = () => {
                 <List>
                     <ListItem>
                         <ListItemText primary="Biological Process"/>
-                        <HorizontalBar />
+                        {
+                            biologicalProcessDataset && 
+                            <HorizontalBar 
+                                dataset={biologicalProcessDataset}
+                            />
+                        }
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemText
                         primary="Molecular Function"
                         />
-                        <HorizontalBar />
+                        {
+                            molecularFunctionDataset && 
+                            <HorizontalBar 
+                                dataset={molecularFunctionDataset}
+                            />
+                        }
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemText
                         primary="Cellular Component"
                         />
-                        <HorizontalBar />
+                        {
+                            cellularComponentDataset &&  
+                            <HorizontalBar 
+                                dataset={cellularComponentDataset}
+                            />
+                        }
                     </ListItem>
                 </List>
             </Dialog>
