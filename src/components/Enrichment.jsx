@@ -134,13 +134,20 @@ const Enrichment = () => {
                         </Typography>
                     </Backdrop>
                 }
-                <List>
+                <List
+                    style={
+                        {
+                            width: '100%',
+                        }
+                    }
+                >
                     <ListItem 
                         style={
                             {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
+                                width: '100%',
                             }
                         }
                     >
@@ -161,6 +168,7 @@ const Enrichment = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
+                                width: '100%',
                             }
                         }
                     >
@@ -181,6 +189,7 @@ const Enrichment = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
+                                width: '100%',
                             }
                         }
                     >

@@ -7,11 +7,35 @@ const HorizontalBar = ({ dataset }) => {
   return (
     <BarChart
       dataset={sortedDataset}
-      yAxis={[{ scaleType: 'band', dataKey: 'go_label', order: 'original', padding: 0.3}]}
-      series={[{ dataKey: 'bar_charge', label: '-log(p_value)', valueFormatter }]}
+      yAxis={
+        [
+          { 
+            scaleType: 'band',
+            dataKey: 'go_id',
+            order: 'original',
+            padding: 0.3,
+            labelFontSize: 11,
+          }
+        ]
+      }
+      series={
+        [
+          { 
+            dataKey: 'bar_charge', 
+            label: '-log(p_value)', 
+            valueFormatter,
+          },
+        ]
+      }
       layout="horizontal"
-      width={700}
-      height={dataset.length * 50}
+      width={1500}
+      height={dataset.length * 45}
+      margin={{
+        top: 100,
+        right: 100,
+        bottom: 100,
+        left: 600,
+      }}
     />
   );
 }
