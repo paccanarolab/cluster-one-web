@@ -14,7 +14,7 @@ const HorizontalBar = ({ dataset }) => {
             dataKey: 'go_id',
             order: 'original',
             padding: 0.3,
-            labelFontSize: 11,
+            labelFontSize: 12,
           }
         ]
       }
