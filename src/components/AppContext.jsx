@@ -187,6 +187,12 @@ function AppContextProvider ({ children }) {
         penalty: 2,
     });
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [executionParams, setExecutionParams] = React.useState(""); // Execution params
+    const [oraScore, setOraScore] = React.useState({
+        bp_score: 0,
+        mf_score: 0,
+        cc_score: 0,
+    }); // Execution params
 
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
@@ -247,7 +253,7 @@ function AppContextProvider ({ children }) {
             const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
                 method: 'POST'
             });
-            const data = await response.json();
+            let data = await response.json();
             let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
             let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
             let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
@@ -264,6 +270,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -294,7 +301,7 @@ function AppContextProvider ({ children }) {
             const response = await fetch(baseUrl, {
                 method: 'POST',
             });
-            const data = await response.json();
+            let data = await response.json();
             let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
             let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
             let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
@@ -311,6 +318,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -365,18 +373,15 @@ function AppContextProvider ({ children }) {
                 method: 'GET'
             });
             const data = await response.json();
-            console.log("Enrichment Data: ", data);
             let biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
             let molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
             let cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
-            console.log("Biological Process: ", biologicalProcessDataset);
-            console.log("Molecular Function: ", molecularFunctionDataset);
-            console.log("Cellular Component: ", cellularComponentDataset);
             let biologicalProcessDatasetParsed = biologicalProcessDataset.map(
                 (item) => {
                     return {
-                        go_label: item.go_term.go_id,
+                        go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
+                        term: item.go_term.term,
                     }
                 }
             );
@@ -384,16 +389,18 @@ function AppContextProvider ({ children }) {
             let molecularFunctionDatasetParsed = molecularFunctionDataset.map(
                 (item) => {
                     return {
-                        go_label: item.go_term.go_id,
+                        go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
+                        term: item.go_term.term,
                     }
                 }
             );
             let cellularComponentDatasetParsed = cellularComponentDataset.map(
                 (item) => {
                     return {
-                        go_label: item.go_term.go_id,
+                        go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
+                        term: item.go_term.term,
                     }
                 }
             );
@@ -402,6 +409,19 @@ function AppContextProvider ({ children }) {
             setMolecularFunctionDataset(molecularFunctionDatasetParsed);
             setCellularComponentDataset(cellularComponentDatasetParsed);
             setEnrichmentLoading(false);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
+    const getOraScore = async (executionId) => {
+        // Get ORA Score by execution id
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/enrichment/params/?param_id=${executionId}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            setOraScore(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
@@ -560,6 +580,17 @@ function AppContextProvider ({ children }) {
             console.error("Error al obtener datos:", error);
         });
     }, [ppiId]);
+
+    React.useEffect(() => {
+        if (executionParams === "") {
+            return;
+        }
+        // let delayfromEp = 0;
+        getOraScore(executionParams);
+        console.log("ORA Score: ", oraScore);
+    }, [executionParams]);
+
+
     
     return (
         <AppContext.Provider value={{
@@ -597,6 +628,7 @@ function AppContextProvider ({ children }) {
             molecularFunctionDataset,
             cellularComponentDataset,
             loadingMessage,
+            oraScore,
             clearClusterFilter,
             uploadFilePpi,
             openProteinInfo,
