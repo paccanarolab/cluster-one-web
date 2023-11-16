@@ -34,7 +34,7 @@ const HorizontalBar = ({ dataset }) => {
         top: 100,
         right: 100,
         bottom: 100,
-        left: 600,
+        left: 700,
       }}
     />
   );
