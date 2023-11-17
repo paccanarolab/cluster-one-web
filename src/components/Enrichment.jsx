@@ -29,6 +29,7 @@ const Enrichment = () => {
         biologicalProcessDataset,
         molecularFunctionDataset,
         cellularComponentDataset,
+        enrichmentDataBase,
     } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
@@ -134,7 +135,7 @@ const Enrichment = () => {
                         </Typography>
                     </Backdrop>
                 }
-                <List
+                {enrichmentDataBase && <List
                     style={
                         {
                             width: '100%',
@@ -203,7 +204,7 @@ const Enrichment = () => {
                             />
                         }
                     </ListItem>
-                </List>
+                </List>}
             </Dialog>
         </div>
     );
