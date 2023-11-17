@@ -4,7 +4,7 @@ import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
 import { ClusterOneParams } from "./ClusterOneParams.jsx";
 import {SelectPPiOptions} from "./SelectPPiOptions.jsx";
-
+import { ScoreTable } from "./ScoreTable.jsx";
 
 import "../styles/ExecuteBar.scss";
 import { AppContext } from "./AppContext.jsx";
@@ -96,9 +96,7 @@ const ExecuteBar = ({ href, label }) => {
 				message={"with custom parameters"}
 			/>
             <ClusterFilter />
-			<a className="config-ppi">
-				PPI: {ppiLabel}
-			</a>
+			<ScoreTable />
 			<a href={href} className="config-link" target="_blank" rel="noopener noreferrer">
 				{label}
 			</a>

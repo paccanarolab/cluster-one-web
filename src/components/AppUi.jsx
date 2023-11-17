@@ -49,12 +49,11 @@ const AppUi = () => {
                     style={
                         {
                             position: "absolute",
-                            top: "0px",
                             right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "3%",
-                            left: "38%",
+                            top: "5%",
+                            left: "48%",
                         }
                     }
                 />
@@ -75,8 +74,8 @@ const AppUi = () => {
                             right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "3%",
-                            left: "55%",
+                            top: "5%",
+                            left: "65%",
                         }
                     }
                 />
