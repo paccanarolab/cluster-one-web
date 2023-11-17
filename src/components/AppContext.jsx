@@ -196,7 +196,7 @@ function AppContextProvider ({ children }) {
 
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
-    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState("");
+    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState(false);
     const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
     const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
@@ -372,7 +372,7 @@ function AppContextProvider ({ children }) {
             const response = await fetch(`http://localhost:8203/v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
-            const data = await response.json();
+            let data = await response.json();
             let biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
             let molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
             let cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
@@ -404,13 +404,66 @@ function AppContextProvider ({ children }) {
                     }
                 }
             );
-            setEnrichmentDataBase(data);
+            setEnrichmentDataBase(true);
+            if (biologicalProcessDatasetParsed.length === 0) {
+                biologicalProcessDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
+            if (molecularFunctionDatasetParsed.length === 0) {
+                molecularFunctionDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
+            if (cellularComponentDatasetParsed.length === 0) {
+                cellularComponentDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
             setBiologicalProcessDataset(biologicalProcessDatasetParsed);
             setMolecularFunctionDataset(molecularFunctionDatasetParsed);
             setCellularComponentDataset(cellularComponentDatasetParsed);
             setEnrichmentLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
+            let biologicalProcessDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            let molecularFunctionDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            let cellularComponentDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
+            setCellularComponentDataset(cellularComponentDatasetParsed);
+            setEnrichmentDataBase(true);
+            setEnrichmentLoading(false);
         }
     }
 
