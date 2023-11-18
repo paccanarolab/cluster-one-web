@@ -20,6 +20,7 @@ const ExecuteBar = ({ href, label }) => {
 		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
+		cyGraph,
     } = React.useContext(AppContext);
 	
 
@@ -28,7 +29,8 @@ const ExecuteBar = ({ href, label }) => {
 			<div
 				style={{
 					fontSize: "20px",
-					marginBottom: "17px"
+					marginBottom: "17px",
+					// top: "500px",
 				}}>
 				{/* Centrar el titulo */}
 				<span
@@ -40,19 +42,7 @@ const ExecuteBar = ({ href, label }) => {
 					ClusterONE WEB
 				</span>
 			</div>
-            <div>
-                <p style={
-                    {
-                        fontSize: "18px",
-                        marginBottom: "17px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }
-                }>Select Layout</p>
-                <Layout classname="config-dropdown" />
-            </div>
-			
+            
 			<SelectPPiOptions
 				open={modalOpen}
 				handleClose={() => setModalOpen(false)}
@@ -95,7 +85,19 @@ const ExecuteBar = ({ href, label }) => {
 				classname={"runClusterOneButton"}
 				message={"with custom parameters"}
 			/>
-            <ClusterFilter />
+			{cyGraph.code && <div>
+                <p style={
+                    {
+                        fontSize: "18px",
+                        marginBottom: "17px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }
+                }>Select Layout</p>
+                <Layout classname="config-dropdown" />
+            </div>}
+            {cyGraph.code && <ClusterFilter />}
 			<ScoreTable />
 			<a href={href} className="config-link" target="_blank" rel="noopener noreferrer">
 				{label}

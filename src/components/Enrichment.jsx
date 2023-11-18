@@ -159,6 +159,7 @@ const Enrichment = () => {
                             biologicalProcessDataset && 
                             <HorizontalBar 
                                 dataset={biologicalProcessDataset}
+                                height={biologicalProcessDataset.length * 50}
                             />
                         }
                     </ListItem>
@@ -180,6 +181,7 @@ const Enrichment = () => {
                             molecularFunctionDataset && 
                             <HorizontalBar 
                                 dataset={molecularFunctionDataset}
+                                height={molecularFunctionDataset.length * 80}
                             />
                         }
                     </ListItem>
@@ -201,6 +203,7 @@ const Enrichment = () => {
                             cellularComponentDataset &&  
                             <HorizontalBar 
                                 dataset={cellularComponentDataset}
+                                height={cellularComponentDataset.length * 50}
                             />
                         }
                     </ListItem>

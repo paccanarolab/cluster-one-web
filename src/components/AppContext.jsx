@@ -611,14 +611,16 @@ function AppContextProvider ({ children }) {
         setComplexCounter(0);
         setCyGraph(initialGraphData);
         setComplexProteinList([initialProteinData]);
+        setOraScore({
+            bp_score: 0,
+            mf_score: 0,
+            cc_score: 0,
+        });
         setLoadingMessage("Processing PPI.. Wait a moment please🧬");
         updateRedis(ppiId).then((data) => {
             const delayfromEp = data.size * 7;
-            console.log("Delay: ", delayfromEp);
-    
             setLoading(true);
-            console.log("set loading true");
-    
+            
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
             const timer = setTimeout(() => {
                 setLoading(false);

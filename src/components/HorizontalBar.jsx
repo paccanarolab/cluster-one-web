@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const HorizontalBar = ({ dataset }) => {
+const HorizontalBar = ({ dataset, height }) => {
   const valueFormatter = (value) => `${value}mm`;
   const sortedDataset = dataset.slice().sort((a, b) => b.bar_charge - a.bar_charge);
   return (
@@ -29,7 +29,7 @@ const HorizontalBar = ({ dataset }) => {
       }
       layout="horizontal"
       width={1500}
-      height={dataset.length * 45}
+      height={height}
       margin={{
         top: 100,
         right: 100,
