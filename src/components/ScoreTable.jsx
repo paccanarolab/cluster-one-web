@@ -70,7 +70,7 @@ const ScoreTable = () => {
                     <StyledTableCell>
                         <Tooltip 
                             // {title="Análisis de Overrepresentation (ORA) de Complejos Proteicos en Redes PPI: Relación de resultados con las Funciones Biológicas, Funciones Moleculares y Componentes Celulares del GO (Gene Ontology)"}
-                            title="Overrepresentation Analysis (ORA) of Protein Complexes in PPI Networks: Relationship between ClusterONE results and Domains in Gene Ontology (GO): Biological Functions (BP), Molecular Functions (MF), and Cellular Components (CC)."
+                            title="Proportion of complexes that are overrepresented in any of the three Gene Ontology (GO) domains: Biological Functions (BP), Molecular Functions (MF), and Cellular Components (CC)."
                             arrow placement="top" 
                             enterTouchDelay={50} 
                             leaveTouchDelay={3000}
