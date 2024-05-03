@@ -24,6 +24,7 @@ const AppUi = () => {
         fundacionImage,
         clusterOneManual,
         cyGraph,
+        goaFileName,
         cyGraphList,
         loading,
         loadingMessage,
@@ -208,7 +209,7 @@ const AppUi = () => {
             <DownloadButton />
             <AboutModal />
             <InfoButton />
-            {cyGraph.code && <Enrichment/>}
+            {(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
             <ProteinModal/>
         </React.Fragment>
     );

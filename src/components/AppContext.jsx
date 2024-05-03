@@ -197,6 +197,7 @@ function AppContextProvider ({ children }) {
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
     const [enrichmentDataBase, setEnrichmentDataBase] = React.useState(false);
+    const [goaFileName, setGoaFileName] = React.useState("");
     const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
     const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
@@ -229,6 +230,28 @@ function AppContextProvider ({ children }) {
         }
     };
 
+    const uploadGoaFile = async (inputElement) => {
+        // This function is called when the user uploads a file and charges it to the API
+        // The API returns the id of the PPI and we save it in setPpiId state
+        const file = inputElement.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            try {
+                const response = await fetch("http://localhost:8203/v1/api/enrichment/upload/goa/", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                console.log(data);
+                setGoaFileName(data.goa_file);
+            } catch (error) {
+                console.error("There was an error uploading the file:", error);
+            }
+        }
+    };
+
+
     const updateRedis = async (ppi_id) => {
         // This function is called when the user uploads a file and charges it to the API
         let ppi = ppiList.filter(
@@ -250,7 +273,12 @@ function AppContextProvider ({ children }) {
     const quickRunClusterOne = async (ppi_id) => {
         // Uses the ppi_id state to call the API and get the clusters
         try {
-            const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
+            if ( goaFileName === "" ) {
+                var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+            } else {
+                var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`
+            }
+            const response = await fetch(baseUrl, {
                 method: 'POST'
             });
             let data = await response.json();
@@ -282,9 +310,14 @@ function AppContextProvider ({ children }) {
         // Uses the ppi_id state to call the API and get the clusters
         var minSizeValue = params.minSize;
         var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+
         var minDensityValue = params.minDensity;
         var maxOverlapValue = params.maxOverlap;
         var penaltyValue = params.penalty;
+        if ( goaFileName !== "" ) {
+            var baseUrl = baseUrl + `&goa_file=${goaFileName}`;
+        }
+        
         if (minSizeValue !== "") {
             var baseUrl = baseUrl + `&min_size=${minSizeValue}`;
         }
@@ -463,7 +496,7 @@ function AppContextProvider ({ children }) {
             setMolecularFunctionDataset(molecularFunctionDatasetParsed);
             setCellularComponentDataset(cellularComponentDatasetParsed);
             setEnrichmentDataBase(true);
-            setEnrichmentLoading(false);
+            // setEnrichmentLoading(false);
         }
     }
 
@@ -618,7 +651,16 @@ function AppContextProvider ({ children }) {
         });
         setLoadingMessage("Processing PPI.. Wait a moment please🧬");
         updateRedis(ppiId).then((data) => {
-            const delayfromEp = data.size * 7;
+            try {
+                var delayfromEp = data.size;
+                console.log(data);
+                if (data.size === 0) {
+                    var delayfromEp = 60000;
+                }
+            } catch (error) {
+                console.error(error);
+                var delayfromEp = 60000;
+            }
             setLoading(true);
             
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
@@ -635,6 +677,23 @@ function AppContextProvider ({ children }) {
             console.error("Error al obtener datos:", error);
         });
     }, [ppiId]);
+
+    React.useEffect(() => {
+        if (goaFileName === "") {
+            return;
+        }
+        setLoadingMessage("Processing Gene Ontology.. Wait a moment please🧬");
+        var delayfromEp = 60000;
+        setLoading(true);
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, delayfromEp);  
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [goaFileName]);
+
+
 
     React.useEffect(() => {
         if (executionParams === "") {
@@ -679,6 +738,7 @@ function AppContextProvider ({ children }) {
             modalOpen,
             enrichmentLoading,
             enrichmentDataBase,
+            goaFileName,
             biologicalProcessDataset,
             molecularFunctionDataset,
             cellularComponentDataset,
@@ -686,6 +746,7 @@ function AppContextProvider ({ children }) {
             oraScore,
             clearClusterFilter,
             uploadFilePpi,
+            uploadGoaFile,
             openProteinInfo,
             proteinInfo,
             openAboutModal,

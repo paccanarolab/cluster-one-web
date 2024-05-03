@@ -12,9 +12,11 @@ import { AppContext } from "./AppContext.jsx";
 const ExecuteBar = ({ href, label }) => {
     const { 
         uploadFilePpi,
+		uploadGoaFile,
         quickRunClusterOne,
         ppiId,
 		ppiLabel,
+		goaFileName,
 		modalOpen,
 		setLoading,
 		setLoadingMessage,
@@ -29,7 +31,7 @@ const ExecuteBar = ({ href, label }) => {
 			<div
 				style={{
 					fontSize: "20px",
-					marginBottom: "17px",
+					marginBottom: "20px",
 					// top: "500px",
 				}}>
 				{/* Centrar el titulo */}
@@ -67,7 +69,22 @@ const ExecuteBar = ({ href, label }) => {
                     fileInput.click();
                 }}
 				classname={"explorePpiButton"}
+				message={ppiId ? "PPI LOADED" : "PPI NOT LOADED"}
 			/>
+			<RunFunctionButton
+				label="Load your GOA file"
+				icon="fa fa-upload"
+				onClickFunction={() => {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = '.csv, .txt';
+                    fileInput.onchange = () => uploadGoaFile(fileInput);
+                    fileInput.click();
+                }}
+				classname={"explorePpiButton"}
+				message={goaFileName ? "GOA FILE LOADED" : "GOA FILE NOT LOADED"}
+			/>
+
 			<RunFunctionButton
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
