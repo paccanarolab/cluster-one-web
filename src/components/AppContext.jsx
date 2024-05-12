@@ -187,7 +187,20 @@ function AppContextProvider ({ children }) {
         penalty: 2,
     });
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [executionParams, setExecutionParams] = React.useState(""); // Execution params
+    const [oraScore, setOraScore] = React.useState({
+        bp_score: 0,
+        mf_score: 0,
+        cc_score: 0,
+    }); // Execution params
 
+    // Enrichment States
+    const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
+    const [enrichmentDataBase, setEnrichmentDataBase] = React.useState(false);
+    const [goaFileName, setGoaFileName] = React.useState("");
+    const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
+    const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
+    const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
 
     // Clear functions
     const clearClusterFilter = () => {
@@ -217,6 +230,28 @@ function AppContextProvider ({ children }) {
         }
     };
 
+    const uploadGoaFile = async (inputElement) => {
+        // This function is called when the user uploads a file and charges it to the API
+        // The API returns the id of the PPI and we save it in setPpiId state
+        const file = inputElement.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            try {
+                const response = await fetch("http://localhost:8203/v1/api/enrichment/upload/goa/", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                console.log(data);
+                setGoaFileName(data.goa_file);
+            } catch (error) {
+                console.error("There was an error uploading the file:", error);
+            }
+        }
+    };
+
+
     const updateRedis = async (ppi_id) => {
         // This function is called when the user uploads a file and charges it to the API
         let ppi = ppiList.filter(
@@ -238,10 +273,15 @@ function AppContextProvider ({ children }) {
     const quickRunClusterOne = async (ppi_id) => {
         // Uses the ppi_id state to call the API and get the clusters
         try {
-            const response = await fetch(`http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`, {
+            if ( goaFileName === "" ) {
+                var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+            } else {
+                var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`
+            }
+            const response = await fetch(baseUrl, {
                 method: 'POST'
             });
-            const data = await response.json();
+            let data = await response.json();
             let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
             let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
             let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
@@ -258,6 +298,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -269,9 +310,14 @@ function AppContextProvider ({ children }) {
         // Uses the ppi_id state to call the API and get the clusters
         var minSizeValue = params.minSize;
         var baseUrl = `http://localhost:8203/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+
         var minDensityValue = params.minDensity;
         var maxOverlapValue = params.maxOverlap;
         var penaltyValue = params.penalty;
+        if ( goaFileName !== "" ) {
+            var baseUrl = baseUrl + `&goa_file=${goaFileName}`;
+        }
+        
         if (minSizeValue !== "") {
             var baseUrl = baseUrl + `&min_size=${minSizeValue}`;
         }
@@ -288,7 +334,7 @@ function AppContextProvider ({ children }) {
             const response = await fetch(baseUrl, {
                 method: 'POST',
             });
-            const data = await response.json();
+            let data = await response.json();
             let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
             let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
             let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
@@ -305,6 +351,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -347,6 +394,120 @@ function AppContextProvider ({ children }) {
             });
             const data = await response.json();
             setProteinInfo(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
+    const getEnrichmentData = async (clusterId) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
+                method: 'GET'
+            });
+            let data = await response.json();
+            let biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
+            let molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
+            let cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
+            let biologicalProcessDatasetParsed = biologicalProcessDataset.map(
+                (item) => {
+                    return {
+                        go_id: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                        term: item.go_term.term,
+                    }
+                }
+            );
+
+            let molecularFunctionDatasetParsed = molecularFunctionDataset.map(
+                (item) => {
+                    return {
+                        go_id: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                        term: item.go_term.term,
+                    }
+                }
+            );
+            let cellularComponentDatasetParsed = cellularComponentDataset.map(
+                (item) => {
+                    return {
+                        go_id: item.go_term.go_id,
+                        bar_charge: item.bar_charge,
+                        term: item.go_term.term,
+                    }
+                }
+            );
+            setEnrichmentDataBase(true);
+            if (biologicalProcessDatasetParsed.length === 0) {
+                biologicalProcessDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
+            if (molecularFunctionDatasetParsed.length === 0) {
+                molecularFunctionDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
+            if (cellularComponentDatasetParsed.length === 0) {
+                cellularComponentDatasetParsed = [
+                    {
+                        go_id: "No data",
+                        bar_charge: 0,
+                        term: "No data",
+                    }
+                ];
+            }
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
+            setCellularComponentDataset(cellularComponentDatasetParsed);
+            setEnrichmentLoading(false);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+            let biologicalProcessDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            let molecularFunctionDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            let cellularComponentDatasetParsed = [
+                {
+                    go_id: "No data",
+                    bar_charge: 0,
+                    term: "No data",
+                }
+            ];
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
+            setCellularComponentDataset(cellularComponentDatasetParsed);
+            setEnrichmentDataBase(true);
+            // setEnrichmentLoading(false);
+        }
+    }
+
+    const getOraScore = async (executionId) => {
+        // Get ORA Score by execution id
+        try {
+            const response = await fetch(`http://localhost:8203/v1/api/enrichment/params/?param_id=${executionId}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            setOraScore(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
@@ -400,6 +561,7 @@ function AppContextProvider ({ children }) {
             return;
         }
         setLayout(initiallayout);
+        getEnrichmentData(cyGraph.code)
         setShowWeight(false);
         setShowHighlight(false);
     }, [cyGraph]);
@@ -482,14 +644,25 @@ function AppContextProvider ({ children }) {
         setComplexCounter(0);
         setCyGraph(initialGraphData);
         setComplexProteinList([initialProteinData]);
+        setOraScore({
+            bp_score: 0,
+            mf_score: 0,
+            cc_score: 0,
+        });
         setLoadingMessage("Processing PPI.. Wait a moment please🧬");
         updateRedis(ppiId).then((data) => {
-            const delayfromEp = data.size * 7;
-            console.log("Delay: ", delayfromEp);
-    
+            try {
+                var delayfromEp = data.size;
+                console.log(data);
+                if (data.size === 0) {
+                    var delayfromEp = 60000;
+                }
+            } catch (error) {
+                console.error(error);
+                var delayfromEp = 60000;
+            }
             setLoading(true);
-            console.log("set loading true");
-    
+            
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
             const timer = setTimeout(() => {
                 setLoading(false);
@@ -504,6 +677,34 @@ function AppContextProvider ({ children }) {
             console.error("Error al obtener datos:", error);
         });
     }, [ppiId]);
+
+    React.useEffect(() => {
+        if (goaFileName === "") {
+            return;
+        }
+        setLoadingMessage("Processing Gene Ontology.. Wait a moment please🧬");
+        var delayfromEp = 60000;
+        setLoading(true);
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, delayfromEp);  
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [goaFileName]);
+
+
+
+    React.useEffect(() => {
+        if (executionParams === "") {
+            return;
+        }
+        // let delayfromEp = 0;
+        getOraScore(executionParams);
+        console.log("ORA Score: ", oraScore);
+    }, [executionParams]);
+
+
     
     return (
         <AppContext.Provider value={{
@@ -535,9 +736,17 @@ function AppContextProvider ({ children }) {
             quality,
             clusterOneParams,
             modalOpen,
+            enrichmentLoading,
+            enrichmentDataBase,
+            goaFileName,
+            biologicalProcessDataset,
+            molecularFunctionDataset,
+            cellularComponentDataset,
             loadingMessage,
+            oraScore,
             clearClusterFilter,
             uploadFilePpi,
+            uploadGoaFile,
             openProteinInfo,
             proteinInfo,
             openAboutModal,
@@ -567,6 +776,8 @@ function AppContextProvider ({ children }) {
             getProteinInfo,
             setProteinInfo,
             setOpenAboutModal,
+            setEnrichmentLoading,
+            getEnrichmentData,
         }}>
             {children}
         </AppContext.Provider>

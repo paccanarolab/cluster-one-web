@@ -261,18 +261,19 @@ const ClusterFilter = () => {
 				))}
 			</select>
 			
-			<select
-				style={{ marginBottom: "15px", width: "100%" }}
-				className="config-dropdown"
-				onChange={handleSignificancePvalueChange}
-			>	
-				<option value="clear">All p-values</option>
-				<option value="p > 0.05">Not significant p-value {"(p > 0.05)"}</option>
-				<option value="p <= 0.05">Significant p-value {"(p <= 0.05)"}</option>
-				<option value="p <= 0.01">Very significant p-value {"(p <= 0.01)"}</option>
-				<option value="p <= 0.001">Highly significant p-value {"(p <= 0.001)"}</option>
-			</select>
-			
+			{
+				// <select
+				// 	style={{ marginBottom: "15px", width: "100%" }}
+				// 	className="config-dropdown"
+				// 	onChange={handleSignificancePvalueChange}
+				// >	
+				// 	<option value="clear">All p-values</option>
+				// 	<option value="p > 0.05">Not significant p-value {"(p > 0.05)"}</option>
+				// 	<option value="p <= 0.05">Significant p-value {"(p <= 0.05)"}</option>
+				// 	<option value="p <= 0.01">Very significant p-value {"(p <= 0.01)"}</option>
+				// 	<option value="p <= 0.001">Highly significant p-value {"(p <= 0.001)"}</option>
+				// </select>
+			}
 			<div
 				style={{
 					display: "flex",

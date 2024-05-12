@@ -24,6 +24,7 @@ const AppUi = () => {
         fundacionImage,
         clusterOneManual,
         cyGraph,
+        goaFileName,
         cyGraphList,
         loading,
         loadingMessage,
@@ -36,45 +37,50 @@ const AppUi = () => {
     } = React.useContext(AppContext);
     return (
         <React.Fragment>
-            <ProteinFilter />
-            <CheckboxLabels 
-                label={"Highlight overlapping proteins"}
-                onChangeFunc={
-                    (event) => {
-                        setShowHighlight(event.target.checked)
+            {cyGraph.code && <ProteinFilter />}
+            {
+                cyGraph.code &&
+                <CheckboxLabels 
+                    label={"Highlight overlapping proteins"}
+                    onChangeFunc={
+                        (event) => {
+                            setShowHighlight(event.target.checked)
+                        }
                     }
-                }
-                style={
-                    {
-                        position: "absolute",
-                        top: "0px",
-                        right: "0px",
-                        margin: "10px",
-                        zIndex: "1000",
-                        top: "3%",
-                        left: "38%",
+                    style={
+                        {
+                            position: "absolute",
+                            right: "0px",
+                            margin: "10px",
+                            zIndex: "1000",
+                            top: "5%",
+                            left: "48%",
+                        }
                     }
-                }
-            />
-            <CheckboxLabels
-                label={"Show weight"}
-                onChangeFunc={
-                    (event) => {
-                        setShowWeight(event.target.checked)
+                />
+            }
+            {
+                cyGraph.code &&
+                <CheckboxLabels
+                    label={"Show weight"}
+                    onChangeFunc={
+                        (event) => {
+                            setShowWeight(event.target.checked)
+                        }
                     }
-                }
-                style={
-                    {
-                        position: "absolute",
-                        top: "0px",
-                        right: "0px",
-                        margin: "10px",
-                        zIndex: "1000",
-                        top: "3%",
-                        left: "55%",
+                    style={
+                        {
+                            position: "absolute",
+                            top: "0px",
+                            right: "0px",
+                            margin: "10px",
+                            zIndex: "1000",
+                            top: "5%",
+                            left: "65%",
+                        }
                     }
-                }
-            />
+                />
+            }
             <ExecuteBar  
                 href={clusterOneManual.href} 
                 label={clusterOneManual.label}
@@ -145,13 +151,15 @@ const AppUi = () => {
                                 });
                                 
                                 node.on("click", function(evt) {
-                                    getProteinInfo(node.data('label'));
-                                    setOpenProteinInfo(true);
-                                    let connectedEdges = node.connectedEdges();
-                                    connectedEdges.forEach(edge => {
-                                            edge.style("line-color", "#C65151");
-                                        }
-                                    );
+                                    if (node.data('type') !== "proteinComplex") {
+                                        getProteinInfo(node.data('label'));
+                                        setOpenProteinInfo(true);
+                                        let connectedEdges = node.connectedEdges();
+                                        connectedEdges.forEach(edge => {
+                                                edge.style("line-color", "#C65151");
+                                            }
+                                        );
+                                    }
                                 });
                             });
                         }
@@ -201,7 +209,7 @@ const AppUi = () => {
             <DownloadButton />
             <AboutModal />
             <InfoButton />
-            <Enrichment/>
+            {(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
             <ProteinModal/>
         </React.Fragment>
     );

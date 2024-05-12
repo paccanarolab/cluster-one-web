@@ -4,7 +4,7 @@ import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
 import { ClusterOneParams } from "./ClusterOneParams.jsx";
 import {SelectPPiOptions} from "./SelectPPiOptions.jsx";
-
+import { ScoreTable } from "./ScoreTable.jsx";
 
 import "../styles/ExecuteBar.scss";
 import { AppContext } from "./AppContext.jsx";
@@ -12,14 +12,17 @@ import { AppContext } from "./AppContext.jsx";
 const ExecuteBar = ({ href, label }) => {
     const { 
         uploadFilePpi,
+		uploadGoaFile,
         quickRunClusterOne,
         ppiId,
 		ppiLabel,
+		goaFileName,
 		modalOpen,
 		setLoading,
 		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
+		cyGraph,
     } = React.useContext(AppContext);
 	
 
@@ -28,7 +31,8 @@ const ExecuteBar = ({ href, label }) => {
 			<div
 				style={{
 					fontSize: "20px",
-					marginBottom: "17px"
+					marginBottom: "20px",
+					// top: "500px",
 				}}>
 				{/* Centrar el titulo */}
 				<span
@@ -40,19 +44,7 @@ const ExecuteBar = ({ href, label }) => {
 					ClusterONE WEB
 				</span>
 			</div>
-            <div>
-                <p style={
-                    {
-                        fontSize: "18px",
-                        marginBottom: "17px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }
-                }>Select Layout</p>
-                <Layout classname="config-dropdown" />
-            </div>
-			
+            
 			<SelectPPiOptions
 				open={modalOpen}
 				handleClose={() => setModalOpen(false)}
@@ -77,7 +69,22 @@ const ExecuteBar = ({ href, label }) => {
                     fileInput.click();
                 }}
 				classname={"explorePpiButton"}
+				message={ppiId ? "PPI LOADED" : "PPI NOT LOADED"}
 			/>
+			<RunFunctionButton
+				label="Load your GOA file"
+				icon="fa fa-upload"
+				onClickFunction={() => {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = '.csv, .txt';
+                    fileInput.onchange = () => uploadGoaFile(fileInput);
+                    fileInput.click();
+                }}
+				classname={"explorePpiButton"}
+				message={goaFileName ? "GOA FILE LOADED" : "GOA FILE NOT LOADED"}
+			/>
+
 			<RunFunctionButton
 				label="Quick Run ClusterONE"
 				icon="fa fa-forward"
@@ -95,10 +102,20 @@ const ExecuteBar = ({ href, label }) => {
 				classname={"runClusterOneButton"}
 				message={"with custom parameters"}
 			/>
-            <ClusterFilter />
-			<a className="config-ppi">
-				PPI: {ppiLabel}
-			</a>
+			{cyGraph.code && <div>
+                <p style={
+                    {
+                        fontSize: "18px",
+                        marginBottom: "17px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }
+                }>Select Layout</p>
+                <Layout classname="config-dropdown" />
+            </div>}
+            {cyGraph.code && <ClusterFilter />}
+			<ScoreTable />
 			<a href={href} className="config-link" target="_blank" rel="noopener noreferrer">
 				{label}
 			</a>

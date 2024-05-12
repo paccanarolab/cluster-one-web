@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+
+  clusterone-web:
+    build:
+      context: .
+      dockerfile: DockerFile
+    image: clusterone-web
+    ports:
+      - "3006:3006"

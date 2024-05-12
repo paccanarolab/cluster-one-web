@@ -14,6 +14,7 @@ import Slide from '@mui/material/Slide';
 import { AppContext } from './AppContext';
 import { HorizontalBar } from './HorizontalBar';
 import "../styles/Enrichment.scss"
+import { Backdrop, CircularProgress } from '@mui/material';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -22,7 +23,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Enrichment = () => {
     const [open, setOpen] = React.useState(false);
-    const { cyGraph } = React.useContext(AppContext);   
+    const { 
+        cyGraph, 
+        enrichmentLoading,
+        biologicalProcessDataset,
+        molecularFunctionDataset,
+        cellularComponentDataset,
+        enrichmentDataBase,
+    } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -31,7 +39,14 @@ const Enrichment = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const listItemStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        fontSize: '3.052rem',
+        fontWeight: 'bold',
+    };
+    
     return (
         <div>
             <Button 
@@ -79,26 +94,120 @@ const Enrichment = () => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <List>
-                    <ListItem>
-                        <ListItemText primary="Biological Process"/>
-                        <HorizontalBar />
+                {enrichmentLoading && 
+                    <Backdrop
+                        sx={
+                            { 
+                                color: '#fff',
+                                zIndex: 1 
+                            }
+                        }
+                        open={enrichmentLoading}
+                    >
+                        <CircularProgress color="inherit" style={
+                            {
+                                position: 'absolute',
+                                left: '50%',
+                                top: '50%',
+                                marginTop: -12,
+                                marginLeft: -12,
+                            }
+                        } />
+                        <Typography 
+                            variant="h6" 
+                            component="div" 
+                            sx={
+                                { 
+                                    paddingTop: 2, 
+                                    textAlign: 'center',
+                                }
+                            }
+                            style={
+                                {
+                                    position: 'absolute',
+                                    top: '60%',
+                                    left: '51.5%',
+                                    transform: 'translate(-50%, -50%)',
+                                }
+                            }
+                        >
+                            Waiting for enrichment analysis...
+                        </Typography>
+                    </Backdrop>
+                }
+                {enrichmentDataBase && <List
+                    style={
+                        {
+                            width: '100%',
+                        }
+                    }
+                >
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                width: '100%',
+                            }
+                        }
+                    >
+                        <ListItemText 
+                            primary="Biological Process"
+                        />
+                        {
+                            biologicalProcessDataset && 
+                            <HorizontalBar 
+                                dataset={biologicalProcessDataset}
+                                height={biologicalProcessDataset.length * 50}
+                            />
+                        }
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                width: '100%',
+                            }
+                        }
+                    >
                         <ListItemText
-                        primary="Molecular Function"
+                            primary="Molecular Function"
                         />
-                        <HorizontalBar />
+                        {
+                            molecularFunctionDataset && 
+                            <HorizontalBar 
+                                dataset={molecularFunctionDataset}
+                                height={molecularFunctionDataset.length * 80}
+                            />
+                        }
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem 
+                        style={
+                            {
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                width: '100%',
+                            }
+                        }
+                    >
                         <ListItemText
-                        primary="Cellular Component"
+                            primary="Cellular Component"
                         />
-                        <HorizontalBar />
+                        {
+                            cellularComponentDataset &&  
+                            <HorizontalBar 
+                                dataset={cellularComponentDataset}
+                                height={cellularComponentDataset.length * 50}
+                            />
+                        }
                     </ListItem>
-                </List>
+                </List>}
             </Dialog>
         </div>
     );

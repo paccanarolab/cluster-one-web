@@ -3,7 +3,7 @@
     left: 0;
     height: 100%;
     /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
-    width: 18%;
+    width: 24%;
     /* Ocupará todo el ancho de la pantalla */
     background: rgba(0, 0, 0, 0.8);
     /* Hacemos el fondo más oscuro */
@@ -16,18 +16,21 @@
     overflow: auto;
     z-index: 1;
     margin-top: -8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .config-link {
-    display: block;
+    // display: block;
+    margin-top: 10px;
     color: #9ed0fa;
     text-decoration: none;
     transition: color 0.3s ease;
     // position: absolute;
     /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
-    bottom: 18px;
+    // bottom: 0;
     /* Posición desde la parte inferior */
-    left: 20px;
+    left: 23px;
     /* Posición desde la izquierda */
 
     &:hover {

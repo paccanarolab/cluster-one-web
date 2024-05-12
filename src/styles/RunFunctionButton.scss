@@ -17,8 +17,8 @@
     /* Para asegurar que el ícono y el texto estén alineados correctamente */
     justify-content: space-between;
     /* Separa el ícono y el texto en extremos opuestos */
-    width: 90%;
-    margin-top: 15px;
+    width: 10%;
+    margin-top: 5px;
     align-items: center;
     /* Añade esta línea para centrar verticalmente */
 }
@@ -41,6 +41,7 @@
 .explorePpiButton:hover .buttonMessage {
     display: inline;
     /* Se muestra en el hover */
+    font-style: normal;
 }
 
 .explorePpiButton:hover {
