@@ -19,6 +19,7 @@ module.exports = {
         alias: {
             '@components': path.resolve(__dirname, 'src/components/'),
             '@styles': path.resolve(__dirname, 'src/styles/'),
+            '@cy': path.resolve(__dirname, 'src/utils_cy/'),
         }
     },
     mode: 'production',
@@ -70,7 +71,11 @@ module.exports = {
             ]
         })
     ],
-    optmization: {
+    stats: {
+        colors: true,
+        // warnings: false  
+    },
+    optimization: {
         minimize: true,
         minimizer: [
             new CssMiniMinimizerPlugin(),
