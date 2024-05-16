@@ -217,7 +217,7 @@ function AppContextProvider ({ children }) {
             const formData = new FormData();
             formData.append("file", file);
             try {
-                const response = await fetch("https://paccanarolab.org/clusteroneweb/api//v1/api/graph/ppi/", {
+                const response = await fetch("https://paccanarolab.org/clusteroneweb/api/v1/api/graph/ppi/", {
                     method: "POST",
                     body: formData,
                 });
@@ -238,7 +238,7 @@ function AppContextProvider ({ children }) {
             const formData = new FormData();
             formData.append("file", file);
             try {
-                const response = await fetch("https://paccanarolab.org/clusteroneweb/api//v1/api/enrichment/upload/goa/", {
+                const response = await fetch("https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/upload/goa/", {
                     method: "POST",
                     body: formData,
                 });
@@ -260,7 +260,7 @@ function AppContextProvider ({ children }) {
             }
         );
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/graph/ppi/preloaded/update/?file_name=${ppi[0].file_name}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/graph/ppi/preloaded/update/?file_name=${ppi[0].file_name}`, {
                 method: 'POST'
             });
             const data = await response.json();
@@ -274,9 +274,9 @@ function AppContextProvider ({ children }) {
         // Uses the ppi_id state to call the API and get the clusters
         try {
             if ( goaFileName === "" ) {
-                var baseUrl = `https://paccanarolab.org/clusteroneweb/api//v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+                var baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
             } else {
-                var baseUrl = `https://paccanarolab.org/clusteroneweb/api//v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`
+                var baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`
             }
             const response = await fetch(baseUrl, {
                 method: 'POST'
@@ -309,7 +309,7 @@ function AppContextProvider ({ children }) {
     const runClusterOneParams = async (ppi_id, params) => {
         // Uses the ppi_id state to call the API and get the clusters
         var minSizeValue = params.minSize;
-        var baseUrl = `https://paccanarolab.org/clusteroneweb/api//v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+        var baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
 
         var minDensityValue = params.minDensity;
         var maxOverlapValue = params.maxOverlap;
@@ -362,7 +362,7 @@ function AppContextProvider ({ children }) {
     const getAllPpi = async () => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/graph/ppi/all/`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/graph/ppi/all/`, {
                 method: 'GET'
             });
             
@@ -376,7 +376,7 @@ function AppContextProvider ({ children }) {
     const getProteinDataByCluster = async (clusterId) => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
             const data = await response.json();
@@ -389,7 +389,7 @@ function AppContextProvider ({ children }) {
     const getProteinInfo = async (proteinLabel) => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/protein/${proteinLabel}/uniprot/?protein=${proteinLabel}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/${proteinLabel}/uniprot/?protein=${proteinLabel}`, {
                 method: 'GET'
             });
             const data = await response.json();
@@ -402,7 +402,7 @@ function AppContextProvider ({ children }) {
     const getEnrichmentData = async (clusterId) => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
             let data = await response.json();
@@ -503,7 +503,7 @@ function AppContextProvider ({ children }) {
     const getOraScore = async (executionId) => {
         // Get ORA Score by execution id
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api//v1/api/enrichment/params/?param_id=${executionId}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/params/?param_id=${executionId}`, {
                 method: 'GET'
             });
             const data = await response.json();
