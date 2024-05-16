@@ -51,7 +51,7 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'dist'),
         },
-        allowedHosts: 'auto' | 'all' | Array[string],
+        allowedHosts: 'all',
         compress: true,
         port: 3006,
     },
