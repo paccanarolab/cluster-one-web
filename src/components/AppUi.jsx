@@ -12,8 +12,11 @@ import { Typography } from "@mui/material";
 import { Enrichment } from "./Enrichment.jsx";
 import { ProteinModal } from "./ProteinModal.jsx";
 import { AboutModal } from "./AboutModal.jsx";
-
-import "../styles/global.scss"
+import { MyMenuButton } from "./MenuButtom.jsx";
+import { ClusterFilter } from "./ClusterFilter.jsx";
+import { Layout } from "./Layout.jsx";
+import "../styles/global.scss";
+import "../styles/ProteinFilter.scss";
 
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 const AppUi = () => {
@@ -34,10 +37,21 @@ const AppUi = () => {
         setShowWeight,
         getProteinInfo,
         setOpenProteinInfo,
+        openProteinInfo,
+        showMenu,
+        showHighlight,
+        showWeight,
     } = React.useContext(AppContext);
+    //comentario test
     return (
         <React.Fragment>
-            {cyGraph.code && <ProteinFilter />}
+            {
+                cyGraph.code && 
+                <ProteinFilter
+                    top={"6%"}
+                    left={showMenu ? "30%" : "15%"}
+                />
+            }
             {
                 cyGraph.code &&
                 <CheckboxLabels 
@@ -53,10 +67,11 @@ const AppUi = () => {
                             right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "5%",
-                            left: "48%",
+                            top: "3%",
+                            left: showMenu ? "40%" : "25%",
                         }
                     }
+                    checked={showHighlight}
                 />
             }
             {
@@ -75,16 +90,35 @@ const AppUi = () => {
                             right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "5%",
-                            left: "65%",
+                            top: "3%",
+                            left: showMenu ? "60%": "45%",
                         }
                     }
+                    checked={showWeight}
                 />
             }
-            <ExecuteBar  
-                href={clusterOneManual.href} 
-                label={clusterOneManual.label}
-            />
+            {cyGraph.code && 
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "6%",
+                        left: showMenu ? "80%" : "65%",
+                        zIndex: "1000",
+                    }}
+                    className={"proteinContainer"}>
+                    <label htmlFor="proteinSelect" className={"proteinLabel"}>Layout:</label>    
+                    <Layout 
+                        classname="proteinDropdown"
+                    />
+                </div>
+            }
+            <MyMenuButton />
+            { showMenu && 
+                <ExecuteBar  
+                    href={clusterOneManual.href} 
+                    label={clusterOneManual.label}
+                /> 
+            }
             <LabImage 
                 image={paccaLabImage.image}
                 url={paccaLabImage.url}
@@ -121,6 +155,15 @@ const AppUi = () => {
                     cy={
                         cy => {
                             setCyEvent(cy);
+                            if (showMenu===true) {
+                                cy.center();
+                            } else {
+                                // Necesito restar en el eje X el tamanio del menu
+                                let center = cy.center();
+                                console.log(center);
+                                cy.center({ x: center.x - 50, y: center.y });
+                            }
+
                             cy.on("tap", "node", evt => {
                                 var node = evt.target;
                                 var nodePosition = node.position();
@@ -134,33 +177,27 @@ const AppUi = () => {
                                             }
                                         });
                                     } else {
-                                        // Cuando quiera que sea mas animado el zoom, descomentar esto:
-                                        // console.log("Node: ", node);
-                                        // cy.animate({
-                                        //     fit: {
-                                        //         eles: node,
-                                        //         padding: 50
-                                        //     },
-                                        //     duration: 1000
-                                        // });
                                         cy.zoom({
                                             level: 1,
                                             position: { x: nodePosition.x, y: nodePosition.y }
                                         });
                                     }
                                 });
-                                
                                 node.on("click", function(evt) {
                                     if (node.data('type') !== "proteinComplex") {
                                         getProteinInfo(node.data('label'));
                                         setOpenProteinInfo(true);
                                         let connectedEdges = node.connectedEdges();
                                         connectedEdges.forEach(edge => {
+                                            if (openProteinInfo === true) {
                                                 edge.style("line-color", "#C65151");
                                             }
-                                        );
+                                            if (openProteinInfo === false) {
+                                                edge.style("line-color", "#618CB3");
+                                            }
+                                        });
                                     }
-                                });
+                                })
                             });
                         }
                     }
@@ -197,7 +234,7 @@ const AppUi = () => {
                         {
                             position: 'absolute',
                             top: '60%',
-                            left: '51.5%',
+                            left: showMenu ? '51.5%' : '50%',
                             transform: 'translate(-50%, -50%)',
                         }
                     }
@@ -206,6 +243,7 @@ const AppUi = () => {
                 </Typography>
               </Backdrop>
             }
+            {cyGraph.code && <ClusterFilter /> }
             <DownloadButton />
             <AboutModal />
             <InfoButton />

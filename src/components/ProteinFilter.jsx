@@ -2,7 +2,7 @@ import React from "react";
 import { AppContext } from "./AppContext.jsx";
 import "../styles/ProteinFilter.scss";
 
-const ProteinFilter = () => {
+const ProteinFilter = ({ top, left }) => {
     // Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
     const {
         complexProteinList,
@@ -18,7 +18,12 @@ const ProteinFilter = () => {
     }
     
     return (
-        <div className={"proteinContainer"}>
+        <div
+            style={{
+                top: top,
+                left: left,
+            }} 
+            className={"proteinContainer"}>
             <label htmlFor="proteinSelect" className={"proteinLabel"}>Protein:</label>
             <select 
                 id="proteinSelect"

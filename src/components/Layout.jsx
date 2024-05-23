@@ -105,7 +105,7 @@ const AvailableLayouts = [
     },
 ];
 
-const Layout = ({classname}) => {
+const Layout = ({classname, top, left}) => {
     const { setLayout } = React.useContext(AppContext);
     
     const handleChangeLayout = (event) => {
@@ -114,7 +114,10 @@ const Layout = ({classname}) => {
     
     return (
         <div>
-            <select onChange={handleChangeLayout} className={classname}>
+            <select 
+                onChange={handleChangeLayout} 
+                className={classname}
+            >
                 {AvailableLayouts.map((layout, index) => (
                     <option key={index} value={JSON.stringify(layout)}>
                         {layout.name.toUpperCase()}

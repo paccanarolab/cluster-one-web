@@ -18,7 +18,7 @@ module.exports = {
             '@styles': path.resolve(__dirname, 'src/styles/'),
         }
     },
-    mode: 'development',
+    mode: 'production',
     module: {
         rules: 
             [
@@ -54,6 +54,12 @@ module.exports = {
         allowedHosts: 'all',
         compress: true,
         port: 3006,
+        client: {
+            overlay: {
+                errors: true,
+                warnings: false
+            }
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({

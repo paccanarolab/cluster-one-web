@@ -75,7 +75,7 @@ function AppContextProvider ({ children }) {
                 color: "white",
                 fontSize: 20
             }
-    },
+        },
         {
             selector: "node[type='proteinComplex']:selected",
             style: {
@@ -142,7 +142,7 @@ function AppContextProvider ({ children }) {
     
     const clusterOneManual = {
         href: "https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html",
-        label: "ClusterONE Manual"
+        label: "ClusterONE Command Line Manual"
     };
 
     // Graph States
@@ -156,6 +156,7 @@ function AppContextProvider ({ children }) {
     const [layout, setLayout] = React.useState(initiallayout);
     const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
     const [openAboutModal, setOpenAboutModal] = React.useState(false); // About modal state
+    const [showMenu, setShowMenu] = React.useState(true); // Show or hide menu
     
     // Protein Filter States
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
@@ -208,6 +209,9 @@ function AppContextProvider ({ children }) {
         setComplexCounter(cyGraphList.length);
     };
     
+    const handleShowMenu = () => {
+        setShowMenu(!showMenu);
+    }
     // Call API functions
     const uploadFilePpi = async (inputElement) => {
         // This function is called when the user uploads a file and charges it to the API
@@ -389,10 +393,7 @@ function AppContextProvider ({ children }) {
     const getProteinInfo = async (proteinLabel) => {
         // Get all information about all PPIs in the database
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/${proteinLabel}/uniprot/?protein=${proteinLabel}`, {
-                method: 'GET'
-            });
-            const data = await response.json();
+            const data = {data: `https://www.uniprot.org/uniprotkb/${proteinLabel}/`, protein: proteinLabel};
             setProteinInfo(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -744,6 +745,7 @@ function AppContextProvider ({ children }) {
             cellularComponentDataset,
             loadingMessage,
             oraScore,
+            showMenu,
             clearClusterFilter,
             uploadFilePpi,
             uploadGoaFile,
@@ -754,6 +756,7 @@ function AppContextProvider ({ children }) {
             getProteinDataByCluster,
             setLayout,
             setPpiId,
+            handleShowMenu,
             getAllPpi,
             setCyGraph,
             setLoading,

@@ -3,7 +3,7 @@
     left: 0;
     height: 100%;
     /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
-    width: 24%;
+    width: 18%;
     /* Ocupará todo el ancho de la pantalla */
     background: rgba(0, 0, 0, 0.8);
     /* Hacemos el fondo más oscuro */
@@ -28,7 +28,7 @@
     transition: color 0.3s ease;
     // position: absolute;
     /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
-    // bottom: 0;
+    bottom: 10px;
     /* Posición desde la parte inferior */
     left: 23px;
     /* Posición desde la izquierda */

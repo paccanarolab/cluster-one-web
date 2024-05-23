@@ -16,6 +16,7 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
     setLoadingMessage,
     runClusterOneParams,
     ppiId,
+    handleShowMenu,
   } = React.useContext(AppContext);
 
   // Definir estados para los campos del formulario
@@ -44,6 +45,7 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
     setOpen(false);
     setLoadingMessage("Running ClusterONE and storing results... you can go for a coffee ☕️!");
     setLoading(true);
+    handleShowMenu();
     runClusterOneParams(ppiId, formData);
   };
 

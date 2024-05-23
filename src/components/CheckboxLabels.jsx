@@ -4,7 +4,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 
-const CheckboxLabels = ({label, onChangeFunc, style}) => {
+const CheckboxLabels = ({label, onChangeFunc, style, checked}) => {
   return (
     <FormGroup 
       style={style}
@@ -13,6 +13,7 @@ const CheckboxLabels = ({label, onChangeFunc, style}) => {
         control={
           <Checkbox 
             color="secondary"
+            checked={checked}
           />
         }
         label={label}

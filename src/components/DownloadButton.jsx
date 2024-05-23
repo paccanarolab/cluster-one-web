@@ -7,7 +7,7 @@ const DownloadButton = () => {
     const { cyGraph, ppiId } = React.useContext(AppContext);
     const downloadFile = async () => {
         try {
-            const response = await fetch(`http://localhost:8203/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`, {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`, {
                 method: 'GET'
             });
             

@@ -57,7 +57,7 @@ const ProteinModal= () => {
               sx={{ m: 1, p: 3 }} 
               id="customized-dialog-title"
             >
-              DEVELOP - {proteinInfo.protein ? proteinInfo.protein : "No protein selected"}
+              UniProtKb - {proteinInfo.protein}
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -76,7 +76,21 @@ const ProteinModal= () => {
               { 
                 proteinInfo 
                 ? 
-                  parseData(proteinInfo)
+                  <a
+                    href={proteinInfo.data}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      '&:hover': {
+                        textDecoration: 'underline',
+                        fontSize: '2rem',
+                      },
+                    }}
+                  >
+                    {proteinInfo.data}
+                  </a>
                 :
                   <Typography gutterBottom>
                     No data available

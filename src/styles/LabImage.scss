@@ -1,14 +1,14 @@
 .labImage {
     position: absolute;
-    top: 40px;
-    right: 10px;
+    top: 15px;
+    right: 25px;
     /* Originalmente estaba a 10px de la derecha */
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
     object-fit: cover;
     overflow: hidden;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     z-index: 1000;
     object-fit: cover;
     object-position: center;
@@ -17,14 +17,14 @@
 
 .fundacionImage {
     position: absolute;
-    top: 40px;
-    right: calc(5cm + 30px);
+    top: 80px;
+    right: 25px;
     /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
     overflow: hidden;
-    border: 1px solid #000;
+    // border: 1px solid #000;
     z-index: 1000;
     background-color: #ffffff;
 }

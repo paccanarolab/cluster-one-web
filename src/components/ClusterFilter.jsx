@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/ClusterFilter.scss";
 import { AppContext } from "./AppContext.jsx";
 import { Slider } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const ClusterFilter = () => {
 	const {
@@ -24,6 +25,7 @@ const ClusterFilter = () => {
 		size,
 		density,
 		quality,
+		cyGraph,
 	} = React.useContext(AppContext);
 
 	const clearSlider = () => {
@@ -170,7 +172,7 @@ const ClusterFilter = () => {
 			} else if (size !== "" && quality !== "") {
 				let minVal = size[0];
 				let maxVal = size[1];
-				if (complexList[i].density <= newValue && omplexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].quality <= quality) {
+				if (complexList[i].density <= newValue && complexList[i].size >= minVal && complexList[i].size <= maxVal && complexList[i].quality <= quality) {
 					auxfilter.push(complexList[i]);
 				}
 			}
@@ -228,17 +230,18 @@ const ClusterFilter = () => {
 	};
 
 	return (
-		<div className="complex" id="cfilter">
-			<div
-				style={{
-					display: "flex",
-					marginTop: "15px",
-					marginBottom: "15px",
-					justifyContent: "center",
-					fontSize: "20px"
-				}}>
-				Complex Filter
-			</div>
+		<div 
+			className="complex" 
+			id="cfilter"
+			style={{
+				width: "10%",
+				height: "10%",
+				position: "fixed",
+				top: "20%",
+				right: 15,
+				zIndex: 1000
+			}}
+		>
 			<div
 				style={{
 					display: "flex",
@@ -254,13 +257,41 @@ const ClusterFilter = () => {
 				style={{ marginBottom: "15px", width: "100%" }}
 				className="config-dropdown"
 			>
-				{complexList.map((graphData, index) => (
-					<option key={index} value={JSON.stringify(graphData)}>
-						{graphData.code ? ("COMPLEX - " + graphData.code) : "NO COMPLEX"}
-					</option>
-				))}
+			{complexList.map((graphData, index) => (
+				<option key={index} value={JSON.stringify(graphData)}>
+				{graphData.code ? ("COMPLEX: " + graphData.file_id + " - Size: " + graphData.size) : "NO COMPLEX"}
+				</option>
+			))}
 			</select>
-			
+			<div
+				style={{
+					display: "flex",
+					marginTop: "15px",
+					marginBottom: "15px",
+					justifyContent: "left",
+					fontSize: "15px"
+				}}>
+				Complex Data: 
+			</div>
+			<div
+				style={{
+					display: "flex",
+					marginTop: "5px",
+					marginBottom: "15px",
+					justifyContent: "left",
+					fontSize: "15px",
+					flexDirection: "column"
+				}}>
+				{cyGraph && (
+					<ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
+						<li>Complex ID: {cyGraph.file_id}</li>
+						<li>Size: {cyGraph.size}</li>
+						<li>Density: {cyGraph.density}</li>
+						<li>Cohesiveness: {cyGraph.quality}</li>
+						{/* Añade aquí cualquier otra propiedad de cyGraph que quieras mostrar */}
+					</ul>
+				)}
+			</div>
 			{
 				// <select
 				// 	style={{ marginBottom: "15px", width: "100%" }}
@@ -280,7 +311,8 @@ const ClusterFilter = () => {
 					marginTop: "15px",
 					marginBottom: "15px",
 					justifyContent: "left",
-					fontSize: "15px"
+					fontSize: "15px",
+					color: "black"
 				}}>
 				Size
 			</div>
@@ -298,9 +330,10 @@ const ClusterFilter = () => {
 				style={{
 					display: "flex",
 					marginTop: "15px",
-					marginBottom: "15px",
+					marginBottom: "10px",
 					justifyContent: "left",
-					fontSize: "15px"
+					fontSize: "15px",
+					color: "black"
 				}}>
 				Density
 			</div>
@@ -318,9 +351,10 @@ const ClusterFilter = () => {
 				style={{
 					display: "flex",
 					marginTop: "15px",
-					marginBottom: "15px",
+					marginBottom: "10px",
 					justifyContent: "left",
-					fontSize: "15px"
+					fontSize: "15px",
+					color: "black"
 				}}>
 				Cohesiveness
 			</div>
@@ -334,9 +368,20 @@ const ClusterFilter = () => {
 				onChange={handleSliderQualityChange}
 			/>
 			<button
-				style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
+				style={{
+					marginBottom: "15px",
+					width: "90%",
+					padding: "10px",
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					borderRadius: "5px",
+				}}
 				onClick={clearClusterFilter}>
-				Clear
+				<div style={{ marginRight: "5px" }}>
+					Clear
+				</div>
+				<ClearIcon />
 			</button>
 		</div>
 	);

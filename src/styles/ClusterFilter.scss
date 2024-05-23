@@ -1,5 +1,4 @@
 .complex {
-    background-color: rgba(0, 0, 0, 0.5);
     /* Fondo semitransparente */
     border-radius: 4px;
     /* Bordes redondeados */
@@ -21,10 +20,10 @@
 
 /* Estilo base para los inputs del filtro */
 .complex input[type="number"] {
-    background-color: rgba(0, 0, 0, 0.8);
+
     border: 1px solid #fff;
     border-radius: 4px;
-    color: #fff;
+    color: #000000;
     padding: 8px;
     margin: 1px;
     transition: all 0.3s ease;
@@ -39,11 +38,10 @@
 
 /* Estilo para el botón Clear */
 .complex button {
-    background-color: rgba(0, 0, 0, 0.8);
     /* Haciendo el fondo un poco más oscuro que el input */
     border: 1px solid #fff;
     border-radius: 4px;
-    color: #fff;
+    color: #000000;
     margin: 10px 5px;
     /* Espaciado estándar */
     cursor: pointer;
@@ -59,11 +57,45 @@
 
 /* Efecto hover para el botón, para que se ilumine ligeramente cuando se pasa el cursor sobre él */
 .complex button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(22, 22, 22, 0.2);
 }
 
 /* Efecto active para el botón, para que tenga una sensación de "pulsado" */
 .complex button:active {
     transform: scale(0.95);
     /* Se reduce ligeramente el tamaño al presionar */
+}
+
+.config-dropdown {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* Reduce el ancho al 80% de su contenedor */
+    /* Fondo más claro */
+    color: #000000;
+    /* Color de letra blanco */
+    /* Bordes blancos */
+    /* Bordes ligeramente redondeados */
+    padding: 8px;
+    /* Reduce el espaciado interno para el texto/dropdown */
+    font-size: 0.9em;
+    /* Reduce el tamaño de fuente */
+    transition: background-color 0.3s ease;
+    /* Transición suave para el cambio de fondo en hover */
+    margin: auto;
+    /* Centra el dropdown en su contenedor */
+    text-align: center;
+
+    &:hover {
+        background-color: rgba(60, 60, 60, 0.85);
+        /* Cambia el fondo al pasar el cursor */
+    }
+
+    /* Estilo para las opciones del dropdown */
+    option {
+        background: rgba(50, 50, 50, 0.75);
+        /* Fondo igual que el dropdown */
+        color: #fff;
+        /* Color de letra blanco */
+    }
 }

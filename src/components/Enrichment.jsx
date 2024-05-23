@@ -66,7 +66,7 @@ const Enrichment = () => {
                 }}
                 className='enrichmentContainer'
             >
-                Enrichment Analysis COMPLEX - {cyGraph.code}
+                Enrichment Analysis COMPLEX - {cyGraph.file_id}
             </Button>
             <Dialog
                 fullScreen
@@ -90,7 +90,7 @@ const Enrichment = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            COMPLEX - {cyGraph.code}
+                            COMPLEX - {cyGraph.file_id}
                         </Typography>
                     </Toolbar>
                 </AppBar>
