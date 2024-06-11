@@ -15,20 +15,24 @@
     margin-right: 10px;
     /* Espacio entre la etiqueta y el desplegable */
     color: black;
-    font-weight: bold;
+    // font-weight: bold;
     /* Puedes ajustar esto según tus necesidades */
 }
 
 .proteinDropdown {
     background-color: white;
     color: black;
-    width: 7cm;
+    width: 4cm;
     height: 1cm;
     border-radius: 15px;
     /* Bordes redondeados */
     border: 1px solid black;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    /* Hide the default dropdown arrow */
+    padding-right: 30px;
+    /* Space for the icon */
     transition: transform 0.3s ease;
     /* Animación de "zoom" cuando se pasa el mouse por encima */
 }
@@ -42,4 +46,13 @@
     background-color: white;
     color: black;
     text-align: center;
+}
+
+.dropdown-icon {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    /* Allows clicks to pass through to the select element */
+    color: black;
+    font-size: 18px;
 }

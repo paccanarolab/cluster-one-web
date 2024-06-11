@@ -14,9 +14,12 @@ import { ProteinModal } from "./ProteinModal.jsx";
 import { AboutModal } from "./AboutModal.jsx";
 import { MyMenuButton } from "./MenuButtom.jsx";
 import { ClusterFilter } from "./ClusterFilter.jsx";
+import {ClusterFilterButtom} from "./ClusterFilterButtom.jsx";
+import { ClusterInfo } from "./ClusterInfo.jsx";
 import { Layout } from "./Layout.jsx";
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
+import "../styles/ClusterFilter.scss";
 
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 const AppUi = () => {
@@ -37,20 +40,68 @@ const AppUi = () => {
         setShowWeight,
         getProteinInfo,
         setOpenProteinInfo,
-        openProteinInfo,
         showMenu,
         showHighlight,
         showWeight,
+        showClusterFilter,
+        showPPILoadedMessage,
     } = React.useContext(AppContext);
     //comentario test
     return (
         <React.Fragment>
+            <MyMenuButton/>
+            { showMenu && 
+                <ExecuteBar  
+                    href={clusterOneManual.href} 
+                    label={clusterOneManual.label}
+                /> 
+            }
+            {
+                cyGraph.code &&
+                <ClusterInfo
+                    top={"20px"}
+                    left={showMenu ? "20%" : "3%"}
+                />
+            }
+            {
+                cyGraph.code && 
+                <ClusterFilterButtom
+                    top={"25px"}
+                    left={showMenu ? "33%" : "15%"}
+                /> 
+            }
+            {
+                showClusterFilter && 
+                <ClusterFilter 
+                    top={"38px"}
+                    left={showMenu ? "33%" : "15%"}    
+                />
+            }
             {
                 cyGraph.code && 
                 <ProteinFilter
-                    top={"6%"}
-                    left={showMenu ? "30%" : "15%"}
+                    top={"4.5%"}
+                    left={showMenu ? "50%" : "30%"}
                 />
+            }
+            {
+                cyGraph.code && 
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "4.5%",
+                        left: showMenu ? "65%" : "45%",
+                        zIndex: "1000",
+                    }}
+                    className={"proteinContainer"}
+                >    
+                    
+                    <label htmlFor="proteinSelect" className={"proteinLabel"}>Layout:</label>
+                    <Layout 
+                        classname="proteinDropdown"
+                    />
+                    <i className={"fa fa-arrow-down dropdown-icon"}></i>
+                </div>
             }
             {
                 cyGraph.code &&
@@ -64,18 +115,17 @@ const AppUi = () => {
                     style={
                         {
                             position: "absolute",
-                            right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "3%",
-                            left: showMenu ? "40%" : "25%",
+                            top: "15px",
+                            left: showMenu ? "73%" : "53%",
                         }
                     }
                     checked={showHighlight}
                 />
             }
             {
-                cyGraph.code &&
+                (cyGraph.code) &&
                 <CheckboxLabels
                     label={"Show weight"}
                     onChangeFunc={
@@ -86,38 +136,14 @@ const AppUi = () => {
                     style={
                         {
                             position: "absolute",
-                            top: "0px",
-                            right: "0px",
                             margin: "10px",
                             zIndex: "1000",
-                            top: "3%",
-                            left: showMenu ? "60%": "45%",
+                            top: "20%",
+                            right: "0.5%",
                         }
                     }
                     checked={showWeight}
                 />
-            }
-            {cyGraph.code && 
-                <div
-                    style={{
-                        position: "absolute",
-                        top: "6%",
-                        left: showMenu ? "80%" : "65%",
-                        zIndex: "1000",
-                    }}
-                    className={"proteinContainer"}>
-                    <label htmlFor="proteinSelect" className={"proteinLabel"}>Layout:</label>    
-                    <Layout 
-                        classname="proteinDropdown"
-                    />
-                </div>
-            }
-            <MyMenuButton />
-            { showMenu && 
-                <ExecuteBar  
-                    href={clusterOneManual.href} 
-                    label={clusterOneManual.label}
-                /> 
             }
             <LabImage 
                 image={paccaLabImage.image}
@@ -146,8 +172,8 @@ const AppUi = () => {
                     style={{ width: "100%", height: "100%"}}
                     zoomingEnabled={true}
                     maxZoom={3}
-                    minZoom={0.1}
-                    zoom={0.5}
+                    minZoom={0.01}
+                    zoom={0.05}
                     autounselectify={false}
                     boxSelectionEnabled={true}
                     layout={layout}
@@ -166,7 +192,6 @@ const AppUi = () => {
 
                             cy.on("tap", "node", evt => {
                                 var node = evt.target;
-                                var nodePosition = node.position();
                                 node.on("dblclick", function(evt) {
                                     if (node.data('type') === "proteinComplex") {
                                         console.log("Is CLuster!");
@@ -177,27 +202,30 @@ const AppUi = () => {
                                             }
                                         });
                                     } else {
-                                        cy.zoom({
-                                            level: 1,
-                                            position: { x: nodePosition.x, y: nodePosition.y }
-                                        });
-                                    }
-                                });
-                                node.on("click", function(evt) {
-                                    if (node.data('type') !== "proteinComplex") {
-                                        getProteinInfo(node.data('label'));
-                                        setOpenProteinInfo(true);
                                         let connectedEdges = node.connectedEdges();
                                         connectedEdges.forEach(edge => {
-                                            if (openProteinInfo === true) {
-                                                edge.style("line-color", "#C65151");
-                                            }
-                                            if (openProteinInfo === false) {
+                                            edge.style("line-color", "#C65151");
+                                        });
+                                        cy.edges().difference(connectedEdges).forEach(edge => {
+                                            // Depende del tipo de edge
+                                            if (edge.data('type') === "overlapping") {
+                                                edge.style("line-color", "#B185B8");
+                                            } else {
                                                 edge.style("line-color", "#618CB3");
                                             }
-                                        });
+                                        })
                                     }
-                                })
+                                });
+                                
+                            });
+                            cy.on("cxttap", "node", evt => {
+                                // evt.preventDefault(); // Disable context menu
+                                var node = evt.target;
+                                console.log("Is rightclick!");
+                                if (node.data('type') !== "proteinComplex") {
+                                    getProteinInfo(node.data('label'));
+                                    setOpenProteinInfo(true);
+                                }
                             });
                         }
                     }
@@ -243,7 +271,26 @@ const AppUi = () => {
                 </Typography>
               </Backdrop>
             }
-            {cyGraph.code && <ClusterFilter /> }
+            {showPPILoadedMessage && <Typography
+                variant="h6"
+                component="div"
+                sx={{ 
+                    paddingTop: 2, 
+                    textAlign: 'center',
+                }}
+                style={
+                    {
+                        position: 'absolute',
+                        top: '60%',
+                        left: showMenu ? '51.5%' : '50%',
+                        transform: 'translate(-50%, -50%)',
+                        color: 'green',
+                    }
+                }
+            >
+                PPI loaded successfully! Now you can run ClusterONE
+            </Typography>
+            }           
             <DownloadButton />
             <AboutModal />
             <InfoButton />

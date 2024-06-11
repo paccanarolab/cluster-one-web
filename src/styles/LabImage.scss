@@ -1,6 +1,6 @@
 .labImage {
     position: absolute;
-    top: 15px;
+    top: 3px;
     right: 25px;
     /* Originalmente estaba a 10px de la derecha */
     width: 5cm;
@@ -17,7 +17,7 @@
 
 .fundacionImage {
     position: absolute;
-    top: 80px;
+    top: 70px;
     right: 25px;
     /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
     width: 5cm;

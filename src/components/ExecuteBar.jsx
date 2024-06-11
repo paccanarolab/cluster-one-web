@@ -24,6 +24,7 @@ const ExecuteBar = ({ href, label }) => {
 		getAllPpi,
 		cyGraph,
 		oraScore,
+		ppiLabel,
     } = React.useContext(AppContext);
 	
 
@@ -92,6 +93,17 @@ const ExecuteBar = ({ href, label }) => {
 					classname={"explorePpiButton"}
 					message={ppiId ? "PPI LOADED" : "PPI NOT LOADED"}
 				/>
+				{
+					ppiId &&
+					<span
+						style={{
+							display: "flex",
+							justifyContent: "left",
+							alignItems: "left",
+						}}>
+						PPI Loaded: {ppiLabel}
+					</span>
+				}
 			</div>
 			<div
 				style={{
@@ -128,26 +140,32 @@ const ExecuteBar = ({ href, label }) => {
 					message={goaFileName ? "GOA FILE LOADED" : "GOA FILE NOT LOADED"}
 				/>
 			</div>
-			
-			<RunFunctionButton
-				label="Quick Run ClusterONE"
-				icon="fa fa-forward"
-				onClickFunction={() => {
-					setLoadingMessage("Running ClusterONE and storing results... you can go for a coffee ☕️!");
-                    setLoading(true);
-					handleShowMenu();
-                    quickRunClusterOne(ppiId); 
-                }}
-				classname={"runClusterOneButton"}
-				message={"with default parameters"}
-			/>
-			<ClusterOneParams
-				label="Run ClusterONE"
-				icon="fa fa-play"
-				classname={"runClusterOneButton"}
-				message={"with custom parameters"}
-			/>
-			
+			{
+				ppiId &&
+				<RunFunctionButton
+					label="Quick Run ClusterONE"
+					icon="fa fa-forward"
+					onClickFunction={() => {
+						setLoadingMessage("Running ClusterONE!");
+						setLoading(true);
+						handleShowMenu();
+						quickRunClusterOne(ppiId); 
+					}}
+					classname={"runClusterOneButton"}
+					message={"with default parameters"}
+				/>
+			}
+
+			{
+				ppiId &&
+				<ClusterOneParams
+					label="Run ClusterONE"
+					icon="fa fa-play"
+					classname={"runClusterOneButton"}
+					message={"with custom parameters"}
+				/>
+			}
+
 			{goaFileName && oraScore &&
 				oraScore.bp_score !== 0 &&
 				oraScore.mf_score !== 0 &&

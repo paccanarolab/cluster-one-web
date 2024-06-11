@@ -33,3 +33,11 @@
 .cl1DownloadButton:hover {
     background-color: green;
 }
+
+.cl1DownloadButton.disabled {
+    background-color: rgb(158, 158, 158);
+    /* o el color que prefieras */
+    cursor: not-allowed;
+    pointer-events: none;
+    /* Asegura que no sea clickeable */
+}

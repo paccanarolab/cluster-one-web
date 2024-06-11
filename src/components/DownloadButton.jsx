@@ -7,10 +7,13 @@ const DownloadButton = () => {
     const { cyGraph, ppiId } = React.useContext(AppContext);
     const downloadFile = async () => {
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`, {
-                method: 'GET'
-            });
             
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -25,10 +28,20 @@ const DownloadButton = () => {
         }
     }
 
+    const openLinkInNewTab = () => {
+        const baseUrl = window.location.origin;
+        const url = `${baseUrl}/clusteroneweb/api/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`;
+        window.open(url, '_blank');
+    }
+
+    const isDisabled = cyGraph.code === "";
+    
     return (
         <button 
-            onClick={downloadFile} 
-            className={'cl1DownloadButton'}
+            onClick={!isDisabled ? openLinkInNewTab : null}
+            className={`cl1DownloadButton ${isDisabled ? 'disabled' : ''}`}
+            disabled={isDisabled}
+
         >
         </button>
     );

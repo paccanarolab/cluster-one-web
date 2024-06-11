@@ -30,6 +30,7 @@ const ProteinFilter = ({ top, left }) => {
                 onChange={handleProteinChange} 
                 className={"proteinDropdown"}
             >
+                <option disabled selected>Search a Protein</option>
                 {
                     showComplexList ?
                         complexProteinList.map((protein) => (
@@ -41,8 +42,9 @@ const ProteinFilter = ({ top, left }) => {
                         <option value={0} key={0}>
                             NO PROTEINS
                         </option>
-                }
+                }    
             </select>
+            <i className={"fa fa-search dropdown-icon"}></i>
         </div>
         
     );

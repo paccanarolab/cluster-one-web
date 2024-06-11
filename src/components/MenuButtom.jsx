@@ -1,7 +1,8 @@
 import React from 'react';
 import { AppContext } from './AppContext';
 import { IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const MyMenuButton = () => {
     const {
@@ -13,13 +14,17 @@ const MyMenuButton = () => {
             onClick={handleShowMenu}
             style={{
                 position: 'absolute',
-                top: '10px',
-                left: '10px',
+                top: "10px",
+                left: showMenu ? "300px" : "10px",
                 zIndex: 1000,
             }}
             color="inherit"
         >
-            <MenuIcon style={{ fontSize: 20, color: showMenu ? 'white' : 'black' }} />
+            {showMenu ? (
+                <ArrowBackIosIcon style={{ fontSize: 20, color: 'white' }} />
+            ) : (
+                <ArrowForwardIosIcon style={{ fontSize: 20, color: 'black' }} />
+            )}
         </IconButton>
     );
 };

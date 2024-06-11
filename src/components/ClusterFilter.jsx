@@ -1,10 +1,9 @@
 import React from "react";
-import "../styles/ClusterFilter.scss";
 import { AppContext } from "./AppContext.jsx";
 import { Slider } from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 
-const ClusterFilter = () => {
+const ClusterFilter = ({top, left}) => {
 	const {
 		complexList,
 		cyGraphList,
@@ -25,7 +24,6 @@ const ClusterFilter = () => {
 		size,
 		density,
 		quality,
-		cyGraph,
 	} = React.useContext(AppContext);
 
 	const clearSlider = () => {
@@ -35,9 +33,6 @@ const ClusterFilter = () => {
 		setCyGraph(cyGraphList[0]);
 	};
 
-	const handleClusterCodeChange = (event) => {
-		setCyGraph(JSON.parse(event.target.value));
-	};
 
 	const handleSignificancePvalueChange = (event) => {
 		var valuePvalue = event.target.value;
@@ -237,11 +232,12 @@ const ClusterFilter = () => {
 				width: "10%",
 				height: "10%",
 				position: "fixed",
-				top: "20%",
-				right: 15,
+				top: top,
+				left: left,
 				zIndex: 1000
 			}}
 		>
+			
 			<div
 				style={{
 					display: "flex",
@@ -252,46 +248,7 @@ const ClusterFilter = () => {
 				}}>
 				Complex counter: {complexCounter}
 			</div>
-			<select
-				onChange={handleClusterCodeChange}
-				style={{ marginBottom: "15px", width: "100%" }}
-				className="config-dropdown"
-			>
-			{complexList.map((graphData, index) => (
-				<option key={index} value={JSON.stringify(graphData)}>
-				{graphData.code ? ("COMPLEX: " + graphData.file_id + " - Size: " + graphData.size) : "NO COMPLEX"}
-				</option>
-			))}
-			</select>
-			<div
-				style={{
-					display: "flex",
-					marginTop: "15px",
-					marginBottom: "15px",
-					justifyContent: "left",
-					fontSize: "15px"
-				}}>
-				Complex Data: 
-			</div>
-			<div
-				style={{
-					display: "flex",
-					marginTop: "5px",
-					marginBottom: "15px",
-					justifyContent: "left",
-					fontSize: "15px",
-					flexDirection: "column"
-				}}>
-				{cyGraph && (
-					<ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
-						<li>Complex ID: {cyGraph.file_id}</li>
-						<li>Size: {cyGraph.size}</li>
-						<li>Density: {cyGraph.density}</li>
-						<li>Cohesiveness: {cyGraph.quality}</li>
-						{/* Añade aquí cualquier otra propiedad de cyGraph que quieras mostrar */}
-					</ul>
-				)}
-			</div>
+			
 			{
 				// <select
 				// 	style={{ marginBottom: "15px", width: "100%" }}
@@ -326,6 +283,7 @@ const ClusterFilter = () => {
 				onChange={handleSliderSizeChange}
 				valueLabelDisplay="auto"
 			/>
+			
 			<div
 				style={{
 					display: "flex",
@@ -367,6 +325,7 @@ const ClusterFilter = () => {
 				max={maxQuality}
 				onChange={handleSliderQualityChange}
 			/>
+			
 			<button
 				style={{
 					marginBottom: "15px",

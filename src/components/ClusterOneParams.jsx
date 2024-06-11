@@ -43,7 +43,7 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
     };
     setClusterOneParams(formData); // Asumo que quieres setear estos datos al contexto
     setOpen(false);
-    setLoadingMessage("Running ClusterONE and storing results... you can go for a coffee ☕️!");
+    setLoadingMessage("Running ClusterONE!");
     setLoading(true);
     handleShowMenu();
     runClusterOneParams(ppiId, formData);

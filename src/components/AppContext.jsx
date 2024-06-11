@@ -157,6 +157,8 @@ function AppContextProvider ({ children }) {
     const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
     const [openAboutModal, setOpenAboutModal] = React.useState(false); // About modal state
     const [showMenu, setShowMenu] = React.useState(true); // Show or hide menu
+    const [showPPILoadedMessage, setShowPPILoadedMessage] = React.useState(false); // Show or hide menu
+    const [isPpiWeighted, setIsPpiWeighted] = React.useState(false);
     
     // Protein Filter States
     const [complexProteinList, setComplexProteinList] = React.useState([initialProteinData]); // Protein List Uses in protein filter
@@ -170,6 +172,7 @@ function AppContextProvider ({ children }) {
     const [proteinInfo, setProteinInfo] = React.useState(""); // Highlight state
 
     // Cluster Filter States
+    const [showClusterFilter, setShowClusterFilter] = React.useState(false);
     const [minsize, setMinSize] = React.useState(0);
     const [maxsize, setMaxSize] = React.useState(100);
     const [minDensity, setMinDensity] = React.useState(0);
@@ -207,10 +210,15 @@ function AppContextProvider ({ children }) {
     const clearClusterFilter = () => {
         setComplexList(cyGraphList);
         setComplexCounter(cyGraphList.length);
+        setCyGraph(cyGraphList[0]);
     };
     
     const handleShowMenu = () => {
         setShowMenu(!showMenu);
+    }
+
+    const handleShowClusterFilter = () => {
+        setShowClusterFilter(!showClusterFilter);
     }
     // Call API functions
     const uploadFilePpi = async (inputElement) => {
@@ -228,6 +236,30 @@ function AppContextProvider ({ children }) {
                 const data = await response.json();
                 setPpiId(data.id);
                 setPpiLabel(data.name);
+                try {
+                    var delayfromEp = data.size * 1000;
+                    console.log(data);
+                    if (data.size === 0) {
+                        var delayfromEp = 60000;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    var delayfromEp = 60000;
+                }
+                setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
+                setIsPpiWeighted(data.weighted);
+                setLoading(true);
+                
+                // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
+                const timer = setTimeout(() => {
+                    setLoading(false);
+                    setShowPPILoadedMessage(true);
+                }, delayfromEp);  
+            
+                // Limpia el temporizador si el componente se desmonta
+                return () => {
+                    clearTimeout(timer);
+                };
             } catch (error) {
                 console.error("There was an error uploading the file:", error);
             }
@@ -391,9 +423,12 @@ function AppContextProvider ({ children }) {
     }
 
     const getProteinInfo = async (proteinLabel) => {
-        // Get all information about all PPIs in the database
         try {
-            const data = {data: `https://www.uniprot.org/uniprotkb/${proteinLabel}/`, protein: proteinLabel};
+            // I need to capture the status code of the response
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/${proteinLabel}/uniprot/?protein_name=${proteinLabel}`, {
+                method: 'GET'
+            });
+            let data = await response.json();
             setProteinInfo(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -520,6 +555,8 @@ function AppContextProvider ({ children }) {
         if (cyGraph.code === "") {
             return;
         }
+        setShowWeight(false);
+        setShowHighlight(false);
         let nodes = cyGraph.nodes;
         let proteins = [];
         nodes.forEach(
@@ -534,9 +571,12 @@ function AppContextProvider ({ children }) {
                 }
             }
         );
-        console.log("Proteins: ", proteins);
         setComplexProteinList(proteins);
         setShowComplexList(true);
+        setLayout(initiallayout);
+        if (goaFileName !== "") {
+            getEnrichmentData(cyGraph.code)
+        }
     }, [cyGraph]);
 
     React.useEffect(() => {
@@ -549,23 +589,9 @@ function AppContextProvider ({ children }) {
                 return node.data().id === proteinId;
             }
         );
-        cyEvent.zoom({
-            level: 2,
-            position: { x: node[0].position().x, y: node[0].position().y }
-        });
-        cyEvent.center(node[0]);
+        cyEvent.nodes().unselect();
         node[0].select();
     }, [proteinId]);
-
-    React.useEffect(() => {
-        if (cyGraph.code === "") {
-            return;
-        }
-        setLayout(initiallayout);
-        getEnrichmentData(cyGraph.code)
-        setShowWeight(false);
-        setShowHighlight(false);
-    }, [cyGraph]);
 
     React.useEffect(() => {
 		if (complexCounter === 1) {
@@ -650,10 +676,10 @@ function AppContextProvider ({ children }) {
             mf_score: 0,
             cc_score: 0,
         });
-        setLoadingMessage("Processing PPI.. Wait a moment please🧬");
+        setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size;
+                var delayfromEp = data.size * 1000;
                 console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
@@ -662,11 +688,13 @@ function AppContextProvider ({ children }) {
                 console.error(error);
                 var delayfromEp = 60000;
             }
+            setIsPpiWeighted(data.weighted);
             setLoading(true);
             
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
             const timer = setTimeout(() => {
                 setLoading(false);
+                setShowPPILoadedMessage(true);
             }, delayfromEp);  
         
             // Limpia el temporizador si el componente se desmonta
@@ -694,8 +722,6 @@ function AppContextProvider ({ children }) {
         };
     }, [goaFileName]);
 
-
-
     React.useEffect(() => {
         if (executionParams === "") {
             return;
@@ -705,7 +731,18 @@ function AppContextProvider ({ children }) {
         console.log("ORA Score: ", oraScore);
     }, [executionParams]);
 
-
+    React.useEffect(() => {
+        if (showPPILoadedMessage === false) {
+            return;
+        }
+        var delayfromEp = 6000;
+        const timer = setTimeout(() => {
+            setShowPPILoadedMessage(false);
+        }, delayfromEp);  
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [showPPILoadedMessage]);
     
     return (
         <AppContext.Provider value={{
@@ -732,6 +769,7 @@ function AppContextProvider ({ children }) {
             minQuality,
             maxQuality,
             complexCounter,
+            isPpiWeighted,
             size,
             density,
             quality,
@@ -746,7 +784,10 @@ function AppContextProvider ({ children }) {
             loadingMessage,
             oraScore,
             showMenu,
+            showClusterFilter,
+            showPPILoadedMessage,
             clearClusterFilter,
+            handleShowClusterFilter,
             uploadFilePpi,
             uploadGoaFile,
             openProteinInfo,
