@@ -15,6 +15,7 @@ const SelectPPiOptions = ({ open, handleClose, label, icon, onClickFunction, cla
         setPpiId,
         setPpiLabel,
         ppiList,
+        setIsPpiWeighted,
     } = React.useContext(AppContext);
     
 
@@ -23,9 +24,11 @@ const SelectPPiOptions = ({ open, handleClose, label, icon, onClickFunction, cla
     };
 
     const handleConfirm = () => {
-        console.log('Selected Option:', selectedOption);
+        console.log(selectedOption);
         setPpiId(selectedOption.id);
         setPpiLabel(selectedOption.name);
+        setIsPpiWeighted(selectedOption.weighted);
+
         handleClose();
     };
 
@@ -43,8 +46,11 @@ const SelectPPiOptions = ({ open, handleClose, label, icon, onClickFunction, cla
                 {isHovered && <a className={"buttonMessage"}>{message}</a>}
             </button>
             
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Select an PPI</DialogTitle>
+            <Dialog 
+                open={open} 
+                onClose={handleClose}
+            >
+                <DialogTitle>Select a PPI</DialogTitle>
                 <DialogContent>
                     <Autocomplete
                         options={ppiList}
