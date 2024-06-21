@@ -45,6 +45,7 @@ const AppUi = () => {
         showWeight,
         showClusterFilter,
         showPPILoadedMessage,
+        isPpiWeighted,
     } = React.useContext(AppContext);
     //comentario test
     return (
@@ -125,7 +126,7 @@ const AppUi = () => {
                 />
             }
             {
-                (cyGraph.code) &&
+                (cyGraph.code && isPpiWeighted) &&
                 <CheckboxLabels
                     label={"Show weight"}
                     onChangeFunc={
