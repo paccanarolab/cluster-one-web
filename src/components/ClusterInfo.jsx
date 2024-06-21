@@ -26,7 +26,7 @@ const ClusterInfo = ({left, top}) => {
 				position: "fixed",
 				top: top,
 				left: left,
-				zIndex: 1000,
+				zIndex: 10,
 				alignItems: "left",
 			}}
 		>
