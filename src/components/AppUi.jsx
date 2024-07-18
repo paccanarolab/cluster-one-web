@@ -106,7 +106,8 @@ const AppUi = () => {
             }
             {
                 cyGraph.code &&
-                <CheckboxLabels 
+                <CheckboxLabels
+                    key={`change-highlight-${showHighlight}`} 
                     label={"Highlight overlapping proteins"}
                     onChangeFunc={
                         (event) => {
@@ -128,6 +129,7 @@ const AppUi = () => {
             {
                 (cyGraph.code && isPpiWeighted) &&
                 <CheckboxLabels
+                    key={`change-weight-${showWeight}`}
                     label={"Show weight"}
                     onChangeFunc={
                         (event) => {
