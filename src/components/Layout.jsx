@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState, useEffect } from "react";
 import { AppContext } from "./AppContext.jsx";
 
 const AvailableLayouts = [
@@ -106,22 +106,35 @@ const AvailableLayouts = [
 ];
 
 const Layout = ({classname}) => {
-    const { setLayout } = React.useContext(AppContext);
+    const { 
+        layout,
+        setLayout,  
+    } = React.useContext(AppContext);
+
+    const [layoutSelected, setLayoutSelected] = useState("");
     
     const handleChangeLayout = (event) => {
         setLayout(JSON.parse(event.target.value));
+        setLayoutSelected(event.target.value);
     };
+
+    useEffect(() => {
+        if (layout) {
+          setLayoutSelected(JSON.stringify(layout));
+        }
+      }, [layout]);
     
     return (
         <div>
             <select 
+                value={layoutSelected}
                 onChange={handleChangeLayout}
                 className={classname}
             >
                 <option disabled selected>Select a Layout</option>
-                {AvailableLayouts.map((layout, index) => (
-                    <option key={index} value={JSON.stringify(layout)}>
-                        {layout.name.toUpperCase()}
+                {AvailableLayouts.map((layoutOption, index) => (
+                    <option key={index} value={JSON.stringify(layoutOption)}>
+                        {layoutOption.name.toUpperCase()}
                     </option>
                 ))}
             </select>

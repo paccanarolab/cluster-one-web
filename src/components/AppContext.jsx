@@ -64,14 +64,14 @@ function AppContextProvider ({ children }) {
         {
             selector: "node[type='proteinComplex']",
             style: {
-                // shape: "rectangle",
-                width: 120,
-                height: 120,
+                shape: "rectangle",
+                width: 30,
+                height: 30,
                 backgroundColor: "#B185B8",
                 label: "data(label)",
                 //text props
-                "text-outline-color": "#B185B8",
-                "text-outline-width": 8,
+                "text-outline-color": "#0B0B0B",
+                "text-outline-width": "2px",
                 color: "white",
                 fontSize: 20
             }
@@ -83,8 +83,8 @@ function AppContextProvider ({ children }) {
                 "border-color": "#AAD8FF",
                 "border-opacity": "0.5",
                 "background-color": "#77828C",
-                width: 180,
-                height: 180,
+                width: 50,
+                height: 50,
                 //text props
                 "text-outline-color": "#77828C",
                 "text-outline-width": 8
@@ -102,7 +102,7 @@ function AppContextProvider ({ children }) {
         {
             selector: "edge[type='overlapping']",
             style: {
-                width: 8,
+                width: 2,
                 "line-color": "#B185B8",
                 "curve-style": "bezier",
                 label: "",
@@ -166,8 +166,21 @@ function AppContextProvider ({ children }) {
     const [ppiId, setPpiId] = React.useState("");
     const [ppiLabel, setPpiLabel] = React.useState(""); // PPI Label Uses in selected our ppi
     const [loading, setLoading] = React.useState(false); // Loading state
-    const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
-    const [showWeight, setShowWeight] = React.useState(false); // Highlight state
+    
+    const [showHighlight, setShowHighlightState] = React.useState(false); // Highlight state
+    const setShowHighlight = (value, callback) => {
+        setShowHighlightState(value, () => {
+            callback?.();
+        });
+    };
+
+    const [showWeight, setShowWeightState] = React.useState(false); // Highlight state
+    const setShowWeight = (value, callback) => {
+        setShowWeightState(value, () => {
+            callback?.();
+        });
+    };
+
     const [openProteinInfo, setOpenProteinInfo] = React.useState(false); // Highlight state
     const [proteinInfo, setProteinInfo] = React.useState(""); // Highlight state
 
@@ -237,7 +250,7 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = data.size * 1000;
+                    var delayfromEp = data.size * 2;
                     console.log(data);
                     if (data.size === 0) {
                         var delayfromEp = 60000;
@@ -395,6 +408,37 @@ function AppContextProvider ({ children }) {
         }
     }
     
+    const downloadCsvFile = async (clusterId) => {
+        try {
+            const url = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/${clusterId}/csv/?cluster_id=${clusterId}`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/csv'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = downloadUrl;
+            a.download = `cluster_${clusterId}.csv`;  // Specify the file name here
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(downloadUrl);
+            a.remove(); // Clean up
+        } catch (error) {
+            console.error("There was an error downloading the file:", error);
+        }
+    }
+    
+
+
     const getAllPpi = async () => {
         // Get all information about all PPIs in the database
         try {
@@ -665,7 +709,6 @@ function AppContextProvider ({ children }) {
         if (ppiId === "") {
             return;
         }
-        let delayfromEp = 0;
         setCyGraphList([initialGraphData]);
         setComplexList([initialGraphData]);
         setComplexCounter(0);
@@ -679,7 +722,7 @@ function AppContextProvider ({ children }) {
         setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size * 1000;
+                var delayfromEp = data.size * 2;
                 console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
@@ -688,7 +731,6 @@ function AppContextProvider ({ children }) {
                 console.error(error);
                 var delayfromEp = 60000;
             }
-            setIsPpiWeighted(data.weighted);
             setLoading(true);
             
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
@@ -744,6 +786,13 @@ function AppContextProvider ({ children }) {
         };
     }, [showPPILoadedMessage]);
     
+    React.useEffect(() => {
+        if (loading === false) {
+            return;
+        }
+        setShowPPILoadedMessage(false);
+    }, [loading]);
+
     return (
         <AppContext.Provider value={{
             stylesheet,
@@ -822,6 +871,10 @@ function AppContextProvider ({ children }) {
             setOpenAboutModal,
             setEnrichmentLoading,
             getEnrichmentData,
+            setIsPpiWeighted,
+            downloadCsvFile,
+            setMinSize,
+            setMaxSize,
         }}>
             {children}
         </AppContext.Provider>
