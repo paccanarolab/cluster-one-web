@@ -20,6 +20,7 @@ import { Layout } from "./Layout.jsx";
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
 import "../styles/ClusterFilter.scss";
+import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 const AppUi = () => {
@@ -36,8 +37,6 @@ const AppUi = () => {
         loadingMessage,
         setCyEvent,
         setCyGraph,
-        setShowHighlight,
-        setShowWeight,
         getProteinInfo,
         setOpenProteinInfo,
         showMenu,
@@ -105,48 +104,36 @@ const AppUi = () => {
                 </div>
             }
             {
-                cyGraph.code &&
-                <CheckboxLabels
-                    key={`change-highlight-${showHighlight}`} 
-                    label={"Highlight overlapping proteins"}
-                    onChangeFunc={
-                        (event) => {
-                            setShowHighlight(event.target.checked)
-                        }
-                    }
-                    style={
-                        {
-                            position: "absolute",
-                            margin: "10px",
-                            zIndex: "1000",
-                            top: "15px",
-                            left: showMenu ? "73%" : "53%",
-                        }
-                    }
-                    checked={showHighlight}
-                />
+                cyGraph.code &&(
+                    <div key={cyGraph.code}>
+                        <HighLightCheckboxLabels
+                            label={"Highlight overlapping proteins"}
+                            style={{
+                                position: "absolute",
+                                margin: "10px",
+                                zIndex: "1000",
+                                top: "15px",
+                                left: showMenu ? "73%" : "53%",
+                            }}
+                        />
+                    </div>
+                )
             }
             {
-                (cyGraph.code && isPpiWeighted) &&
-                <CheckboxLabels
-                    key={`change-weight-${showWeight}`}
-                    label={"Show weight"}
-                    onChangeFunc={
-                        (event) => {
-                            setShowWeight(event.target.checked)
-                        }
-                    }
-                    style={
-                        {
-                            position: "absolute",
-                            margin: "10px",
-                            zIndex: "1000",
-                            top: "20%",
-                            right: "0.5%",
-                        }
-                    }
-                    checked={showWeight}
-                />
+                    (cyGraph.code && isPpiWeighted) && (
+                        <CheckboxLabels
+                            label={"Show weight"}
+                            style={
+                                {
+                                    position: "absolute",
+                                    margin: "10px",
+                                    zIndex: "1000",
+                                    top: "20%",
+                                    right: "0.5%",
+                                }
+                            }
+                        />
+                    )
             }
             <LabImage 
                 image={paccaLabImage.image}

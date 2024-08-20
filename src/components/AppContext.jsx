@@ -166,8 +166,21 @@ function AppContextProvider ({ children }) {
     const [ppiId, setPpiId] = React.useState("");
     const [ppiLabel, setPpiLabel] = React.useState(""); // PPI Label Uses in selected our ppi
     const [loading, setLoading] = React.useState(false); // Loading state
-    const [showHighlight, setShowHighlight] = React.useState(false); // Highlight state
-    const [showWeight, setShowWeight] = React.useState(false); // Highlight state
+    
+    const [showHighlight, setShowHighlightState] = React.useState(false); // Highlight state
+    const setShowHighlight = (value, callback) => {
+        setShowHighlightState(value, () => {
+            callback?.();
+        });
+    };
+
+    const [showWeight, setShowWeightState] = React.useState(false); // Highlight state
+    const setShowWeight = (value, callback) => {
+        setShowWeightState(value, () => {
+            callback?.();
+        });
+    };
+
     const [openProteinInfo, setOpenProteinInfo] = React.useState(false); // Highlight state
     const [proteinInfo, setProteinInfo] = React.useState(""); // Highlight state
 
