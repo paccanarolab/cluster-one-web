@@ -283,7 +283,7 @@ const AppUi = () => {
             </Typography>
             }
 
-            {/* {cyGraph.code && <AllResultsClusterOne/>} */}
+            {cyGraph.code && <AllResultsClusterOne/>}
             <DownloadButton />
             <AboutModal />
             <InfoButton />

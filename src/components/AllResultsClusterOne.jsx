@@ -8,65 +8,49 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { AppContext } from './AppContext';
+import { ResultsTable } from './ResultsTable.jsx';
 import "../styles/AllResultsClusterOne.scss"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const AllResultsClusterOne = () => {
-    const [open, setOpen] = React.useState(false);
     const { 
-        cyGraph,
-        setCyGraph,
-        cyGraphList,
+        ppiLabel,
+        openResults,
+        setOpenResults,
     } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenResults(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenResults(false);
     };
 
-    const handleChangeGraph = (event) => {
-        setCyGraph(event.target.value);
-    };
+    
 
     return (
         <div>
-            <Button 
-                variant="outlined"
+            <button 
                 onClick={handleClickOpen}
-                style={{
-                    borderRadius: "20px",
-                    backgroundColor: "#323232",
-                    color: "white",
-                    position: "fixed",
-                    left: "30%",
-                    bottom: "6%",
-                    width: "50%", 
-                    height: "5%",
-                    fontSize: "15px",
-                    fontWeight: "bold",
-                }}
-                className='resultsContainer'
+                className='resultButton'
             >
-            </Button>
+            </button>
             <Dialog
                 fullScreen
-                open={open}
+                open={openResults}
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
-
                 {/* Barra superior */}
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar 
                         style={{
-                            backgroundColor: "#323232", // un gris que se diferencie del fondo blanco
-                            color: "white", // color del texto
+                            backgroundColor: "#323232",
+                            color: "white",
                         }}
                     >
                         <IconButton
@@ -78,14 +62,11 @@ const AllResultsClusterOne = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            ClusterONE Results
+                            ClusterONE Results - {ppiLabel}
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                
-                {/* here i need a table */}
-                
-                
+                <ResultsTable/>
             </Dialog>
         </div>
     );
