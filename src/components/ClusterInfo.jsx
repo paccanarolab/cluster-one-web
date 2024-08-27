@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState, useEffect }  from "react";
 import { AppContext } from "./AppContext.jsx";
 
 const ClusterInfo = ({left, top}) => {
@@ -7,17 +7,21 @@ const ClusterInfo = ({left, top}) => {
 		complexList,
 		setCyGraph,
 	} = React.useContext(AppContext);
-	const [selectedClusterCode, setSelectedClusterCode] = React.useState("");
+	const [selectedClusterCode, setSelectedClusterCode] = useState("");
 	const handleClusterCodeChange = (event) => {
-		setCyGraph(JSON.parse(event.target.value));
-		setSelectedClusterCode(event.target.value);
+		console.log("Handle change", event.target.value); // Now i have the code of the selected cluster
+		// I need to find the cluster in the complexList
+		// I need to set the cyGraph
+		let clusterSelected = complexList.find((item) => item.code === event.target.value);
+		setCyGraph(clusterSelected);
 	};
+
+	useEffect(() => {
+		if (cyGraph && cyGraph.code) {
+		  setSelectedClusterCode(cyGraph.code);
+		}
+	  }, [cyGraph]);
 	
-	React.useEffect(() => {
-		setSelectedClusterCode(JSON.stringify(cyGraph));
-	}, [cyGraph]);
-
-
 	return (
 		<div 
 			style={{
@@ -48,8 +52,12 @@ const ClusterInfo = ({left, top}) => {
 				>
 				{
 					complexList.map((graphData, index) => (
-						<option key={index} value={JSON.stringify(graphData)}>
-							{graphData.code ? ("Complex #ID " + graphData.file_id + " (" + graphData.size + ")") : "NO COMPLEX"}
+						<option key={index} value={graphData.code}>
+							{
+								graphData.code ? 
+								("Complex #ID " + graphData.file_id + " (" + graphData.size + ")") 
+								: "NO COMPLEX"
+							}
 						</option>
 					))
 				}

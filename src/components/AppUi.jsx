@@ -17,10 +17,11 @@ import { ClusterFilter } from "./ClusterFilter.jsx";
 import {ClusterFilterButtom} from "./ClusterFilterButtom.jsx";
 import { ClusterInfo } from "./ClusterInfo.jsx";
 import { Layout } from "./Layout.jsx";
+import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
+import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
 import "../styles/ClusterFilter.scss";
-import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 
 // El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
 const AppUi = () => {
@@ -280,7 +281,9 @@ const AppUi = () => {
             >
                 PPI loaded successfully! Now you can run ClusterONE
             </Typography>
-            }           
+            }
+
+            {cyGraph.code && <AllResultsClusterOne/>}
             <DownloadButton />
             <AboutModal />
             <InfoButton />

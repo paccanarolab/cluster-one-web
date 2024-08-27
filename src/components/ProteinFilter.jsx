@@ -24,13 +24,13 @@ const ProteinFilter = ({ top, left }) => {
                 left: left,
             }} 
             className={"proteinContainer"}>
-            <label htmlFor="proteinSelect" className={"proteinLabel"}>Protein:</label>
+            <label htmlFor="proteinSelect" className={"proteinLabel"}>Complex Proteins</label>
             <select 
                 id="proteinSelect"
                 onChange={handleProteinChange} 
                 className={"proteinDropdown"}
             >
-                <option disabled selected>Search a Protein</option>
+                <option disabled selected>Protein</option>
                 {
                     showComplexList ?
                         complexProteinList.map((protein) => (

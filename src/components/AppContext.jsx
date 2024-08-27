@@ -195,6 +195,9 @@ function AppContextProvider ({ children }) {
     const [size, setSize] = React.useState([minsize, maxsize]);
     const [density, setDensity] = React.useState("");
     const [quality, setQuality] = React.useState("");
+    const [openResults, setOpenResults] = React.useState(false);
+
+    const [filterModel, setFilterModel] = React.useState({});
 
     // Cluster One Execution Params
     const [clusterOneParams, setClusterOneParams] = React.useState({
@@ -850,6 +853,10 @@ function AppContextProvider ({ children }) {
             getAllPpi,
             setCyGraph,
             setLoading,
+            openResults,
+            setOpenResults,
+            filterModel,
+            setFilterModel,
             setProteinId,
             setCyEvent,
             setCyGraphList,

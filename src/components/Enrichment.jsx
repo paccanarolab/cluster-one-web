@@ -53,16 +53,16 @@ const Enrichment = () => {
                 variant="outlined"
                 onClick={handleClickOpen}
                 style={{
-                    borderRadius: "20px", // bordes redondeados
-                    backgroundColor: "#323232", // un gris que se diferencie del fondo blanco
-                    color: "white", // color del texto
-                    position: "fixed", // para posicionarlo en la esquina inferior izquierda
-                    left: "30%", // separado un 30% del margen izquierdo de la pantalla
-                    bottom: "6%", // un pequeño margen desde el fondo para que no esté directamente en el borde
-                    width: "50%", // ancho del botón
-                    height: "5%", // alto del botón
-                    fontSize: "15px", // tamaño de la letra
-                    fontWeight: "bold", // negrita
+                    borderRadius: "20px",
+                    backgroundColor: "#323232",
+                    color: "white",
+                    position: "fixed",
+                    left: "30%",
+                    bottom: "6%",
+                    width: "50%", 
+                    height: "5%",
+                    fontSize: "15px",
+                    fontWeight: "bold",
                 }}
                 className='enrichmentContainer'
             >
