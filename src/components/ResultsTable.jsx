@@ -47,7 +47,7 @@ const ResultsTable = () => {
   const columns = [
     { 
       field: 'id', 
-      headerName: 'Cluster ID', 
+      headerName: 'Complex ID', 
       width: 100,
       renderCell: (params) => (
         <span 
@@ -60,7 +60,7 @@ const ResultsTable = () => {
           } 
           onClick={() => handleChangeGraph(params)}
         >
-          {params.value}
+          #{params.value}
         </span>
       ),
       description: 'Click to see the graph',
