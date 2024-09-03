@@ -1,14 +1,9 @@
 # Cluster ONE Web App 🧬🧬
 
-On this app, you can upload the PPI network including his GOA File, get the analysis results by Cluster ONE algorithm, and view the enrichment of results on intuitive Bargraph.
+On this app, you can upload the PPI network including his GOA File, get the analysis results by Cluster ONE algorithm, and view the enrichment of results on intuitive Bargraph. (Something was changed, i would detail it later)
 
 You can visualize, filter and manipulate the results in a graph interface. 📊
-
-TODO: 👨🏼‍🎓
-
-- Show protein panel with the information of the protein.
-- Modal with information of how to use ClusterOne Web.
-- Deploy the app.
+ß
 
 ## Prerequisites 📋
 
