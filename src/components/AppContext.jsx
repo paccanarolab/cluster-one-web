@@ -440,8 +440,6 @@ function AppContextProvider ({ children }) {
         }
     }
     
-
-
     const getAllPpi = async () => {
         // Get all information about all PPIs in the database
         try {
@@ -453,19 +451,6 @@ function AppContextProvider ({ children }) {
             setPpiList(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
-        }
-    }
-      
-    const getProteinDataByCluster = async (clusterId) => {
-        // Get all information about all PPIs in the database
-        try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/interactions/${clusterId}/?cluster_id=${clusterId}`, {
-                method: 'GET'
-            });
-            const data = await response.json();
-            return data.proteins;
-        } catch (error) {
-            console.error("There was an error fetching the data:", error);   
         }
     }
 
@@ -846,7 +831,6 @@ function AppContextProvider ({ children }) {
             proteinInfo,
             openAboutModal,
             quickRunClusterOne,
-            getProteinDataByCluster,
             setLayout,
             setPpiId,
             handleShowMenu,
