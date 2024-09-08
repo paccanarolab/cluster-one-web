@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
 
 
@@ -104,12 +104,16 @@ const ResultsTable = () => {
           rows={rows}
           columns={columns}
           pagination={false}
+          getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {
               fontSize: '1.2rem', // Set the desired font size here
             },
             '& .MuiDataGrid-columnHeaders': {
               fontSize: '1.2rem', // Customize header font size
+            },
+            [`& .${gridClasses.cell}`]: {
+              py: 1,
             },
           }}
           // filterModel={filterModel}
