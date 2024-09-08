@@ -38,7 +38,7 @@ const AboutModal= () => {
               sx={{ m: 1, p: 3 }} 
               id="customized-dialog-title"
             >
-              DEVELOP - ABOUT INFO.............................................
+              ClusterONE Web - About
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -52,12 +52,18 @@ const AboutModal= () => {
             >
               <CloseIcon />
             </IconButton>
-
             <DialogContent dividers>
               <Typography gutterBottom>
-                DEVELOP - ABOUT INFO.............................................
+                <b>
+                  ClusterONE
+                </b> is a clustering algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper. 
               </Typography>
-
+              <Typography gutterBottom>
+                <b>ClusterONE Web</b> is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
+              </Typography>
+              <Typography gutterBottom>
+                Developed by: <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://github.com/rubjim" target="_blank">Ruben Jimenez</a>
+              </Typography>
             </DialogContent>
         </BootstrapDialog>
     </div>

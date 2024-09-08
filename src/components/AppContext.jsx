@@ -482,7 +482,6 @@ function AppContextProvider ({ children }) {
                     return {
                         go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
-                        term: item.go_term.term,
                     }
                 }
             );
@@ -492,7 +491,6 @@ function AppContextProvider ({ children }) {
                     return {
                         go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
-                        term: item.go_term.term,
                     }
                 }
             );
@@ -501,7 +499,6 @@ function AppContextProvider ({ children }) {
                     return {
                         go_id: item.go_term.go_id,
                         bar_charge: item.bar_charge,
-                        term: item.go_term.term,
                     }
                 }
             );
@@ -511,7 +508,6 @@ function AppContextProvider ({ children }) {
                     {
                         go_id: "No data",
                         bar_charge: 0,
-                        term: "No data",
                     }
                 ];
             }
@@ -520,7 +516,6 @@ function AppContextProvider ({ children }) {
                     {
                         go_id: "No data",
                         bar_charge: 0,
-                        term: "No data",
                     }
                 ];
             }
@@ -529,7 +524,6 @@ function AppContextProvider ({ children }) {
                     {
                         go_id: "No data",
                         bar_charge: 0,
-                        term: "No data",
                     }
                 ];
             }
@@ -543,21 +537,18 @@ function AppContextProvider ({ children }) {
                 {
                     go_id: "No data",
                     bar_charge: 0,
-                    term: "No data",
                 }
             ];
             let molecularFunctionDatasetParsed = [
                 {
                     go_id: "No data",
                     bar_charge: 0,
-                    term: "No data",
                 }
             ];
             let cellularComponentDatasetParsed = [
                 {
                     go_id: "No data",
                     bar_charge: 0,
-                    term: "No data",
                 }
             ];
             setBiologicalProcessDataset(biologicalProcessDatasetParsed);

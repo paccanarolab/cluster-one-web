@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
 const HorizontalBar = ({ dataset, height }) => {
-  const valueFormatter = (value) => `${value}mm`;
   const sortedDataset = dataset.slice().sort((a, b) => b.bar_charge - a.bar_charge);
   return (
     <BarChart
@@ -18,24 +17,27 @@ const HorizontalBar = ({ dataset, height }) => {
           }
         ]
       }
-      series={
-        [
+      series={[
           { 
-            dataKey: 'bar_charge', 
-            label: '-log(p_value)', 
-            valueFormatter,
+            dataKey: 'bar_charge',
           },
         ]
       }
       layout="horizontal"
-      width={1500}
+      width={600}
       height={height}
       margin={{
-        top: 100,
-        right: 100,
-        bottom: 100,
-        left: 700,
+        top: 20,
+        left: 100,
       }}
+      grid={{ vertical: true }}
+      onItemClick={(event, data) => {
+        console.log(data);
+      } }
+      // topAxis={{
+      //   label: '-log(p_value)',
+      //   labelFontSize: 12,
+      // }}
     />
   );
 }
