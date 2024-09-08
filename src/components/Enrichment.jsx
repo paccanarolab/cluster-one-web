@@ -39,13 +39,6 @@ const Enrichment = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const listItemStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        fontSize: '3.052rem',
-        fontWeight: 'bold',
-    };
     
     return (
         <div>
@@ -59,14 +52,14 @@ const Enrichment = () => {
                     position: "fixed",
                     left: "30%",
                     bottom: "6%",
-                    width: "50%", 
+                    width: "35%", 
                     height: "5%",
                     fontSize: "15px",
                     fontWeight: "bold",
                 }}
-                className='enrichmentContainer'
+                className='enrichment-container'
             >
-                Enrichment Analysis COMPLEX - {cyGraph.file_id}
+                Enrichment Analysis
             </Button>
             <Dialog
                 fullScreen
@@ -77,8 +70,8 @@ const Enrichment = () => {
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar 
                         style={{
-                            backgroundColor: "#323232", // un gris que se diferencie del fondo blanco
-                            color: "white", // color del texto
+                            backgroundColor: "#323232",
+                            color: "white",
                         }}
                     >
                         <IconButton
@@ -90,7 +83,7 @@ const Enrichment = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            COMPLEX - {cyGraph.file_id}
+                            COMPLEX #{cyGraph.file_id}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -126,7 +119,7 @@ const Enrichment = () => {
                                 {
                                     position: 'absolute',
                                     top: '60%',
-                                    left: '51.5%',
+                                    left: '50%',
                                     transform: 'translate(-50%, -50%)',
                                 }
                             }
@@ -135,77 +128,67 @@ const Enrichment = () => {
                         </Typography>
                     </Backdrop>
                 }
-                {enrichmentDataBase && <List
-                    style={
-                        {
-                            width: '100%',
-                        }
-                    }
+                {enrichmentDataBase && 
+                    <List
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row', // Changed from 'column' to 'row'
+                        justifyContent: 'space-around', // This will space out the items evenly
+                    }}
                 >
-                    <ListItem 
-                        style={
-                            {
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                width: '100%',
-                            }
-                        }
+                    <ListItem
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center', // Align items to the center
+                            // width: '30%', // Ensure each item takes up only 30% of the list's width
+                        }}
                     >
-                        <ListItemText 
-                            primary="Biological Process"
-                        />
-                        {
-                            biologicalProcessDataset && 
-                            <HorizontalBar 
+                        <ListItemText primary="Biological Process" />
+                        {biologicalProcessDataset && (
+                            <HorizontalBar
                                 dataset={biologicalProcessDataset}
-                                height={biologicalProcessDataset.length * 50}
+                                height={biologicalProcessDataset.length * 25}
+                                style={{ position: 'relative', top: '-55%' }}
                             />
-                        }
+                        )}
                     </ListItem>
-                    <Divider />
-                    <ListItem 
-                        style={
-                            {
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                width: '100%',
-                            }
-                        }
+                    <Divider orientation="vertical" flexItem />
+                    <ListItem
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center', // Align items to the center
+                            // width: '30%',
+                        }}
                     >
-                        <ListItemText
-                            primary="Molecular Function"
-                        />
-                        {
-                            molecularFunctionDataset && 
-                            <HorizontalBar 
+                        <ListItemText primary="Molecular Function" />
+                        {molecularFunctionDataset && (
+                            <HorizontalBar
                                 dataset={molecularFunctionDataset}
-                                height={molecularFunctionDataset.length * 80}
+                                height={molecularFunctionDataset.length * 30}
+                                style={{ position: 'relative', top: '-55%' }}
                             />
-                        }
+                        )}
                     </ListItem>
-                    <Divider />
-                    <ListItem 
-                        style={
-                            {
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                width: '100%',
-                            }
-                        }
+                    <Divider orientation="vertical" flexItem />
+                    <ListItem
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center', // Align items to the center
+                            // width: '30%',
+                        }}
                     >
-                        <ListItemText
-                            primary="Cellular Component"
-                        />
-                        {
-                            cellularComponentDataset &&  
-                            <HorizontalBar 
+                        <ListItemText primary="Cellular Component" />
+                        {cellularComponentDataset && (
+                            <HorizontalBar
                                 dataset={cellularComponentDataset}
-                                height={cellularComponentDataset.length * 50}
+                                height={cellularComponentDataset.length * 25}
+                                style={{ position: 'relative', top: '-55%' }}
                             />
-                        }
+                        )}
                     </ListItem>
                 </List>}
             </Dialog>
