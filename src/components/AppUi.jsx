@@ -192,21 +192,10 @@ const AppUi = () => {
                                         });
                                     } else {
                                         let connectedEdges = node.connectedEdges();
-                                        let selectedEdges = cy.edges().difference(connectedEdges);
-
                                         cy.batch(() => {
                                             connectedEdges.forEach(edge => {
                                                 edge.style("line-color", "#C65151");
                                                 edge.style("label", edge.data('label'));
-                                            });
-
-                                            selectedEdges.forEach(edge => {
-                                                edge.style("label", "");
-                                                if (edge.data('type') === "overlapping") {
-                                                    edge.style("line-color", "#B185B8");
-                                                } else {
-                                                    edge.style("line-color", "#debc6e");
-                                                }
                                             });
                                         });
                                     }
