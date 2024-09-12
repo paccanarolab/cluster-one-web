@@ -1,43 +1,52 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const HorizontalBar = ({ dataset, height }) => {
-  const sortedDataset = dataset.slice().sort((a, b) => b.bar_charge - a.bar_charge);
+const HorizontalBar = ({ dataset }) => {
+  const height = dataset.length < 15 ? dataset.length * 50 : dataset.length * 25;
+  const getDataByIndex = (index) => {
+    return dataset[index];
+  }
+
   return (
     <BarChart
-      dataset={sortedDataset}
-      yAxis={
-        [
+      dataset={dataset}
+      yAxis={[
           { 
             scaleType: 'band',
-            dataKey: 'go_id',
+            dataKey: 'term',
             order: 'original',
             padding: 0.3,
             labelFontSize: 12,
           }
-        ]
-      }
+      ]}
       series={[
           { 
             dataKey: 'bar_charge',
           },
-        ]
-      }
+      ]}
+      slotProps={{ legend: { hidden: true } }}
       layout="horizontal"
-      width={600}
+      width={2000}
       height={height}
       margin={{
-        top: 20,
-        left: 100,
+        right: 1000,
+        left: 500,
       }}
       grid={{ vertical: true }}
-      onItemClick={(event, data) => {
-        console.log(data);
-      } }
-      // topAxis={{
-      //   label: '-log(p_value)',
-      //   labelFontSize: 12,
+      onItemClick={
+        (event, item) => {
+          window.open(`https://www.ebi.ac.uk/QuickGO/GTerm?id=${getDataByIndex(item.dataIndex).go_id}`, '_blank');
+        }}
+      // barLabel={(item, context) => {
+      //   return getDataByIndex(item.dataIndex).term;
       // }}
+      bottomAxis={null}
+      topAxis={{
+        label: '-log(p_value)',
+        labelFontSize: 12,
+      }}
+      rightAxis={{}}
+      leftAxis={null}
     />
   );
 }

@@ -22,7 +22,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Enrichment = () => {
-    const [open, setOpen] = React.useState(false);
     const { 
         cyGraph, 
         enrichmentLoading,
@@ -30,16 +29,17 @@ const Enrichment = () => {
         molecularFunctionDataset,
         cellularComponentDataset,
         enrichmentDataBase,
+        openEnrichment,
+        setOpenEnrichment,
     } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenEnrichment(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenEnrichment(false);
     };
-    
     return (
         <div>
             <Button 
@@ -63,7 +63,7 @@ const Enrichment = () => {
             </Button>
             <Dialog
                 fullScreen
-                open={open}
+                open={openEnrichment}
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
@@ -133,61 +133,46 @@ const Enrichment = () => {
                     style={{
                         width: '100%',
                         display: 'flex',
-                        flexDirection: 'row', // Changed from 'column' to 'row'
-                        justifyContent: 'space-around', // This will space out the items evenly
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
                     }}
                 >
                     <ListItem
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center', // Align items to the center
-                            // width: '30%', // Ensure each item takes up only 30% of the list's width
+                            alignItems: 'center',
                         }}
                     >
                         <ListItemText primary="Biological Process" />
                         {biologicalProcessDataset && (
-                            <HorizontalBar
-                                dataset={biologicalProcessDataset}
-                                height={biologicalProcessDataset.length * 25}
-                                style={{ position: 'relative', top: '-55%' }}
-                            />
+                            <HorizontalBar dataset={biologicalProcessDataset}/>
                         )}
                     </ListItem>
-                    <Divider orientation="vertical" flexItem />
+                    <Divider orientation="horizontal" flexItem />
                     <ListItem
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center', // Align items to the center
-                            // width: '30%',
+                            alignItems: 'center',
                         }}
                     >
                         <ListItemText primary="Molecular Function" />
                         {molecularFunctionDataset && (
-                            <HorizontalBar
-                                dataset={molecularFunctionDataset}
-                                height={molecularFunctionDataset.length * 30}
-                                style={{ position: 'relative', top: '-55%' }}
-                            />
+                            <HorizontalBar dataset={molecularFunctionDataset}/>
                         )}
                     </ListItem>
-                    <Divider orientation="vertical" flexItem />
+                    <Divider orientation="horizontal" flexItem />
                     <ListItem
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center', // Align items to the center
-                            // width: '30%',
+                            alignItems: 'center',
                         }}
                     >
                         <ListItemText primary="Cellular Component" />
                         {cellularComponentDataset && (
-                            <HorizontalBar
-                                dataset={cellularComponentDataset}
-                                height={cellularComponentDataset.length * 25}
-                                style={{ position: 'relative', top: '-55%' }}
-                            />
+                            <HorizontalBar dataset={cellularComponentDataset}/>
                         )}
                     </ListItem>
                 </List>}
