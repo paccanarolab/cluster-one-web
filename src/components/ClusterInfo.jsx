@@ -55,7 +55,7 @@ const ClusterInfo = ({left, top}) => {
 						<option key={index} value={graphData.code}>
 							{
 								graphData.code ? 
-								("Complex #ID " + graphData.file_id + " (" + graphData.size + ")") 
+								("Complex #" + graphData.file_id + " (" + graphData.size + ")") 
 								: "NO COMPLEX"
 							}
 						</option>
