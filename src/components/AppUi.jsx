@@ -38,11 +38,9 @@ const AppUi = () => {
         loadingMessage,
         setCyEvent,
         setCyGraph,
-        getProteinInfo,
+        setProteinInfo,
         setOpenProteinInfo,
         showMenu,
-        showHighlight,
-        showWeight,
         showClusterFilter,
         showPPILoadedMessage,
         isPpiWeighted,
@@ -121,6 +119,7 @@ const AppUi = () => {
                 )
             }
             {
+                /*
                     (cyGraph.code && isPpiWeighted) && (
                         <CheckboxLabels
                             label={"Show weight"}
@@ -135,6 +134,7 @@ const AppUi = () => {
                             }
                         />
                     )
+                */
             }
             <LabImage 
                 image={paccaLabImage.image}
@@ -185,7 +185,6 @@ const AppUi = () => {
                                 var node = evt.target;
                                 node.on("dblclick", function(evt) {
                                     if (node.data('type') === "proteinComplex") {
-                                        console.log("Is CLuster!");
                                         var node_id = node.data('id');
                                         cyGraphList.forEach((graph) => {
                                             if (graph.code === node_id) {
@@ -196,25 +195,36 @@ const AppUi = () => {
                                         let connectedEdges = node.connectedEdges();
                                         connectedEdges.forEach(edge => {
                                             edge.style("line-color", "#C65151");
+                                            edge.style("label", edge.data('label'));
                                         });
                                         cy.edges().difference(connectedEdges).forEach(edge => {
-                                            // Depende del tipo de edge
+                                            edge.style("label", "");
                                             if (edge.data('type') === "overlapping") {
                                                 edge.style("line-color", "#B185B8");
                                             } else {
-                                                edge.style("line-color", "#618CB3");
+                                                edge.style("line-color", "#debc6e");
                                             }
                                         })
                                     }
                                 });
-                                
+                            });
+                            cy.on("tap", evt => {
+                                cy.edges().forEach(edge => {
+                                    edge.style("label", "");
+                                    if (edge.data('type') === "overlapping") {
+                                        edge.style("line-color", "#B185B8");
+                                    } else {
+                                        edge.style("line-color", "#debc6e");
+                                    }
+                                });
                             });
                             cy.on("cxttap", "node", evt => {
-                                // evt.preventDefault(); // Disable context menu
                                 var node = evt.target;
-                                console.log("Is rightclick!");
                                 if (node.data('type') !== "proteinComplex") {
-                                    getProteinInfo(node.data('label'));
+                                    setProteinInfo({
+                                        protein: node.data('label'),
+                                        data:`https://www.uniprot.org/uniprotkb/${node.data('label')}`
+                                    });
                                     setOpenProteinInfo(true);
                                 }
                             });
