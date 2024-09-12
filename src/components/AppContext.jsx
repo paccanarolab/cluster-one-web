@@ -34,33 +34,37 @@ function AppContextProvider ({ children }) {
         {
             selector: "node[type='protein']",
             style: {
-                backgroundColor: "#618CB3",
+                backgroundColor: "#debc6e",
+                "border-color": "#252525",
+                "border-width": "3px",
                 width: 30,
                 height: 30,
-                label: "data(label)",
+                label: "",
                 "overlay-padding": "6px",
                 "z-index": "10",
-                //text props
-                "text-outline-color": "#618CB3",
-                "text-outline-width": "2px",
-                color: "white",
-                fontSize: 20
             }
         },
         {
             selector: "node[type='protein']:selected",
             style: {
                 "border-width": "6px",
-                "border-color": "#AAD8FF",
+                label: "data(label)",
+                "border-color": "#252525",
                 "border-opacity": "0.5",
-                "background-color": "#77828C",
+                "background-color": "#b2800f",
                 width: 50,
                 height: 50,
                 //text props
-                "text-outline-color": "#77828C",
+                "text-outline-color": "#b2800f",
                 "text-outline-width": 8
             }
         },
+        // {
+        //     selector: "node[type='protein']:hover",
+        //     style: {
+        //         label: "data(label)",
+        //     }
+        // },
         {
             selector: "node[type='proteinComplex']",
             style: {
@@ -73,7 +77,8 @@ function AppContextProvider ({ children }) {
                 "text-outline-color": "#0B0B0B",
                 "text-outline-width": "2px",
                 color: "white",
-                fontSize: 20
+                fontSize: 20,
+                "border-color": "#000000" // Add border color here
             }
         },
         {
@@ -94,9 +99,18 @@ function AppContextProvider ({ children }) {
             selector: "edge",
             style: {
                 width: 2,
-                "line-color": "#618CB3",
+                "line-color": "#debc6e",
                 "curve-style": "bezier",
                 label: "",
+            }
+        },
+        {
+            selector: "edge:selected",
+            style: {
+                width: 2,
+                "line-color": "#debc6e",
+                "curve-style": "bezier",
+                label: "data(label)",
             }
         },
         {
@@ -196,7 +210,6 @@ function AppContextProvider ({ children }) {
     const [density, setDensity] = React.useState("");
     const [quality, setQuality] = React.useState("");
     const [openResults, setOpenResults] = React.useState(false);
-
     const [filterModel, setFilterModel] = React.useState({});
 
     // Cluster One Execution Params
@@ -212,11 +225,12 @@ function AppContextProvider ({ children }) {
         bp_score: 0,
         mf_score: 0,
         cc_score: 0,
-    }); // Execution params
+    });
 
     // Enrichment States
     const [enrichmentLoading, setEnrichmentLoading] = React.useState(true);
     const [enrichmentDataBase, setEnrichmentDataBase] = React.useState(false);
+    const [openEnrichment, setOpenEnrichment] = React.useState(false);
     const [goaFileName, setGoaFileName] = React.useState("");
     const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
@@ -236,6 +250,7 @@ function AppContextProvider ({ children }) {
     const handleShowClusterFilter = () => {
         setShowClusterFilter(!showClusterFilter);
     }
+
     // Call API functions
     const uploadFilePpi = async (inputElement) => {
         // This function is called when the user uploads a file and charges it to the API
@@ -454,19 +469,6 @@ function AppContextProvider ({ children }) {
         }
     }
 
-    const getProteinInfo = async (proteinLabel) => {
-        try {
-            // I need to capture the status code of the response
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/protein/${proteinLabel}/uniprot/?protein_name=${proteinLabel}`, {
-                method: 'GET'
-            });
-            let data = await response.json();
-            setProteinInfo(data);
-        } catch (error) {
-            console.error("There was an error fetching the data:", error);
-        }
-    }
-
     const getEnrichmentData = async (clusterId) => {
         // Get all information about all PPIs in the database
         try {
@@ -474,22 +476,30 @@ function AppContextProvider ({ children }) {
                 method: 'GET'
             });
             let data = await response.json();
-            let biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
-            let molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
-            let cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
+            let _biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
+            let _molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
+            let _cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
+
+            // Sort the data
+            // .slice().sort((a, b) => b.bar_charge - a.bar_charge)
+            let biologicalProcessDataset = _biologicalProcessDataset.sort((a, b) => b.bar_charge - a.bar_charge);
+            let molecularFunctionDataset = _molecularFunctionDataset.sort((a, b) => b.bar_charge - a.bar_charge);
+            let cellularComponentDataset = _cellularComponentDataset.sort((a, b) => b.bar_charge - a.bar_charge);
+            
             let biologicalProcessDatasetParsed = biologicalProcessDataset.map(
                 (item) => {
                     return {
                         go_id: item.go_term.go_id,
+                        term: item.go_term.term,
                         bar_charge: item.bar_charge,
                     }
                 }
             );
-
             let molecularFunctionDatasetParsed = molecularFunctionDataset.map(
                 (item) => {
                     return {
                         go_id: item.go_term.go_id,
+                        term: item.go_term.term,
                         bar_charge: item.bar_charge,
                     }
                 }
@@ -498,6 +508,7 @@ function AppContextProvider ({ children }) {
                 (item) => {
                     return {
                         go_id: item.go_term.go_id,
+                        term: item.go_term.term,
                         bar_charge: item.bar_charge,
                     }
                 }
@@ -527,9 +538,9 @@ function AppContextProvider ({ children }) {
                     }
                 ];
             }
-            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
-            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
-            setCellularComponentDataset(cellularComponentDatasetParsed);
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed.slice(0, 20));
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed.slice(0, 20));
+            setCellularComponentDataset(cellularComponentDatasetParsed.slice(0, 20));
             setEnrichmentLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
@@ -647,13 +658,13 @@ function AppContextProvider ({ children }) {
             nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
                     node.style(
-                        "background-color", "#618CB3");
+                        "background-color", "#debc6e");
                     node.style(
                         "width", 30);
                     node.style(
                         "height", 30);
                     node.style(
-                        "text-outline-color", "#618CB3");
+                        "text-outline-color", "#debc6e");
                     node.style(
                         "text-outline-width", 2);
                 }
@@ -749,7 +760,6 @@ function AppContextProvider ({ children }) {
         }
         // let delayfromEp = 0;
         getOraScore(executionParams);
-        console.log("ORA Score: ", oraScore);
     }, [executionParams]);
 
     React.useEffect(() => {
@@ -811,6 +821,8 @@ function AppContextProvider ({ children }) {
             cellularComponentDataset,
             loadingMessage,
             oraScore,
+            openEnrichment,
+            setOpenEnrichment,
             showMenu,
             showClusterFilter,
             showPPILoadedMessage,
@@ -848,7 +860,6 @@ function AppContextProvider ({ children }) {
             setPpiLabel,
             setShowWeight,
             setOpenProteinInfo,
-            getProteinInfo,
             setProteinInfo,
             setOpenAboutModal,
             setEnrichmentLoading,
