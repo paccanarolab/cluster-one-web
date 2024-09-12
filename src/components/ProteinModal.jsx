@@ -22,30 +22,12 @@ const ProteinModal= () => {
     openProteinInfo,
     proteinInfo,
     setOpenProteinInfo,
-    setProteinInfo,
   } = React.useContext(AppContext);
 
   const handleClose = () => {
     setOpenProteinInfo(false);
-    setProteinInfo("");
   };
 
-  const parseData = (data) => {
-    let finalDataToShow = [];
-    let uniprotData = data.data;
-    console.log(uniprotData);
-    uniprotData.forEach(
-      (element) => {
-        finalDataToShow.push(
-          <Typography gutterBottom>
-            {element}
-          </Typography>
-        ) 
-      }
-
-    );
-    return finalDataToShow;
-  }
   return (
     <div>
         <BootstrapDialog
@@ -71,9 +53,13 @@ const ProteinModal= () => {
             >
               <CloseIcon />
             </IconButton>
-
             <DialogContent dividers>
-              { 
+              <Typography gutterBottom>
+                <b>
+                  If you want to see more information about this protein click the link below: (Only available for UniProtKb proteins id)
+                </b>
+              </Typography>
+              {
                 proteinInfo 
                 ? 
                   <a
@@ -82,7 +68,7 @@ const ProteinModal= () => {
                     rel="noopener noreferrer"
                     style={{
                       textDecoration: 'none',
-                      color: 'inherit',
+                      color: 'blue',
                       '&:hover': {
                         textDecoration: 'underline',
                         fontSize: '2rem',
