@@ -177,7 +177,6 @@ const AppUi = () => {
                             } else {
                                 // Necesito restar en el eje X el tamanio del menu
                                 let center = cy.center();
-                                console.log(center);
                                 cy.center({ x: center.x - 50, y: center.y });
                             }
 
@@ -193,29 +192,37 @@ const AppUi = () => {
                                         });
                                     } else {
                                         let connectedEdges = node.connectedEdges();
-                                        connectedEdges.forEach(edge => {
-                                            edge.style("line-color", "#C65151");
-                                            edge.style("label", edge.data('label'));
+                                        let selectedEdges = cy.edges().difference(connectedEdges);
+
+                                        cy.batch(() => {
+                                            connectedEdges.forEach(edge => {
+                                                edge.style("line-color", "#C65151");
+                                                edge.style("label", edge.data('label'));
+                                            });
+
+                                            selectedEdges.forEach(edge => {
+                                                edge.style("label", "");
+                                                if (edge.data('type') === "overlapping") {
+                                                    edge.style("line-color", "#B185B8");
+                                                } else {
+                                                    edge.style("line-color", "#debc6e");
+                                                }
+                                            });
                                         });
-                                        cy.edges().difference(connectedEdges).forEach(edge => {
-                                            edge.style("label", "");
-                                            if (edge.data('type') === "overlapping") {
-                                                edge.style("line-color", "#B185B8");
-                                            } else {
-                                                edge.style("line-color", "#debc6e");
-                                            }
-                                        })
                                     }
                                 });
                             });
                             cy.on("tap", evt => {
-                                cy.edges().forEach(edge => {
-                                    edge.style("label", "");
-                                    if (edge.data('type') === "overlapping") {
-                                        edge.style("line-color", "#B185B8");
-                                    } else {
-                                        edge.style("line-color", "#debc6e");
-                                    }
+                                let edges = cy.edges();
+                                cy.batch(() => {
+                                    edges.forEach(edge => {
+                                        edge.style("label", "");
+                                        if (edge.data('type') === "overlapping") {
+                                            edge.style("line-color", "#B185B8");
+                                        } else {
+                                            edge.style("line-color", "#debc6e");
+                                        }
+                                    });
                                 });
                             });
                             cy.on("cxttap", "node", evt => {
