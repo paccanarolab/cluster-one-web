@@ -8,6 +8,8 @@ const ResultsTable = () => {
     setCyGraph,
     cyGraphList,
     setOpenResults,
+    setOpenEnrichment,
+    goaFileName,
     filterModel,
     setFilterModel,
   } = React.useContext(AppContext);
@@ -20,6 +22,19 @@ const ResultsTable = () => {
       setOpenResults(false);
     }
   };
+
+  const handleShowEnrichment = (params) => {
+    console.log("Handle show enrichment", params);
+    if (params.field === 'id') {
+      let _cyGraph = cyGraphList.find((graph) => graph.file_id === params.value);
+      setCyGraph(_cyGraph);
+      setOpenResults(false);
+      setTimeout(() => {
+        setOpenEnrichment(true);
+      }, 1000);
+    }
+  }
+
 
   let rows = [];
   // I want to get the rows from the cyGraphlist
@@ -48,20 +63,36 @@ const ResultsTable = () => {
     { 
       field: 'id', 
       headerName: 'Complex ID', 
-      width: 100,
+      width: 170,
       renderCell: (params) => (
-        <span 
-          style={
-            {
-              color: 'blue',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }
+        <div>
+          <span 
+            style={
+              {
+                color: 'blue',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }
+            } 
+            onClick={() => handleChangeGraph(params)}
+          >
+            #{params.value}
+          </span>
+          {
+            goaFileName !== "" && <span
+              style={{
+                color: 'blue',
+                cursor: 'pointer',
+                marginLeft: '10px',
+                textDecoration: 'underline',
+                alignContent: 'center',
+              }}
+              onClick={() => handleShowEnrichment(params)}
+            >
+              Show Enrichment
+            </span>
           } 
-          onClick={() => handleChangeGraph(params)}
-        >
-          #{params.value}
-        </span>
+        </div>
       ),
       description: 'Click to see the graph',
       
@@ -69,7 +100,7 @@ const ResultsTable = () => {
     { 
       field: 'size', 
       headerName: 'Size', 
-      width: 150,
+      width: 100,
       type: 'number',
     },
     { 
@@ -91,8 +122,20 @@ const ResultsTable = () => {
       sortable: false,
       width: "100%",
       renderCell: (params) => (
-        <div style={{ whiteSpace: 'normal', height: '100px', padding: '5px' }}>
-          {params.value.join(', ')}
+        <div style={{ whiteSpace: 'normal', padding: '5px' }}>
+          {params.value.map((protein, index) => (
+            <React.Fragment key={index}>
+              <a 
+                href={`https://www.uniprot.org/uniprotkb/${protein}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'underline', color: 'inherit', cursor: 'pointer' }}
+              >
+                {protein}
+              </a>
+              {index !== params.value.length - 1 && ' '}
+            </React.Fragment>
+          ))}
         </div>
       ),
     }
@@ -107,7 +150,7 @@ const ResultsTable = () => {
           getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {
-              fontSize: '1.2rem', // Set the desired font size here
+              fontSize: '1.5rem', // Set the desired font size here
             },
             '& .MuiDataGrid-columnHeaders': {
               fontSize: '1.2rem', // Customize header font size
