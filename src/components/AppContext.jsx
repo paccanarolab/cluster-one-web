@@ -55,8 +55,8 @@ function AppContextProvider ({ children }) {
                 width: 50,
                 height: 50,
                 //text props
-                "text-outline-color": "#b2800f",
-                "text-outline-width": 8
+                // "text-outline-color": "#b2800f",
+                // "text-outline-width": 8
             }
         },
         // {
