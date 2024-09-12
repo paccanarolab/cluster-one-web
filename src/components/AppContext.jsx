@@ -120,6 +120,7 @@ function AppContextProvider ({ children }) {
                 "line-color": "#B185B8",
                 "curve-style": "bezier",
                 label: "",
+                "opacity": 0.1 // Add opacity here to grey-out the edges
             }
         }
     ];
