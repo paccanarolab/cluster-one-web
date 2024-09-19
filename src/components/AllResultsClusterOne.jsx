@@ -40,10 +40,19 @@ const AllResultsClusterOne = () => {
             >
             </button>
             <Dialog
-                fullScreen
                 open={openResults}
                 onClose={handleClose}
                 TransitionComponent={Transition}
+                PaperProps={{
+                    style: { 
+                        width: "90%",
+                        height: "auto",
+                        padding: "20px",
+                        maxWidth: "1200px",
+                        maxHeight: "90vh",
+                        margin: "auto",
+                    }
+                }}
             >
                 {/* Barra superior */}
                 <AppBar sx={{ position: 'relative' }}>

@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { AppContext } from './AppContext';
 
-const ClusterOneParams = ({classname, message, icon, label}) => {
+const ClusterOneParams = ({classname, message, icon, label, disabled, initialView}) => {
   const [open, setOpen] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
   const {
@@ -51,17 +51,25 @@ const ClusterOneParams = ({classname, message, icon, label}) => {
 
   return (
     <div>
-      <button
+        {
+          initialView ? 
+          <Button onClick={() => handleClickOpen()} disabled={disabled} color='primary' >
+            {label}
+          </Button>
+          :
+          <button
             style={{ marginBottom: "15px", width: "98%", padding: "10px" }}
             className={classname}
             onClick={() => handleClickOpen()}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-      >
-            <span className={"buttonLabel"}>{label}</span>
-            {icon && <i className={icon}></i>}
-            {isHovered && <a className={"buttonMessage"}>{message}</a>}
-      </button>
+            disabled={disabled}
+          >
+              <span className={"buttonLabel"}>{label}</span>
+              {icon && <i className={icon}></i>}
+              {isHovered && <a className={"buttonMessage"}>{message}</a>}
+          </button>
+        }
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle> Set ClusterONE Params </DialogTitle>
         <DialogContent>

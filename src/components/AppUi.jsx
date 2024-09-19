@@ -17,6 +17,7 @@ import { ClusterInfo } from "./ClusterInfo.jsx";
 import { Layout } from "./Layout.jsx";
 import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
+
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
 import "../styles/ClusterFilter.scss";
@@ -40,7 +41,13 @@ const AppUi = () => {
         showMenu,
         showClusterFilter,
         showPPILoadedMessage,
+        getAllDatabases,
     } = React.useContext(AppContext);
+
+    React.useEffect(() => {
+        getAllDatabases();
+    }, []);
+
     //comentario test
     return (
         <React.Fragment>
@@ -245,11 +252,12 @@ const AppUi = () => {
                     }
                 />
             </div>
+            
             {loading && <Backdrop
                 sx={
                     { 
                         color: '#fff',
-                        zIndex: (theme) => theme.zIndex.drawer + 1 
+                        zIndex: (theme) => theme.zIndex.drawer + 1000,
                     }
                 }
                 open={loading}

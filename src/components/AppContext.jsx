@@ -273,7 +273,7 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = data.size * 20;
+                    var delayfromEp = data.size * 10;
                     console.log(data);
                     if (data.size === 0) {
                         var delayfromEp = 60000;
@@ -669,15 +669,11 @@ function AppContextProvider ({ children }) {
             nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
                     node.style(
-                        "background-color", "#C65151");
+                        "background-color", "#800080");
                     node.style(
                         "width", 50);
                     node.style(
                         "height", 50);
-                    node.style(
-                        "text-outline-color", "#C65151");
-                    node.style(
-                        "text-outline-width", 8);
                 }
             });
         } else {
@@ -690,10 +686,6 @@ function AppContextProvider ({ children }) {
                         "width", 30);
                     node.style(
                         "height", 30);
-                    node.style(
-                        "text-outline-color", "#debc6e");
-                    node.style(
-                        "text-outline-width", 2);
                 }
             });
         }
@@ -736,10 +728,10 @@ function AppContextProvider ({ children }) {
             mf_score: 0,
             cc_score: 0,
         });
-        setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
+        setLoadingMessage("Processing PPI.. Wait a moment please depend of PPI size 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size * 20;
+                var delayfromEp = data.size * 10;
                 console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
