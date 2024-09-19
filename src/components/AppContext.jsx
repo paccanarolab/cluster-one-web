@@ -164,7 +164,11 @@ function AppContextProvider ({ children }) {
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
     const [complexCounter, setComplexCounter] = React.useState(0); // Cluster List
     const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
+
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
+    const [dbList, setDbList] = React.useState([]); // PPI List Uses in selected our ppi
+    const [organismList, setOrganismList] = React.useState([]); // PPI List Uses in selected our ppi
+
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
     const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
     const [proteinId, setProteinId] = React.useState("");
@@ -269,7 +273,7 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = data.size * 2;
+                    var delayfromEp = data.size * 20;
                     console.log(data);
                     if (data.size === 0) {
                         var delayfromEp = 60000;
@@ -370,6 +374,7 @@ function AppContextProvider ({ children }) {
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
+            window.alert("There was an error fetching the data:", error);
             setLoading(false);
         }
     }
@@ -456,6 +461,49 @@ function AppContextProvider ({ children }) {
         }
     }
     
+
+    const getAllDatabases = async () => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/graph/databases/all/`, {
+                method: 'GET'
+            });
+            
+            const data = await response.json();
+            setDbList(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
+    const getAllOrganismsByDb = async (db_id) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/graph/organisms/db/?db_id=${db_id}`, {
+                method: 'GET'
+            });
+
+            const data = await response.json();
+            setOrganismList(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
+    const getPpiByOrganismAndDb = async (organism_id, database_id) => {
+        // Get all information about all PPIs in the database
+        try {
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/graph/ppi/organism/all/?organism_id=${organism_id}&database_id=${database_id}`, {
+                method: 'GET'
+            });
+
+            const data = await response.json();
+            setPpiList(data);
+        } catch (error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    }
+
     const getAllPpi = async () => {
         // Get all information about all PPIs in the database
         try {
@@ -691,7 +739,7 @@ function AppContextProvider ({ children }) {
         setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size * 2;
+                var delayfromEp = data.size * 20;
                 console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
@@ -802,6 +850,8 @@ function AppContextProvider ({ children }) {
             oraScore,
             openEnrichment,
             setOpenEnrichment,
+            dbList,
+            organismList,
             showMenu,
             showClusterFilter,
             showPPILoadedMessage,
@@ -817,6 +867,10 @@ function AppContextProvider ({ children }) {
             setPpiId,
             handleShowMenu,
             getAllPpi,
+            getAllOrganismsByDb,
+            setOrganismList,
+            getAllDatabases,
+            getPpiByOrganismAndDb,
             setCyGraph,
             setLoading,
             openResults,
