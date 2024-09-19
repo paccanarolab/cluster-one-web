@@ -1,10 +1,9 @@
 import React from "react";
-import { Layout } from "./Layout.jsx";
-import { ClusterFilter } from "./ClusterFilter.jsx";
 import { RunFunctionButton } from "./RunFunctionButton.jsx";
 import { ClusterOneParams } from "./ClusterOneParams.jsx";
 import {SelectPPiOptions} from "./SelectPPiOptions.jsx";
 import { ScoreTable } from "./ScoreTable.jsx";
+import { InitialView } from "./InitialView.jsx";
 
 import "../styles/ExecuteBar.scss";
 import { AppContext } from "./AppContext.jsx";
@@ -22,7 +21,6 @@ const ExecuteBar = ({ href, label }) => {
 		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
-		cyGraph,
 		oraScore,
 		ppiLabel,
     } = React.useContext(AppContext);
@@ -34,7 +32,6 @@ const ExecuteBar = ({ href, label }) => {
 				style={{
 					fontSize: "20px",
 					marginBottom: "20px",
-					// top: "500px",
 				}}>
 				<span
 					style={{
@@ -43,16 +40,14 @@ const ExecuteBar = ({ href, label }) => {
 						alignItems: "center",
 						fontSize: "30px",
 					}}>
-					ClusterONE WEB
+					ClusterONE Web
 				</span>
 			</div>
             <div
 				style={{
-					// display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
 					marginBottom: "20px",
-					// backgroundColor: "rgba(0, 0, 0, 0.8)",
 					borderRadius: "5px",
 					padding: "10px",
 					color: "white",
@@ -67,7 +62,12 @@ const ExecuteBar = ({ href, label }) => {
 					}}>
 					Protein Protein Interaction options
 				</span>
-				<SelectPPiOptions
+				<InitialView
+					label="Select DataBase"
+					icon="fa fa-search"
+					classname={"explorePpiButton"}
+				/>
+				{/*<SelectPPiOptions
 					open={modalOpen}
 					handleClose={() => setModalOpen(false)}
 					label="Select an example PPI"
@@ -79,7 +79,7 @@ const ExecuteBar = ({ href, label }) => {
 						}
 					}
 					classname={"explorePpiButton"}
-				/>
+				/>*/}
 				<RunFunctionButton
 					label="Load your PPI"
 					icon="fa fa-upload"
@@ -163,6 +163,8 @@ const ExecuteBar = ({ href, label }) => {
 					icon="fa fa-play"
 					classname={"runClusterOneButton"}
 					message={"with custom parameters"}
+					disabled={false}
+					initialView={false}
 				/>
 			}
 
