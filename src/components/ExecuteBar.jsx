@@ -166,7 +166,8 @@ const ExecuteBar = ({ href, label }) => {
 				/>
 			}
 
-			{goaFileName && oraScore &&
+			{
+				goaFileName &&
 				oraScore.bp_score !== 0 &&
 				oraScore.mf_score !== 0 &&
 				oraScore.cc_score !== 0 && (

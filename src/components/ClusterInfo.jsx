@@ -1,11 +1,13 @@
 import React, { useState, useEffect }  from "react";
 import { AppContext } from "./AppContext.jsx";
+import { Enrichment } from "./Enrichment.jsx";
 
 const ClusterInfo = ({left, top}) => {
 	const {
 		cyGraph,
 		complexList,
 		setCyGraph,
+		goaFileName
 	} = React.useContext(AppContext);
 	const [selectedClusterCode, setSelectedClusterCode] = useState("");
 	const handleClusterCodeChange = (event) => {
@@ -80,6 +82,7 @@ const ClusterInfo = ({left, top}) => {
 					</ul>
 				)}
 			</div>
+			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
 		</div>
 	);
 };
