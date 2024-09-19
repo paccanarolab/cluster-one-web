@@ -7,9 +7,7 @@ import { ProteinFilter } from "./ProteinFilter.jsx";
 import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
 import { Backdrop, CircularProgress } from '@mui/material';
-import { CheckboxLabels } from "./CheckboxLabels.jsx";
 import { Typography } from "@mui/material";
-import { Enrichment } from "./Enrichment.jsx";
 import { ProteinModal } from "./ProteinModal.jsx";
 import { AboutModal } from "./AboutModal.jsx";
 import { MyMenuButton } from "./MenuButtom.jsx";
@@ -32,7 +30,6 @@ const AppUi = () => {
         fundacionImage,
         clusterOneManual,
         cyGraph,
-        goaFileName,
         cyGraphList,
         loading,
         loadingMessage,
@@ -43,7 +40,6 @@ const AppUi = () => {
         showMenu,
         showClusterFilter,
         showPPILoadedMessage,
-        isPpiWeighted,
     } = React.useContext(AppContext);
     //comentario test
     return (
@@ -181,6 +177,7 @@ const AppUi = () => {
                             }
 
                             cy.on("tap", "node", evt => {
+                                console.log("click on node", evt.target.data('label'));
                                 var node = evt.target;
                                 node.on("dblclick", function(evt) {
                                     if (node.data('type') === "proteinComplex") {
@@ -190,28 +187,48 @@ const AppUi = () => {
                                                 setCyGraph(graph);
                                             }
                                         });
-                                    } else {
-                                        let connectedEdges = node.connectedEdges();
-                                        cy.batch(() => {
-                                            connectedEdges.forEach(edge => {
-                                                edge.style("line-color", "#C65151");
-                                                edge.style("label", edge.data('label'));
-                                            });
-                                        });
                                     }
-                                });
-                            });
-                            cy.on("tap", evt => {
-                                let edges = cy.edges();
-                                cy.batch(() => {
-                                    edges.forEach(edge => {
-                                        edge.style("label", "");
-                                        if (edge.data('type') === "overlapping") {
-                                            edge.style("line-color", "#B185B8");
-                                        } else {
-                                            edge.style("line-color", "#debc6e");
+                                    console.log("ONE click on node", node.data('label'));
+                                    let connectedEdges = node.connectedEdges();
+                                    let connectedNodes = [];
+                                    connectedEdges.forEach(edge => {
+                                        edge.style("line-color", "#C65151");
+                                        edge.style("label", edge.data('label'));
+                                        let source = edge.source();
+                                        let target = edge.target();
+                                        // If some node already exists in the array, it won't be added again
+                                        if (!connectedNodes.includes(source) && source.data('type') !== "proteinComplex") {
+
+                                            connectedNodes.push(source);
+                                        }
+                                        if (!connectedNodes.includes(target) && target.data('type') !== "proteinComplex") {
+                                            connectedNodes.push(target);
                                         }
                                     });
+                                    console.log("Connected nodes", connectedNodes);
+                                    connectedNodes.forEach(connectedNode => {
+                                        connectedNode.style("background-color", "#C65151");
+                                        connectedNode.style("label", connectedNode.data('label'));
+                                    });
+                                });
+                            });
+
+                            cy.on("tap", evt => {
+                                console.log("ONE click on background");
+                                console.log("Event", evt);
+                                let edges = cy.edges();
+                                let nodes = cy.nodes();
+                                edges.forEach(edge => {
+                                    edge.style("label", "");
+                                    if (edge.data('type') === "overlapping") {
+                                        edge.style("line-color", "#B185B8");
+                                    } else {
+                                        edge.style("line-color", "#debc6e");
+                                    }
+                                });
+                                nodes.forEach(node => {
+                                    node.style("background-color", "#debc6e");
+                                    node.style("label", "");
                                 });
                             });
                             cy.on("cxttap", "node", evt => {
@@ -293,7 +310,6 @@ const AppUi = () => {
             <DownloadButton />
             <AboutModal />
             <InfoButton />
-            {(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
             <ProteinModal/>
         </React.Fragment>
     );

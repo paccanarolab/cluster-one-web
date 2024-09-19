@@ -518,7 +518,7 @@ function AppContextProvider ({ children }) {
             if (biologicalProcessDatasetParsed.length === 0) {
                 biologicalProcessDatasetParsed = [
                     {
-                        go_id: "No data",
+                        go_id: "No overrepresented terms",
                         bar_charge: 0,
                     }
                 ];
@@ -526,7 +526,7 @@ function AppContextProvider ({ children }) {
             if (molecularFunctionDatasetParsed.length === 0) {
                 molecularFunctionDatasetParsed = [
                     {
-                        go_id: "No data",
+                        go_id: "No overrepresented terms",
                         bar_charge: 0,
                     }
                 ];
@@ -534,7 +534,7 @@ function AppContextProvider ({ children }) {
             if (cellularComponentDatasetParsed.length === 0) {
                 cellularComponentDatasetParsed = [
                     {
-                        go_id: "No data",
+                        go_id: "No overrepresented terms",
                         bar_charge: 0,
                     }
                 ];
@@ -545,29 +545,7 @@ function AppContextProvider ({ children }) {
             setEnrichmentLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
-            let biologicalProcessDatasetParsed = [
-                {
-                    go_id: "No data",
-                    bar_charge: 0,
-                }
-            ];
-            let molecularFunctionDatasetParsed = [
-                {
-                    go_id: "No data",
-                    bar_charge: 0,
-                }
-            ];
-            let cellularComponentDatasetParsed = [
-                {
-                    go_id: "No data",
-                    bar_charge: 0,
-                }
-            ];
-            setBiologicalProcessDataset(biologicalProcessDatasetParsed);
-            setMolecularFunctionDataset(molecularFunctionDatasetParsed);
-            setCellularComponentDataset(cellularComponentDatasetParsed);
-            setEnrichmentDataBase(true);
-            // setEnrichmentLoading(false);
+            setEnrichmentLoading(false);
         }
     }
 
