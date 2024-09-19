@@ -18,7 +18,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="right" ref={ref} {...props} />;
 });
 
 const Enrichment = () => {
@@ -49,12 +49,7 @@ const Enrichment = () => {
                     borderRadius: "20px",
                     backgroundColor: "#323232",
                     color: "white",
-                    position: "fixed",
-                    left: "30%",
-                    bottom: "6%",
-                    width: "35%", 
-                    height: "5%",
-                    fontSize: "15px",
+                    fontSize: "10px",
                     fontWeight: "bold",
                 }}
                 className='enrichment-container'
@@ -63,6 +58,14 @@ const Enrichment = () => {
             </Button>
             <Dialog
                 fullScreen
+                maxWidth="lg" // Control the maximum width (set to 'lg', but you can adjust this)
+                PaperProps={{
+                    style: {
+                        margin: 'auto', // Center the dialog
+                        width: '80%', // Set dialog width as a percentage of screen (adjust as needed)
+                        maxHeight: '95vh', // Limit the dialog's height to 90% of the viewport height
+                    },
+                }}
                 open={openEnrichment}
                 onClose={handleClose}
                 TransitionComponent={Transition}
@@ -83,7 +86,7 @@ const Enrichment = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            COMPLEX #{cyGraph.file_id}
+                            Enrichment Complex #{cyGraph.file_id}
                         </Typography>
                     </Toolbar>
                 </AppBar>
