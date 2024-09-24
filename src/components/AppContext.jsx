@@ -273,7 +273,7 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = data.size * 10;
+                    var delayfromEp = data.size;
                     console.log(data);
                     if (data.size === 0) {
                         var delayfromEp = 60000;
@@ -731,7 +731,7 @@ function AppContextProvider ({ children }) {
         setLoadingMessage("Processing PPI.. Wait a moment please depend of PPI size 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size * 10;
+                var delayfromEp = data.size;
                 console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
