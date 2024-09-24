@@ -94,8 +94,7 @@ const ResultsTable = () => {
           } 
         </div>
       ),
-      description: 'Click to see the graph',
-      
+      description: 'Click to see the graph',   
     },
     { 
       field: 'size', 
