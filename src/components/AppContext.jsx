@@ -282,7 +282,7 @@ function AppContextProvider ({ children }) {
                     console.error(error);
                     var delayfromEp = 5000;
                 }
-                setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
+                setLoadingMessage("Processing PPI.. Wait a moment please 🧬");
                 setIsPpiWeighted(data.weighted);
                 setLoading(true);
                 
@@ -746,7 +746,7 @@ function AppContextProvider ({ children }) {
             mf_score: 0,
             cc_score: 0,
         });
-        setLoadingMessage("Processing PPI.. Wait a moment please depend of PPI size 🧬 you can go for a coffee ☕️");
+        setLoadingMessage("Processing PPI.. Wait a moment please 🧬");
         updateRedis(ppiId).then((data) => {
             try {
                 var delayfromEp = 5000;
