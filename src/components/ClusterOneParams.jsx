@@ -43,7 +43,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
     };
     setClusterOneParams(formData); // Asumo que quieres setear estos datos al contexto
     setOpen(false);
-    setLoadingMessage("Running ClusterONE!");
+    setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
     setLoading(true);
     handleShowMenu();
     runClusterOneParams(ppiId, formData);
