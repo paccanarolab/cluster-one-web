@@ -342,24 +342,41 @@ function AppContextProvider ({ children }) {
         }
     }
 
-    const quickRunClusterOne = async (ppi_id) => {
+    const quickRunClusterOne = async (ppi_id, timeout = 400000) => {
         // Uses the ppi_id state to call the API and get the clusters
         try {
-            if ( goaFileName === "" ) {
-                var baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
+            let baseUrl = '';
+            if (goaFileName === "") {
+                baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}`;
             } else {
-                var baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`
+                baseUrl = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/run/?pp_id=${ppi_id}&goa_file=${goaFileName}`;
             }
-            const response = await fetch(baseUrl, {
-                method: 'POST'
-            });
+    
+            // Function to handle fetch with timeout
+            const fetchWithTimeout = (resource, options) => {
+                const fetchPromise = fetch(resource, options);
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Request timed out')), timeout);
+                });
+    
+                return Promise.race([fetchPromise, timeoutPromise]);
+            };
+    
+            const response = await fetchWithTimeout(baseUrl, { method: 'POST' });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
             let data = await response.json();
-            let minSizeData = Math.min.apply(Math, data.map(function(o) { return o.size; }));
-            let maxSizeData = Math.max.apply(Math, data.map(function(o) { return o.size; }));
-            let minDensityData = Math.min.apply(Math, data.map(function(o) { return o.density; }));
-            let maxDensityData = Math.max.apply(Math, data.map(function(o) { return o.density; }));
-            let minQualityData = Math.min.apply(Math, data.map(function(o) { return o.quality; }));
-            let maxQualityData = Math.max.apply(Math, data.map(function(o) { return o.quality; }));
+    
+            let minSizeData = Math.min.apply(Math, data.map(function (o) { return o.size; }));
+            let maxSizeData = Math.max.apply(Math, data.map(function (o) { return o.size; }));
+            let minDensityData = Math.min.apply(Math, data.map(function (o) { return o.density; }));
+            let maxDensityData = Math.max.apply(Math, data.map(function (o) { return o.density; }));
+            let minQualityData = Math.min.apply(Math, data.map(function (o) { return o.quality; }));
+            let maxQualityData = Math.max.apply(Math, data.map(function (o) { return o.quality; }));
+    
             setMinSize(minSizeData);
             setMaxSize(maxSizeData);
             setMinDensity(minDensityData);
@@ -374,10 +391,11 @@ function AppContextProvider ({ children }) {
             setLoading(false);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
-            window.alert("There was an error fetching the data:", error);
+            window.alert(`There was an error fetching the data: ${error.message}`);
             setLoading(false);
         }
-    }
+    };
+
 
     const runClusterOneParams = async (ppi_id, params) => {
         // Uses the ppi_id state to call the API and get the clusters

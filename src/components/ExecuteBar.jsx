@@ -146,10 +146,10 @@ const ExecuteBar = ({ href, label }) => {
 					label="Quick Run ClusterONE"
 					icon="fa fa-forward"
 					onClickFunction={() => {
-						setLoadingMessage("Running ClusterONE!");
+						setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
 						setLoading(true);
 						handleShowMenu();
-						quickRunClusterOne(ppiId); 
+						quickRunClusterOne(ppiId, 400000); 
 					}}
 					classname={"runClusterOneButton"}
 					message={"with default parameters"}

@@ -63,10 +63,10 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
     }
 
     const handleQuickRun = () => {
-        setLoadingMessage("Running ClusterONE!");
+        setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
-        quickRunClusterOne(selectedPPOption.id); 
+        quickRunClusterOne(selectedPPOption.id, 400000); 
         handleConfirm();
     }
 
