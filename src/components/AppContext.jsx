@@ -273,14 +273,14 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = data.size;
-                    console.log(data);
-                    if (data.size === 0) {
-                        var delayfromEp = 60000;
-                    }
+                    var delayfromEp = 5000;
+                    // console.log(data);
+                    // if (data.size === 0) {
+                    //     var delayfromEp = 60000;
+                    // }
                 } catch (error) {
                     console.error(error);
-                    var delayfromEp = 60000;
+                    var delayfromEp = 5000;
                 }
                 setLoadingMessage("Processing PPI.. Wait a moment please 🧬 you can go for a coffee ☕️");
                 setIsPpiWeighted(data.weighted);
@@ -731,14 +731,14 @@ function AppContextProvider ({ children }) {
         setLoadingMessage("Processing PPI.. Wait a moment please depend of PPI size 🧬 you can go for a coffee ☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = data.size;
-                console.log(data);
-                if (data.size === 0) {
-                    var delayfromEp = 60000;
-                }
+                var delayfromEp = 5000;
+                // console.log(data);
+                // if (data.size === 0) {
+                //     var delayfromEp = 60000;
+                // }
             } catch (error) {
                 console.error(error);
-                var delayfromEp = 60000;
+                var delayfromEp = 5000;
             }
             setLoading(true);
             
