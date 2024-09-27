@@ -190,6 +190,7 @@ const AppUi = () => {
                                 console.log("click on node", evt.target.data('label'));
                                 var node = evt.target;
                                 node.on("dblclick", function(evt) {
+                                    // Double click on complex node to show it
                                     if (node.data('type') === "proteinComplex") {
                                         var node_id = node.data('id');
                                         cyGraphList.forEach((graph) => {
@@ -236,15 +237,19 @@ const AppUi = () => {
                                 });
                                 nodes.forEach(node => {
                                     if (node.data('type') !== "proteinComplex") {
-                                        if (node.data().overlapping !== true) {
-                                            node.style("background-color", "#debc6e");
-                                            node.style("label", "");
-                                        } else {
-                                            if (showHighlight === false) {
-                                                node.style("background-color", "#debc6e");
-                                                node.style("label", "");
-                                            }
-                                        }
+                                        console.log("Node", node);
+                                        console.log("Show highlight", showHighlight);
+                                        node.style("background-color", "#debc6e");
+                                        node.style("label", "");
+                                        // if (node.data().overlapping !== true) {
+                                        //     node.style("background-color", "#debc6e");
+                                        //     node.style("label", "");
+                                        // } else {
+                                        //     if (showHighlight === false) {
+                                        //         node.style("background-color", "#debc6e");
+                                        //         node.style("label", "");
+                                        //     }
+                                        // }
                                     }
                                 });
                             });
