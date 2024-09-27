@@ -149,7 +149,7 @@ const ExecuteBar = ({ href, label }) => {
 					icon="fa fa-forward"
 					onClickFunction={() => {
 						setLoadingInterval(loadingIntervalClusterOne);
-						setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
+						setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
 						setLoading(true);
 						handleShowMenu();
 						quickRunClusterOne(ppiId, 400000); 

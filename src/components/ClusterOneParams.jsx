@@ -46,7 +46,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
     setClusterOneParams(formData);
     setOpen(false);
     setLoadingInterval(loadingIntervalClusterOne);
-    setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
+    setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
     setLoading(true);
     handleShowMenu();
     runClusterOneParams(ppiId, formData);
