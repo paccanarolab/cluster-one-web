@@ -185,6 +185,8 @@ function AppContextProvider ({ children }) {
     const [ppiId, setPpiId] = React.useState("");
     const [ppiLabel, setPpiLabel] = React.useState(""); // PPI Label Uses in selected our ppi
     const [loading, setLoading] = React.useState(false); // Loading state
+    const [loadingInterval, setLoadingInterval] = React.useState(0); // Loading interval
+    const [loadingIntervalClusterOne, setLoadingIntervalClusterOne] = React.useState(0); // Loading interval
     
     const [showHighlight, setShowHighlightState] = React.useState(false); // Highlight state
     const setShowHighlight = (value, callback) => {
@@ -273,16 +275,33 @@ function AppContextProvider ({ children }) {
                 setPpiId(data.id);
                 setPpiLabel(data.name);
                 try {
-                    var delayfromEp = 5000;
+                    var delayfromEp = data.size / 20;
                     // console.log(data);
-                    // if (data.size === 0) {
-                    //     var delayfromEp = 60000;
-                    // }
+                    if (data.size === 0) {
+                        var delayfromEp = 60000;
+                        setLoadingInterval(delayfromEp);
+                        setLoadingIntervalClusterOne(60000 * 3);
+                    } else {
+                        setLoadingInterval(delayfromEp);
+                        if (data.size < 100) {
+                            setLoadingIntervalClusterOne(data.size * 20);
+                        } else if (data.size < 1000) {
+                            setLoadingIntervalClusterOne(data.size * 10);
+                        } else if (data.size < 10000) {
+                            setLoadingIntervalClusterOne(data.size * 5);
+                        } else if (data.size < 100000) {
+                            setLoadingIntervalClusterOne(data.size * 3);
+                        } else {
+                            setLoadingIntervalClusterOne(data.size);
+                        }
+                    }
                 } catch (error) {
                     console.error(error);
-                    var delayfromEp = 5000;
-                }
-                setLoadingMessage("Processing PPI.. Wait a moment please 🧬");
+                    var delayfromEp = 60000;
+                    setLoadingInterval(delayfromEp);
+                    setLoadingIntervalClusterOne(60000 * 3);
+                }    
+                setLoadingMessage("Processing PPI.. Wait a moment please the time depend of PPI size. You can go for a coffee 🧬☕️");
                 setIsPpiWeighted(data.weighted);
                 setLoading(true);
                 
@@ -746,18 +765,35 @@ function AppContextProvider ({ children }) {
             mf_score: 0,
             cc_score: 0,
         });
-        setLoadingMessage("Processing PPI.. Wait a moment please 🧬");
+        setLoadingMessage("Processing PPI.. Wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
         updateRedis(ppiId).then((data) => {
             try {
-                var delayfromEp = 5000;
+                var delayfromEp = data.size / 20;
                 // console.log(data);
-                // if (data.size === 0) {
-                //     var delayfromEp = 60000;
-                // }
+                if (data.size === 0) {
+                    var delayfromEp = 60000;
+                    setLoadingInterval(delayfromEp);
+                    setLoadingIntervalClusterOne(60000 * 3);
+                } else {
+                    setLoadingInterval(delayfromEp);
+                    if (data.size < 100) {
+                        setLoadingIntervalClusterOne(data.size * 20);
+                    } else if (data.size < 1000) {
+                        setLoadingIntervalClusterOne(data.size * 10);
+                    } else if (data.size < 10000) {
+                        setLoadingIntervalClusterOne(data.size * 5);
+                    } else if (data.size < 100000) {
+                        setLoadingIntervalClusterOne(data.size * 3);
+                    } else {
+                        setLoadingIntervalClusterOne(data.size);
+                    }
+                }
             } catch (error) {
                 console.error(error);
-                var delayfromEp = 5000;
-            }
+                var delayfromEp = 60000;
+                setLoadingInterval(delayfromEp);
+                setLoadingIntervalClusterOne(60000 * 3);
+            } 
             setLoading(true);
             
             // Configura el temporizador para cambiar el estado después del tiempo especificado por delayfromEp
@@ -836,8 +872,11 @@ function AppContextProvider ({ children }) {
             complexList,
             complexProteinList,
             showComplexList,
+            loadingInterval,
+            setLoadingInterval,
             cyGraphList,
             minsize,
+            loadingIntervalClusterOne,
             maxsize,
             minDensity,
             maxDensity,

@@ -23,6 +23,8 @@ const ExecuteBar = ({ href, label }) => {
 		getAllPpi,
 		oraScore,
 		ppiLabel,
+		setLoadingInterval,
+		loadingIntervalClusterOne,
     } = React.useContext(AppContext);
 	
 
@@ -146,6 +148,7 @@ const ExecuteBar = ({ href, label }) => {
 					label="Quick Run ClusterONE"
 					icon="fa fa-forward"
 					onClickFunction={() => {
+						setLoadingInterval(loadingIntervalClusterOne);
 						setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
 						setLoading(true);
 						handleShowMenu();
