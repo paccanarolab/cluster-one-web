@@ -66,7 +66,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
 
     const handleQuickRun = () => {
         setLoadingInterval(loadingIntervalClusterOne);
-        setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
+        setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
         quickRunClusterOne(selectedPPOption.id, 400000); 

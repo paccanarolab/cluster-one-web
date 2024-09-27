@@ -301,7 +301,7 @@ function AppContextProvider ({ children }) {
                     setLoadingInterval(delayfromEp);
                     setLoadingIntervalClusterOne(60000 * 3);
                 }    
-                setLoadingMessage("Processing PPI.. Wait a moment please the time depend of PPI size. You can go for a coffee 🧬☕️");
+                setLoadingMessage("Processing PPI.. Wait a moment please, the time depends on PPI size. You can go for a coffee 🧬☕️");
                 setIsPpiWeighted(data.weighted);
                 setLoading(true);
                 
@@ -765,7 +765,7 @@ function AppContextProvider ({ children }) {
             mf_score: 0,
             cc_score: 0,
         });
-        setLoadingMessage("Processing PPI.. Wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
+        setLoadingMessage("Processing PPI.. Wait a moment please, the time depends on PPI size. You can go for a coffee 🧬☕️");
         updateRedis(ppiId).then((data) => {
             try {
                 var delayfromEp = data.size / 20;

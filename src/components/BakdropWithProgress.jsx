@@ -27,6 +27,7 @@ function CircularProgressWithLabel({ value }) {
           variant="h6" // Increase the size of the text
           component="div" 
           color="textSecondary"
+          sx={{ color: 'white'}}
         >
           {`${Math.round(value)}%`}
         </Typography>
