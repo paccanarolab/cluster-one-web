@@ -30,6 +30,8 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         setOrganismList,
         getPpiByOrganismAndDb,
         quickRunClusterOne,
+        setLoadingInterval,
+        loadingIntervalClusterOne,
     } = React.useContext(AppContext);
 
     const handleSelectionPP = (event, newValue) => {
@@ -63,6 +65,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
     }
 
     const handleQuickRun = () => {
+        setLoadingInterval(loadingIntervalClusterOne);
         setLoadingMessage("Running ClusterONE and rendering the results on screen wait a moment please, the time depend of PPI size. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
