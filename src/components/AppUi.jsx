@@ -17,6 +17,7 @@ import { ClusterInfo } from "./ClusterInfo.jsx";
 import { Layout } from "./Layout.jsx";
 import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
+import { BackdropWithProgress } from "./BakdropWithProgress.jsx";
 
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
@@ -34,6 +35,7 @@ const AppUi = () => {
         cyGraphList,
         loading,
         loadingMessage,
+        loadingInterval,
         setCyEvent,
         setCyGraph,
         setProteinInfo,
@@ -42,6 +44,7 @@ const AppUi = () => {
         showClusterFilter,
         showPPILoadedMessage,
         getAllDatabases,
+        showHighlight,
     } = React.useContext(AppContext);
 
     React.useEffect(() => {
@@ -195,7 +198,6 @@ const AppUi = () => {
                                             }
                                         });
                                     }
-                                    console.log("ONE click on node", node.data('label'));
                                     let connectedEdges = node.connectedEdges();
                                     let connectedNodes = [];
                                     connectedEdges.forEach(edge => {
@@ -205,7 +207,6 @@ const AppUi = () => {
                                         let target = edge.target();
                                         // If some node already exists in the array, it won't be added again
                                         if (!connectedNodes.includes(source) && source.data('type') !== "proteinComplex") {
-
                                             connectedNodes.push(source);
                                         }
                                         if (!connectedNodes.includes(target) && target.data('type') !== "proteinComplex") {
@@ -234,8 +235,17 @@ const AppUi = () => {
                                     }
                                 });
                                 nodes.forEach(node => {
-                                    node.style("background-color", "#debc6e");
-                                    node.style("label", "");
+                                    if (node.data('type') !== "proteinComplex") {
+                                        if (node.data().overlapping !== true) {
+                                            node.style("background-color", "#debc6e");
+                                            node.style("label", "");
+                                        } else {
+                                            if (showHighlight === false) {
+                                                node.style("background-color", "#debc6e");
+                                                node.style("label", "");
+                                            }
+                                        }
+                                    }
                                 });
                             });
                             cy.on("cxttap", "node", evt => {
@@ -252,47 +262,7 @@ const AppUi = () => {
                     }
                 />
             </div>
-            
-            {loading && <Backdrop
-                sx={
-                    { 
-                        color: '#fff',
-                        zIndex: (theme) => theme.zIndex.drawer + 1000,
-                    }
-                }
-                open={loading}
-              >
-                <CircularProgress color="inherit" style={
-                    {
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        marginTop: -12,
-                        marginLeft: -12,
-                    }
-                } />
-                <Typography 
-                    variant="h6" 
-                    component="div" 
-                    sx={
-                        { 
-                            paddingTop: 2, 
-                            textAlign: 'center',
-                        }
-                    }
-                    style={
-                        {
-                            position: 'absolute',
-                            top: '60%',
-                            left: showMenu ? '51.5%' : '50%',
-                            transform: 'translate(-50%, -50%)',
-                        }
-                    }
-                >
-                    {loadingMessage}
-                </Typography>
-              </Backdrop>
-            }
+            {loading && <BackdropWithProgress showMenu={showMenu} loadingMessage={loadingMessage} progressInterval={loadingInterval} />}
             {showPPILoadedMessage && <Typography
                 variant="h6"
                 component="div"

@@ -41,15 +41,27 @@ const ResultsTable = () => {
   if (cyGraphList.length > 1) {
     cyGraphList.forEach((graph) => {
       let proteins = [];
+      let overlappingComplexes = [];
       graph.nodes.forEach((protein) => {
         if (protein.data.type === 'protein'){
           proteins.push(protein.data.label);
+        } else if (protein.data.type === 'proteinComplex') {
+          let complexFileId = protein.data.label.split('#')[1];
+          // I need to make sure this complex is not in the list
+          if (!overlappingComplexes.includes(complexFileId)) {
+            overlappingComplexes.push(complexFileId);
+          }
         }
       });
       // I need to order by alphabet
       proteins = proteins.sort((a, b) => a.localeCompare(b));
+      // I need to order by id
+      overlappingComplexes = overlappingComplexes.sort((a, b) => a - b);
+      // I need all overlappingComplexes to be string
+      overlappingComplexes = overlappingComplexes.map((complex) => complex.toString());
       rows.push({
         id: graph.file_id,
+        overlapping_complexes: overlappingComplexes,
         size: graph.size,
         density: graph.density,
         quality: graph.quality,
@@ -78,7 +90,7 @@ const ResultsTable = () => {
           >
             #{params.value}
           </span>
-          {
+          {/*
             goaFileName !== "" && <span
               style={{
                 color: 'blue',
@@ -91,10 +103,38 @@ const ResultsTable = () => {
             >
               Show Enrichment
             </span>
-          } 
+          */} 
         </div>
       ),
       description: 'Click to see the graph',   
+    },
+    {
+      field: 'overlapping_complexes',
+      headerName: 'Overlapping Complexes',
+      description: 'This column has a value getter and is not sortable.',
+      width: 300,
+      sortable: false,
+      renderCell: (params) => (
+        <div style={{ whiteSpace: 'normal', padding: '5px' }}>
+          {params.value.map((complexId, index) => (
+            <React.Fragment key={index}>
+              <span 
+                style={
+                  {
+                    color: 'blue',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  }
+                }
+                onClick={() => handleChangeGraph({field: 'id', value: parseInt(complexId)})}
+              >
+                {complexId}
+              </span>
+              {index !== params.value.length - 1 && ', '}
+            </React.Fragment>
+          ))}
+        </div>
+      ),
     },
     { 
       field: 'size', 
