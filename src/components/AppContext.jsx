@@ -72,27 +72,20 @@ function AppContextProvider ({ children }) {
                 width: 30,
                 height: 30,
                 backgroundColor: "#B185B8",
-                label: "data(label)",
                 //text props
-                "text-outline-color": "#0B0B0B",
-                "text-outline-width": "2px",
-                color: "white",
+                color: "black",
                 fontSize: 20,
-                "border-color": "#000000" // Add border color here
             }
         },
         {
             selector: "node[type='proteinComplex']:selected",
             style: {
-                "border-width": "6px",
-                "border-color": "#AAD8FF",
+                "border-color": "#252525",
                 "border-opacity": "0.5",
-                "background-color": "#77828C",
+                "background-color": "#B185B8",
                 width: 50,
                 height: 50,
-                //text props
-                "text-outline-color": "#77828C",
-                "text-outline-width": 8
+                label: "data(label)",
             }
         },
         {
@@ -120,7 +113,7 @@ function AppContextProvider ({ children }) {
                 "line-color": "#B185B8",
                 "curve-style": "bezier",
                 label: "",
-                "opacity": 0.1 // Add opacity here to grey-out the edges
+                "line-style": "dashed",
             }
         }
     ];
@@ -285,8 +278,10 @@ function AppContextProvider ({ children }) {
                         setLoadingInterval(delayfromEp);
                         if (data.size < 100) {
                             setLoadingIntervalClusterOne(data.size * 20);
-                        } else if (data.size < 1000) {
-                            setLoadingIntervalClusterOne(data.size * 10);
+                        } else if (data.size < 4000) {
+                            setLoadingIntervalClusterOne(data.size * 20);
+                        } else if (data.size < 10000) {
+                            setLoadingIntervalClusterOne(data.size * 5);
                         } else if (data.size < 10000) {
                             setLoadingIntervalClusterOne(data.size * 5);
                         } else if (data.size < 100000) {

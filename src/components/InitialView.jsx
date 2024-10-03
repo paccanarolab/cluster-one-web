@@ -26,8 +26,6 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         setLoadingMessage,
         setLoading,
         handleShowMenu,
-        getAllOrganismsByDb,
-        setOrganismList,
         getPpiByOrganismAndDb,
         quickRunClusterOne,
         setLoadingInterval,
@@ -35,21 +33,21 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
     } = React.useContext(AppContext);
 
     const handleSelectionPP = (event, newValue) => {
+        if (newValue === null) {
+            return;
+        }
         setSelectedPPOption(newValue);
         setPpiId(newValue.id);
         setPpiLabel(newValue.name);
         setIsPpiWeighted(newValue.weighted);
     };
 
-    const handleSelectionDB = (event, newValue) => {
-        setSelectedDbOption(newValue);
-        let organismList = getAllOrganismsByDb(newValue.id);
-        setOrganismList(organismList);
-    }
-
     const handleSelectionOR = (event, newValue) => {
+        if (newValue === null) {
+            return;
+        }
         setSelectedOrOption(newValue);
-        getPpiByOrganismAndDb(newValue.id, selectedDbOption.id);
+        getPpiByOrganismAndDb(newValue.id, -1);
     }
 
     const handleConfirm = () => {
@@ -101,8 +99,8 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
                     }
                 }}
             >
-                <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web 🧬☕️</DialogTitle>
-                <DialogContent style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "60px" }}>
+                <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web 🧬</DialogTitle>
+                <DialogContent style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "20px" }}>
                     <p style={{ fontSize: "1.5em", lineHeight: "1.5em", textAlign: "center" }}>
                         ClusterONE Web is a web-based tool for the identification of protein complexes in protein-protein interaction networks.
                         It is based on the ClusterONE algorithm, which is a graph clustering algorithm that identifies dense regions in networks. 
@@ -110,18 +108,9 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
                     </p>
                     <Divider orientation='horizontal'/>
                     <p style={{ fontSize: "1.2em", lineHeight: "1.2em" }}>
-                        Please select a Database, an Organism, and a Protein-Protein Interaction from the lists below to proceed.
+                        Please select an Organism, and a Protein-Protein Interaction from the lists below to proceed.
                         Once you have made your selections, you can either run a quick analysis (Using the default parameters) or a full analysis (Setup your parameters) using ClusterONE.
                     </p>
-                    <Autocomplete
-                        options={dbList}
-                        getOptionLabel={(option) => option.name}
-                        style={{ width: "100%", marginBottom: "20px" }}
-                        onChange={handleSelectionDB}
-                        renderInput={(params) => <TextField {...params} label="Database" variant="outlined" />}
-                        disablePortal
-                        color="primary"
-                    />
                     <Autocomplete
                         options={organismList}
                         getOptionLabel={(option) => option.name}
@@ -135,7 +124,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
                     <Autocomplete
                         options={ppiList}
                         getOptionLabel={(option) => option.name}
-                        style={{ width: "100%", marginBottom: "40px" }}
+                        style={{ width: "100%", marginBottom: "150px" }}
                         onChange={handleSelectionPP}
                         renderInput={(params) => <TextField {...params} label="Protein-Protein Interactions" variant="outlined" />}
                         disablePortal
