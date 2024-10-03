@@ -82,6 +82,36 @@ const ClusterInfo = ({left, top}) => {
 					</ul>
 				)}
 			</div>
+			<div
+				style={{
+					display: "flex",
+					marginTop: "15px",
+					marginBottom: "15px",
+					justifyContent: "left",
+					fontSize: "15px",
+					flexDirection: "column"
+				}}>
+				<ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
+					<li>
+						<b>* Double click on Protein: </b>
+							<li>
+								Edges: Changes line color and displays the weights
+							</li>
+							<li>
+								Nodes: Changes background color and displays labels
+							</li>
+					</li>
+					<li>
+						<b>* Double click on Complex: </b> you can go to the corresponding graph
+					</li>
+					<li>
+						<b>* Single click on Background: </b> Resets all edges and nodes
+					</li>
+					<li>
+						<b>* Right click on Protein: </b> Shows a link to UniProt with all information about it
+					</li>
+				</ul>
+			</div>
 			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
 		</div>
 	);

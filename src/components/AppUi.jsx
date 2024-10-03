@@ -43,12 +43,13 @@ const AppUi = () => {
         showMenu,
         showClusterFilter,
         showPPILoadedMessage,
-        getAllDatabases,
+        getAllOrganismsByDb,
         showHighlight,
     } = React.useContext(AppContext);
 
     React.useEffect(() => {
-        getAllDatabases();
+        // getAllDatabases();
+        getAllOrganismsByDb(-1);
     }, []);
 
     //comentario test
@@ -187,7 +188,6 @@ const AppUi = () => {
                             }
 
                             cy.on("tap", "node", evt => {
-                                console.log("click on node", evt.target.data('label'));
                                 var node = evt.target;
                                 node.on("dblclick", function(evt) {
                                     // Double click on complex node to show it
@@ -207,16 +207,19 @@ const AppUi = () => {
                                         let source = edge.source();
                                         let target = edge.target();
                                         // If some node already exists in the array, it won't be added again
-                                        if (!connectedNodes.includes(source) && source.data('type') !== "proteinComplex") {
+                                        // if (!connectedNodes.includes(source) && source.data('type') !== "proteinComplex") {
+                                        if (!connectedNodes.includes(source)) {
                                             connectedNodes.push(source);
                                         }
-                                        if (!connectedNodes.includes(target) && target.data('type') !== "proteinComplex") {
+                                        // if (!connectedNodes.includes(target) && target.data('type') !== "proteinComplex") {
+                                        if (!connectedNodes.includes(target)) {
                                             connectedNodes.push(target);
                                         }
                                     });
-                                    console.log("Connected nodes", connectedNodes);
                                     connectedNodes.forEach(connectedNode => {
-                                        connectedNode.style("background-color", "#C65151");
+                                        if (connectedNode.data('type') !== "proteinComplex") {
+                                            connectedNode.style("background-color", "#C65151");
+                                        }
                                         connectedNode.style("label", connectedNode.data('label'));
                                     });
                                 });
@@ -236,11 +239,11 @@ const AppUi = () => {
                                     }
                                 });
                                 nodes.forEach(node => {
+                                    node.style("label", "");
                                     if (node.data('type') !== "proteinComplex") {
                                         console.log("Node", node);
                                         console.log("Show highlight", showHighlight);
                                         node.style("background-color", "#debc6e");
-                                        node.style("label", "");
                                         // if (node.data().overlapping !== true) {
                                         //     node.style("background-color", "#debc6e");
                                         //     node.style("label", "");
