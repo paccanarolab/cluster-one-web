@@ -54,17 +54,8 @@ function AppContextProvider ({ children }) {
                 "background-color": "#b2800f",
                 width: 50,
                 height: 50,
-                //text props
-                // "text-outline-color": "#b2800f",
-                // "text-outline-width": 8
             }
         },
-        // {
-        //     selector: "node[type='protein']:hover",
-        //     style: {
-        //         label: "data(label)",
-        //     }
-        // },
         {
             selector: "node[type='proteinComplex']",
             style: {
@@ -78,6 +69,12 @@ function AppContextProvider ({ children }) {
             }
         },
         {
+            selector: '.showlabel',
+            style: {
+              'label': 'data(label)', // Show labels when highlighted
+            },
+        },
+        {
             selector: "node[type='proteinComplex']:selected",
             style: {
                 "border-color": "#252525",
@@ -88,34 +85,58 @@ function AppContextProvider ({ children }) {
                 label: "data(label)",
             }
         },
+         // Default edge style
         {
-            selector: "edge",
+            selector: 'edge',
             style: {
-                width: 2,
-                "line-color": "#debc6e",
-                "curve-style": "bezier",
-                label: "",
-            }
+            width: 2,
+            'line-color': '#debc6e',
+            'curve-style': 'bezier',
+            label: '',
+            },
         },
+        // Selected edge style
         {
-            selector: "edge:selected",
+            selector: 'edge:selected',
             style: {
-                width: 2,
-                "line-color": "#debc6e",
-                "curve-style": "bezier",
-                label: "data(label)",
-            }
+            width: 2,
+            'line-color': '#debc6e',
+            'curve-style': 'bezier',
+            label: 'data(label)',
+            },
         },
+        // Overlapping edge style
         {
             selector: "edge[type='overlapping']",
             style: {
-                width: 2,
-                "line-color": "#B185B8",
-                "curve-style": "bezier",
-                label: "",
-                "line-style": "dashed",
-            }
-        }
+            width: 2,
+            'line-color': '#B185B8',
+            'curve-style': 'bezier',
+            label: '',
+            'line-style': 'dashed',
+            },
+        },
+        // Styles for highlighted nodes
+        {
+            selector: 'node.highlighted',
+            style: {
+            'background-color': '#C65151',
+            'label': 'data(label)',
+            },
+        },
+        // Styles for highlighted edges
+        {
+            selector: 'edge.highlighted',
+            style: {
+                'line-color': '#C65151',
+                width: 3,
+                'label': 'data(label)',
+                'text-outline-color': '#C65151',
+                'text-outline-width': 2,
+                color: '#fff',
+                'z-index': 9999, // Ensure highlighted edges appear above others
+            },
+        },
     ];
     
     const initialGraphData = {
@@ -281,7 +302,7 @@ function AppContextProvider ({ children }) {
                         } else if (data.size < 4000) {
                             setLoadingIntervalClusterOne(data.size * 20);
                         } else if (data.size < 10000) {
-                            setLoadingIntervalClusterOne(data.size * 5);
+                            setLoadingIntervalClusterOne(data.size * 7);
                         } else if (data.size < 10000) {
                             setLoadingIntervalClusterOne(data.size * 5);
                         } else if (data.size < 100000) {
@@ -774,8 +795,11 @@ function AppContextProvider ({ children }) {
                     if (data.size < 100) {
                         setLoadingIntervalClusterOne(data.size * 20);
                     } else if (data.size < 1000) {
-                        setLoadingIntervalClusterOne(data.size * 10);
-                    } else if (data.size < 10000) {
+                        setLoadingIntervalClusterOne(data.size * 20);
+                    } else if( data.size < 4000) {
+                        setLoadingIntervalClusterOne(data.size * 7);
+                    }
+                    else if (data.size < 10000) {
                         setLoadingIntervalClusterOne(data.size * 5);
                     } else if (data.size < 100000) {
                         setLoadingIntervalClusterOne(data.size * 3);
