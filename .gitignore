@@ -108,3 +108,6 @@ env/
 venv/
 __pycache__/
 *.py[cod]
+
+# Mac files
+.DS_Store
