@@ -30,6 +30,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         quickRunClusterOne,
         setLoadingInterval,
         setOrganismName,
+        setGoaFileName,
         loadingIntervalClusterOne,
     } = React.useContext(AppContext);
 
@@ -49,6 +50,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         }
         setSelectedOrOption(newValue);
         setOrganismName(newValue.name);
+        setGoaFileName(newValue.goa_file_path);
         // console.log("Selected Organism: ", newValue);
         getPpiByOrganismAndDb(newValue.id, -1);
     }
