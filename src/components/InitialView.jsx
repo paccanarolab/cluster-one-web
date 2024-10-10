@@ -70,7 +70,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
-        quickRunClusterOne(selectedPPOption.id, 400000); 
+        quickRunClusterOne(selectedPPOption.id, 800000); 
         handleConfirm();
     }
 

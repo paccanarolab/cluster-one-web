@@ -377,7 +377,7 @@ function AppContextProvider ({ children }) {
         }
     }
 
-    const quickRunClusterOne = async (ppi_id, timeout = 400000) => {
+    const quickRunClusterOne = async (ppi_id, timeout = 800000) => {
         // Uses the ppi_id state to call the API and get the clusters
         try {
             let baseUrl = '';

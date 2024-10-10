@@ -165,7 +165,7 @@ const ExecuteBar = ({ href, label }) => {
 						setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
 						setLoading(true);
 						handleShowMenu();
-						quickRunClusterOne(ppiId, 400000); 
+						quickRunClusterOne(ppiId, 800000); 
 					}}
 					classname={"runClusterOneButton"}
 					message={"with default parameters"}
