@@ -835,7 +835,7 @@ function AppContextProvider ({ children }) {
             return;
         }
         setLoadingMessage("Processing Gene Ontology.. Wait a moment please🧬");
-        var delayfromEp = 60000;
+        var delayfromEp = 1000;
         setLoading(true);
         const timer = setTimeout(() => {
             setLoading(false);
@@ -912,6 +912,7 @@ function AppContextProvider ({ children }) {
             enrichmentLoading,
             enrichmentDataBase,
             goaFileName,
+            setGoaFileName,
             biologicalProcessDataset,
             molecularFunctionDataset,
             cellularComponentDataset,
