@@ -22,6 +22,7 @@ const ExecuteBar = ({ href, label }) => {
 		setModalOpen,
 		getAllPpi,
 		organismName,
+		setOrganismName,
 		oraScore,
 		ppiLabel,
 		setLoadingInterval,
@@ -87,6 +88,7 @@ const ExecuteBar = ({ href, label }) => {
 					label="Load your PPI"
 					icon="fa fa-upload"
 					onClickFunction={() => {
+						setOrganismName("");
 						const fileInput = document.createElement('input');
 						fileInput.type = 'file';
 						fileInput.accept = '.csv, .txt';
