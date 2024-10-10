@@ -186,85 +186,66 @@ const AppUi = () => {
                                 let center = cy.center();
                                 cy.center({ x: center.x - 50, y: center.y });
                             }
-
+                            cy.on('tap', function(evt) {
+                                if (evt.target === cy) {
+                                  console.log("Clicked on background");
+                                  // Reset styles
+                                  cy.elements('.highlighted').removeClass('highlighted');
+                                }
+                            });
                             cy.on("tap", "node", evt => {
                                 var node = evt.target;
+                                node.addClass('highlighted');
+                                const connectedEdges = node.connectedEdges();
+                                const connectedNodes = [];
+                                // const connectedElements = node.closedNeighborhood();
+                                // Get connected nodes
+                                connectedEdges.forEach(edge => {
+                                    const source = edge.source();
+                                    const target = edge.target();
+                                    
+                                    // Avoid duplicates
+                                    if (!connectedNodes.includes(source)) {
+                                        connectedNodes.push(source);
+                                    }
+                                    if (!connectedNodes.includes(target)) {
+                                        connectedNodes.push(target);
+                                    }
+
+                                    edge.addClass('highlighted');
+                                });
+                            
+                                // Highlight connected nodes
+                                connectedNodes.forEach(connectedNode => {
+                                    connectedNode.addClass('highlighted');
+                                });
                                 node.on("dblclick", function(evt) {
-                                    // Double click on complex node to show it
-                                    if (node.data('type') === "proteinComplex") {
+                                    if (node.data('type') !== "proteinComplex") {
+                                        window.open(`https://www.uniprot.org/uniprotkb/${node.data('label')}`, '_blank');
+                                    } else {
                                         var node_id = node.data('id');
                                         cyGraphList.forEach((graph) => {
                                             if (graph.code === node_id) {
                                                 setCyGraph(graph);
+                                                cy.elements('.highlighted').removeClass('highlighted');
                                             }
                                         });
                                     }
-                                    let connectedEdges = node.connectedEdges();
-                                    let connectedNodes = [];
-                                    connectedEdges.forEach(edge => {
-                                        edge.style("line-color", "#C65151");
-                                        edge.style("label", edge.data('label'));
-                                        let source = edge.source();
-                                        let target = edge.target();
-                                        // If some node already exists in the array, it won't be added again
-                                        // if (!connectedNodes.includes(source) && source.data('type') !== "proteinComplex") {
-                                        if (!connectedNodes.includes(source)) {
-                                            connectedNodes.push(source);
-                                        }
-                                        // if (!connectedNodes.includes(target) && target.data('type') !== "proteinComplex") {
-                                        if (!connectedNodes.includes(target)) {
-                                            connectedNodes.push(target);
-                                        }
-                                    });
-                                    connectedNodes.forEach(connectedNode => {
-                                        if (connectedNode.data('type') !== "proteinComplex") {
-                                            connectedNode.style("background-color", "#C65151");
-                                        }
-                                        connectedNode.style("label", connectedNode.data('label'));
-                                    });
                                 });
                             });
 
-                            cy.on("tap", evt => {
-                                console.log("ONE click on background");
-                                console.log("Event", evt);
-                                let edges = cy.edges();
-                                let nodes = cy.nodes();
-                                edges.forEach(edge => {
-                                    edge.style("label", "");
-                                    if (edge.data('type') === "overlapping") {
-                                        edge.style("line-color", "#B185B8");
-                                    } else {
-                                        edge.style("line-color", "#debc6e");
-                                    }
-                                });
-                                nodes.forEach(node => {
-                                    node.style("label", "");
-                                    if (node.data('type') !== "proteinComplex") {
-                                        console.log("Node", node);
-                                        console.log("Show highlight", showHighlight);
-                                        node.style("background-color", "#debc6e");
-                                        // if (node.data().overlapping !== true) {
-                                        //     node.style("background-color", "#debc6e");
-                                        //     node.style("label", "");
-                                        // } else {
-                                        //     if (showHighlight === false) {
-                                        //         node.style("background-color", "#debc6e");
-                                        //         node.style("label", "");
-                                        //     }
-                                        // }
-                                    }
-                                });
+                            // Mouseover event
+                            cy.on('mouseover', 'node', evt => {
+                                const node = evt.target;
+                                const connectedElements = node.closedNeighborhood(); // Includes the node and its connected edges and nodes
+                                connectedElements.addClass('showlabel');
                             });
-                            cy.on("cxttap", "node", evt => {
-                                var node = evt.target;
-                                if (node.data('type') !== "proteinComplex") {
-                                    setProteinInfo({
-                                        protein: node.data('label'),
-                                        data:`https://www.uniprot.org/uniprotkb/${node.data('label')}`
-                                    });
-                                    setOpenProteinInfo(true);
-                                }
+                            
+                            // Mouseout event
+                            cy.on('mouseout', 'node', evt => {
+                                const node = evt.target;
+                                const connectedElements = node.closedNeighborhood();
+                                connectedElements.removeClass('showlabel');
                             });
                         }
                     }
