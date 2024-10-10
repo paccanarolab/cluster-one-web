@@ -21,6 +21,8 @@ const ExecuteBar = ({ href, label }) => {
 		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
+		organismName,
+		setOrganismName,
 		oraScore,
 		ppiLabel,
 		setLoadingInterval,
@@ -86,6 +88,7 @@ const ExecuteBar = ({ href, label }) => {
 					label="Load your PPI"
 					icon="fa fa-upload"
 					onClickFunction={() => {
+						setOrganismName("");
 						const fileInput = document.createElement('input');
 						fileInput.type = 'file';
 						fileInput.accept = '.csv, .txt';
@@ -95,6 +98,16 @@ const ExecuteBar = ({ href, label }) => {
 					classname={"explorePpiButton"}
 					message={ppiId ? "PPI LOADED" : "PPI NOT LOADED"}
 				/>
+				{ organismName &&
+					<span
+						style={{
+							display: "flex",
+							justifyContent: "left",
+							alignItems: "left",
+						}}>
+						Organism: {organismName}
+					</span>
+				}
 				{
 					ppiId &&
 					<span

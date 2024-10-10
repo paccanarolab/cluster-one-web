@@ -182,7 +182,7 @@ function AppContextProvider ({ children }) {
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
     const [dbList, setDbList] = React.useState([]); // PPI List Uses in selected our ppi
     const [organismList, setOrganismList] = React.useState([]); // PPI List Uses in selected our ppi
-
+    const [organismName, setOrganismName] = React.useState("")
     const [cyGraph, setCyGraph] = React.useState(initialGraphData); // Cluster List
     const [cyEvent, setCyEvent] = React.useState(""); // Cluster List
     const [proteinId, setProteinId] = React.useState("");
@@ -904,6 +904,8 @@ function AppContextProvider ({ children }) {
             complexCounter,
             isPpiWeighted,
             size,
+            organismName,
+            setOrganismName,
             density,
             quality,
             clusterOneParams,
