@@ -29,6 +29,7 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
         getPpiByOrganismAndDb,
         quickRunClusterOne,
         setLoadingInterval,
+        setOrganismName,
         loadingIntervalClusterOne,
     } = React.useContext(AppContext);
 
@@ -47,6 +48,8 @@ const InitialView = ({label, icon, onClickFunction, classname, message }) => {
             return;
         }
         setSelectedOrOption(newValue);
+        setOrganismName(newValue.name);
+        // console.log("Selected Organism: ", newValue);
         getPpiByOrganismAndDb(newValue.id, -1);
     }
 

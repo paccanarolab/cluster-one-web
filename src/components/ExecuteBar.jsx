@@ -21,6 +21,7 @@ const ExecuteBar = ({ href, label }) => {
 		setLoadingMessage,
 		setModalOpen,
 		getAllPpi,
+		organismName,
 		oraScore,
 		ppiLabel,
 		setLoadingInterval,
@@ -95,6 +96,16 @@ const ExecuteBar = ({ href, label }) => {
 					classname={"explorePpiButton"}
 					message={ppiId ? "PPI LOADED" : "PPI NOT LOADED"}
 				/>
+				{ organismName &&
+					<span
+						style={{
+							display: "flex",
+							justifyContent: "left",
+							alignItems: "left",
+						}}>
+						Organism: {organismName}
+					</span>
+				}
 				{
 					ppiId &&
 					<span
