@@ -298,17 +298,17 @@ function AppContextProvider ({ children }) {
                     } else {
                         setLoadingInterval(delayfromEp);
                         if (data.size < 100) {
+                            setLoadingIntervalClusterOne(data.size * 25);
+                        } else if (data.size < 1000) {
                             setLoadingIntervalClusterOne(data.size * 20);
                         } else if (data.size < 4000) {
-                            setLoadingIntervalClusterOne(data.size * 20);
+                            setLoadingIntervalClusterOne(data.size * 10);
                         } else if (data.size < 10000) {
                             setLoadingIntervalClusterOne(data.size * 7);
-                        } else if (data.size < 10000) {
-                            setLoadingIntervalClusterOne(data.size * 5);
                         } else if (data.size < 100000) {
-                            setLoadingIntervalClusterOne(data.size * 3);
+                            setLoadingIntervalClusterOne(data.size * 5);
                         } else {
-                            setLoadingIntervalClusterOne(data.size);
+                            setLoadingIntervalClusterOne(data.size) * 2;
                         }
                     }
                 } catch (error) {
@@ -793,18 +793,17 @@ function AppContextProvider ({ children }) {
                 } else {
                     setLoadingInterval(delayfromEp);
                     if (data.size < 100) {
-                        setLoadingIntervalClusterOne(data.size * 20);
+                        setLoadingIntervalClusterOne(data.size * 25);
                     } else if (data.size < 1000) {
                         setLoadingIntervalClusterOne(data.size * 20);
-                    } else if( data.size < 4000) {
+                    } else if (data.size < 4000) {
+                        setLoadingIntervalClusterOne(data.size * 10);
+                    } else if (data.size < 10000) {
                         setLoadingIntervalClusterOne(data.size * 7);
-                    }
-                    else if (data.size < 10000) {
-                        setLoadingIntervalClusterOne(data.size * 5);
                     } else if (data.size < 100000) {
-                        setLoadingIntervalClusterOne(data.size * 3);
+                        setLoadingIntervalClusterOne(data.size * 5);
                     } else {
-                        setLoadingIntervalClusterOne(data.size);
+                        setLoadingIntervalClusterOne(data.size) * 2;
                     }
                 }
             } catch (error) {
