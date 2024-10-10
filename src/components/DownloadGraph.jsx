@@ -3,7 +3,7 @@ import { AppContext } from "./AppContext.jsx";
 import "../styles/DownloadButton.scss";
 
 
-const DownloadGraph = ({ cy }) => {
+const DownloadGraph = ({ cy, name}) => {
     const { 
         cyGraph,
     } = React.useContext(AppContext);
@@ -14,7 +14,7 @@ const DownloadGraph = ({ cy }) => {
         // Create a temporary link element
         const downloadLink = document.createElement('a');
         downloadLink.href = pngDataUrl;
-        downloadLink.download = 'graph.png';
+        downloadLink.download = `cl1_${name}_graph.png`;
   
         // Append the link to the body
         document.body.appendChild(downloadLink);

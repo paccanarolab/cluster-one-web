@@ -276,7 +276,7 @@ const AppUi = () => {
             }
 
             {cyGraph.code && <AllResultsClusterOne/>}
-            <DownloadGraph cy={cyEvent}/>
+            <DownloadGraph cy={cyEvent} name={cyGraph.code}/>
             <DownloadButton />
             <AboutModal />
             <InfoButton />
