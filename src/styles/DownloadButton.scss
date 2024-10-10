@@ -19,7 +19,7 @@
 }
 
 .cl1DownloadButton:before {
-    content: '\2193';
+    // content: '\2193';
     /* Carácter Unicode para la flecha hacia abajo */
     position: absolute;
     top: 50%;
@@ -35,6 +35,50 @@
 }
 
 .cl1DownloadButton.disabled {
+    background-color: rgb(158, 158, 158);
+    /* o el color que prefieras */
+    cursor: not-allowed;
+    pointer-events: none;
+    /* Asegura que no sea clickeable */
+}
+
+.graphDownloadButton {
+    display: inline-block;
+    width: 2cm;
+    height: 2cm;
+    background-color: lightgreen;
+    border-radius: 1cm;
+    /* La mitad del ancho y alto para que sea completamente redondo */
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    /* Hace que el botón quede fijado en una posición */
+    bottom: 5%;
+    /* Margen desde la parte inferior */
+    right: 130px;
+    /* Margen desde la parte derecha */
+    overflow: hidden;
+    z-index: 1000;
+    /* Asegurarse de que el botón quede encima de otros elementos */
+}
+
+.graphDownloadButton:before {
+    // content: '\2193';
+    /* Carácter Unicode para la flecha hacia abajo */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2cm;
+    /* Tamaño de la flecha */
+    font-weight: bold;
+}
+
+.graphDownloadButton:hover {
+    background-color: green;
+}
+
+.graphDownloadButton.disabled {
     background-color: rgb(158, 158, 158);
     /* o el color que prefieras */
     cursor: not-allowed;

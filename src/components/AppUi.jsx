@@ -18,6 +18,7 @@ import { Layout } from "./Layout.jsx";
 import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
 import { BackdropWithProgress } from "./BakdropWithProgress.jsx";
+import { DownloadGraph } from "./DownloadGraph.jsx";
 
 import "../styles/global.scss";
 import "../styles/ProteinFilter.scss";
@@ -37,6 +38,7 @@ const AppUi = () => {
         loadingMessage,
         loadingInterval,
         setCyEvent,
+        cyEvent,
         setCyGraph,
         setProteinInfo,
         setOpenProteinInfo,
@@ -274,6 +276,7 @@ const AppUi = () => {
             }
 
             {cyGraph.code && <AllResultsClusterOne/>}
+            <DownloadGraph cy={cyEvent}/>
             <DownloadButton />
             <AboutModal />
             <InfoButton />
