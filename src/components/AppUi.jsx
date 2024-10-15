@@ -172,8 +172,9 @@ const AppUi = () => {
                     style={{ width: "100%", height: "100%"}}
                     zoomingEnabled={true}
                     maxZoom={3}
-                    minZoom={0.01}
-                    zoom={0.05}
+                    minZoom={0.1}
+                    zoom={0.5}
+                    wheelSensitivity={0.1}
                     autounselectify={false}
                     boxSelectionEnabled={true}
                     layout={layout}
