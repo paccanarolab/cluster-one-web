@@ -137,6 +137,14 @@ function AppContextProvider ({ children }) {
                 'z-index': 9999, // Ensure highlighted edges appear above others
             },
         },
+        {
+            selector: 'node.overlapping',
+            style: {
+                'background-color': '#1ef313',
+                'width': 50,
+                'height': 50,
+            },
+        }
     ];
     
     const initialGraphData = {
@@ -377,7 +385,7 @@ function AppContextProvider ({ children }) {
         }
     }
 
-    const quickRunClusterOne = async (ppi_id, timeout = 800000) => {
+    const quickRunClusterOne = async (ppi_id, timeout = 8000000) => {
         // Uses the ppi_id state to call the API and get the clusters
         try {
             let baseUrl = '';
@@ -721,24 +729,14 @@ function AppContextProvider ({ children }) {
             let nodes = cyEvent.nodes()
             nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
-                    node.style(
-                        "background-color", "#800080");
-                    node.style(
-                        "width", 50);
-                    node.style(
-                        "height", 50);
+                    node.addClass("overlapping");
                 }
             });
         } else {
             let nodes = cyEvent.nodes()
             nodes.forEach((node) => {
                 if (node.data().overlapping === true) {
-                    node.style(
-                        "background-color", "#debc6e");
-                    node.style(
-                        "width", 30);
-                    node.style(
-                        "height", 30);
+                    node.removeClass("overlapping");
                 }
             });
         }
