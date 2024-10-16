@@ -114,128 +114,185 @@ const InitialView = ({label, icon, classname }) => {
                         Developed by PaccanaroLab
                     </p>
                     <Divider orientation='horizontal'/>
-                    <p style={{ fontSize: "1.2em", lineHeight: "1.2em" }}>
-                        Please select an Organism, and a Protein-Protein Interaction from the lists below to proceed, or you can upload your own PPI and if you want to make the functional enrichment analysis, upload your GOA file.
-                        Once you have made your selections, you can either run a quick analysis (Using the default parameters) or a full analysis (Setup your parameters) using ClusterONE.
-                    </p>
                     <Grid container spacing={2} alignItems="flex-start" style={{ marginTop: "20px" }}>
-            {/* Left Column */}
-            <Grid item xs={12} sm={6}>
-              <Box
-                border={1}
-                borderColor="grey.300"
-                bgcolor="grey.100"
-                p={2}
-                borderRadius={4}
-                height="100%"
-              >
-                <Typography variant="subtitle1" gutterBottom>
-                  Required
-                </Typography>
-                <Box>
-                  {/* First Autocomplete */}
-                  <Autocomplete
-                    options={organismList}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleSelectionOR}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Organism"
-                        variant="outlined"
-                        margin="none"
-                        fullWidth
-                      />
-                    )}
-                    disablePortal
-                    disabled={organismList.length === 0}
-                  />
-                </Box>
-                <Box mt={2}>
-                  {/* Second Autocomplete */}
-                  <Autocomplete
-                    options={ppiList}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleSelectionPP}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Protein-Protein Interactions"
-                        variant="outlined"
-                        margin="none"
-                        fullWidth
-                      />
-                    )}
-                    disablePortal
-                    disabled={ppiList.length === 0}
-                  />
-                </Box>
-              </Box>
-            </Grid>
+                        {/* Left Column */}
+                        <Grid item xs={12} sm={6}>
+                        <Box
+                            border={1}
+                            borderColor="grey.300"
+                            bgcolor="grey.25"
+                            p={2}
+                            borderRadius={4}
+                            height="100%"
+                        >
+                            <Typography variant="subtitle1" gutterBottom>
+                            Main options. Please select an Organism, and a Protein-Protein Interaction from the lists below to proceed
+                            </Typography>
+                            <Box>
+                            {/* First Autocomplete */}
+                            <Autocomplete
+                                options={organismList}
+                                getOptionLabel={(option) => option.name}
+                                onChange={handleSelectionOR}
+                                renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Organism"
+                                    variant="outlined"
+                                    margin="none"
+                                    fullWidth
+                                />
+                                )}
+                                disablePortal
+                                disabled={organismList.length === 0}
+                            />
+                            </Box>
+                            <Box mt={2}>
+                            {/* Second Autocomplete */}
+                            <Autocomplete
+                                options={ppiList}
+                                getOptionLabel={(option) => option.name}
+                                onChange={handleSelectionPP}
+                                renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Protein-Protein Interactions"
+                                    variant="outlined"
+                                    margin="none"
+                                    fullWidth
+                                />
+                                )}
+                                disablePortal
+                                disabled={ppiList.length === 0}
+                            />
+                            </Box>
+                        </Box>
+                        </Grid>
+                            
+                        {/* Right Column */}
+                        <Grid item xs={12} sm={6}>
+                            <Box
+                                border={1}
+                                borderColor="grey.300"
+                                bgcolor="grey.100"
+                                p={2}
+                                borderRadius={4}
+                                height="100%"
+                            >
+                                <Grid container alignItems="center" spacing={2}>
+                                    <Grid item xs={8}>
+                                        <Typography variant="subtitle1" gutterBottom>
+                                            Alternatively, you can upload your PPI and run your own experiments. If you want the functional enrichment analysis, upload the corresponding GOA file (this step is optional).
+                                        </Typography>
+                                    </Grid>
 
-            {/* Right Column */}
-            <Grid item xs={12} sm={6}>
-              <Box
-                border={1}
-                borderColor="grey.300"
-                bgcolor="grey.100"
-                p={2}
-                borderRadius={4}
-                height="100%"
-              >
-                <Typography variant="subtitle1" gutterBottom>
-                  Optional
-                </Typography>
-                <Box>
-                  {/* First Button */}
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    startIcon={<UploadIcon />}
-                    onClick={() => {
-                      setOrganismName("");
-                      const fileInput = document.createElement('input');
-                      fileInput.type = 'file';
-                      fileInput.accept = '.csv, .txt';
-                      fileInput.onchange = () => uploadFilePpi(fileInput);
-                      fileInput.click();
-                    }}
-                    style={{
-                      height: '56px',
-                      padding: '0 12px',
-                      boxSizing: 'border-box',
-                    }}
-                  >
-                    Load your PPI
-                  </Button>
-                </Box>
-                <Box mt={2}>
-                  {/* Second Button */}
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    startIcon={<UploadIcon />}
-                    onClick={() => {
-                      const fileInput = document.createElement('input');
-                      fileInput.type = 'file';
-                      fileInput.accept = '.gaf';
-                      fileInput.onchange = () => uploadGoaFile(fileInput);
-                      fileInput.click();
-                    }}
-                    style={{
-                      height: '56px',
-                      padding: '0 12px',
-                      boxSizing: 'border-box',
-                    }}
-                  >
-                    Load your GOA file
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+                                    <Grid item xs={4}>
+                                    <Box display="flex" flexDirection="column" gap={2} alignItems="center">
+                                        <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        startIcon={<UploadIcon />}
+                                        onClick={() => {
+                                            setOrganismName("");
+                                            const fileInput = document.createElement('input');
+                                            fileInput.type = 'file';
+                                            fileInput.accept = '.csv, .txt';
+                                            fileInput.onchange = () => uploadFilePpi(fileInput);
+                                            fileInput.click();
+                                        }}
+                                        style={{
+                                            height: '30px',
+                                            width: '90px',
+                                        }}
+                                        >
+                                        PPI
+                                        </Button>
+                                        <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        startIcon={<UploadIcon />}
+                                        onClick={() => {
+                                            const fileInput = document.createElement('input');
+                                            fileInput.type = 'file';
+                                            fileInput.accept = '.gaf';
+                                            fileInput.onchange = () => uploadGoaFile(fileInput);
+                                            fileInput.click();
+                                        }}
+                                        style={{
+                                            height: '30px', // Adjusted height for smaller button
+                                            width: '90px',
+                                        }}
+                                        >
+                                        GOA
+                                        </Button>
+                                    </Box>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>
+
+                        {/* Right Column 
+                        <Grid item xs={12} sm={6}>
+                        <Box
+                            border={1}
+                            borderColor="grey.300"
+                            bgcolor="grey.100"
+                            p={2}
+                            borderRadius={4}
+                            height="100%"
+                        >
+                            <Typography variant="subtitle1" gutterBottom>
+                            Alternatively, you can upload your PPI and run your own experiments. If you want the functional enrichment analysis, upload the corresponding GOA file (this step is optional).
+                            </Typography>
+                            <Grid container spacing={2} alignItems='center'>
+                                    <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<UploadIcon />}
+                                            onClick={() => {
+                                                setOrganismName("");
+                                                const fileInput = document.createElement('input');
+                                                fileInput.type = 'file';
+                                                fileInput.accept = '.csv, .txt';
+                                                fileInput.onchange = () => uploadFilePpi(fileInput);
+                                                fileInput.click();
+                                            }}
+                                            style={{
+                                                height: '30px', // Adjusted height for smaller button
+                                                width: '110px',
+                                            }}
+                                        >
+                                            PPI
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<UploadIcon />}
+                                            onClick={() => {
+                                                const fileInput = document.createElement('input');
+                                                fileInput.type = 'file';
+                                                fileInput.accept = '.gaf';
+                                                fileInput.onchange = () => uploadGoaFile(fileInput);
+                                                fileInput.click();
+                                            }}
+                                            style={{
+                                                height: '30px', // Adjusted height for smaller button
+                                                width: '110px',
+                                            }}
+                                        >
+                                            GOA
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                        </Box>
+                        </Grid>*/}
+                    </Grid>
+                    <p style={{ fontSize: "1em", lineHeight: "1.2em", alignContent: 'center' }}>
+                        (once you have made your selections, you can either run a quick analysis (Using the default parameters) or a full analysis (Setup your parameters) using ClusterONE)
+                    </p>
                 </DialogContent>
                 <Divider orientation='horizontal'/>
                 <DialogActions style={{ justifyContent: 'center' }}>

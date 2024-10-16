@@ -41,29 +41,22 @@ const AppUi = () => {
             {
                 cyGraph.code &&
                 <ClusterInfo
-                    top={"73px"}
+                    top={"58px"}
                     left={"1.5%"}
                 />
-            }
-            
-            
-            
+            }   
             <LabImage 
                 image={paccaLabImage.image}
                 url={paccaLabImage.url}
                 classname={paccaLabImage.classname}
             />
-            <LabImage 
-                image={fundacionImage.image}
-                url={fundacionImage.url}
-                classname={fundacionImage.classname}    
-            />
+            {/* Cytoscape graph */}
             <div
                 style={{
                 width: "100%",
                 height: "100vh",
                 position: "absolute",
-                top: "73px",
+                top: "58px",
                 left: "0px",
                 backgroundColor: "white"
             }}>
@@ -76,7 +69,7 @@ const AppUi = () => {
                     zoomingEnabled={true}
                     maxZoom={3}
                     minZoom={0.1}
-                    zoom={0.5}
+                    zoom={0.3}
                     wheelSensitivity={0.1}
                     autounselectify={false}
                     boxSelectionEnabled={true}
@@ -122,7 +115,7 @@ const AppUi = () => {
                                     if (node.data('type') !== "proteinComplex") {
                                         window.open(`https://www.uniprot.org/uniprotkb/${node.data('label')}`, '_blank');
                                         // remove the existing listener
-                                        node.removeListener('dblclick');
+                                        console.log("Opening uniprot");
                                     } else {
                                         var node_id = node.data('id');
                                         cyGraphList.forEach((graph) => {

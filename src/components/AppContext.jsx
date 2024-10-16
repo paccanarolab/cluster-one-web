@@ -34,7 +34,8 @@ function AppContextProvider ({ children }) {
         {
             selector: "node[type='protein']",
             style: {
-                backgroundColor: "#debc6e",
+                // backgroundColor: "#debc6e",
+                backgroundColor: "#ff7f00",
                 "border-color": "#252525",
                 "border-width": "3px",
                 width: 30,
@@ -51,7 +52,8 @@ function AppContextProvider ({ children }) {
                 label: "data(label)",
                 "border-color": "#252525",
                 "border-opacity": "0.5",
-                "background-color": "#b2800f",
+                // "background-color": "#b2800f",
+                "background-color": "#e07a15",
                 width: 50,
                 height: 50,
             }
@@ -62,7 +64,8 @@ function AppContextProvider ({ children }) {
                 shape: "rectangle",
                 width: 30,
                 height: 30,
-                backgroundColor: "#B185B8",
+                // backgroundColor: "#B185B8",
+                backgroundColor: "#984ea3",
                 //text props
                 color: "black",
                 fontSize: 20,
@@ -79,7 +82,8 @@ function AppContextProvider ({ children }) {
             style: {
                 "border-color": "#252525",
                 "border-opacity": "0.5",
-                "background-color": "#B185B8",
+                // "background-color": "#B185B8",
+                "background-color": "#984ea3",
                 width: 50,
                 height: 50,
                 label: "data(label)",
@@ -89,20 +93,19 @@ function AppContextProvider ({ children }) {
         {
             selector: 'edge',
             style: {
-            width: 2,
-            'line-color': '#debc6e',
-            'curve-style': 'bezier',
-            label: '',
+                width: 2,
+                'line-color': '#ff7f00',
+                // 'line-color': '#debc6e',
+                'curve-style': 'bezier',
+                label: '',
             },
         },
         // Selected edge style
         {
             selector: 'edge:selected',
             style: {
-            width: 2,
-            'line-color': '#debc6e',
-            'curve-style': 'bezier',
-            label: 'data(label)',
+                width: 2,
+                label: 'data(label)',
             },
         },
         // Overlapping edge style
@@ -110,7 +113,8 @@ function AppContextProvider ({ children }) {
             selector: "edge[type='overlapping']",
             style: {
             width: 2,
-            'line-color': '#B185B8',
+            // 'line-color': '#B185B8',
+            'line-color': '#984ea3',
             'curve-style': 'bezier',
             label: '',
             'line-style': 'dashed',
@@ -120,7 +124,8 @@ function AppContextProvider ({ children }) {
         {
             selector: 'node.highlighted',
             style: {
-            'background-color': '#C65151',
+            'background-color': '#e41a1c',
+            // 'background-color': '#C65151',
             'label': 'data(label)',
             },
         },
@@ -128,10 +133,12 @@ function AppContextProvider ({ children }) {
         {
             selector: 'edge.highlighted',
             style: {
-                'line-color': '#C65151',
+                'line-color': '#e41a1c',
+                // 'line-color': '#C65151',
                 width: 3,
                 'label': 'data(label)',
-                'text-outline-color': '#C65151',
+                'text-outline-color': '#e41a1c',
+                // 'text-outline-color': '#C65151',
                 'text-outline-width': 2,
                 color: '#fff',
                 'z-index': 9999, // Ensure highlighted edges appear above others
@@ -140,7 +147,7 @@ function AppContextProvider ({ children }) {
         {
             selector: 'node.overlapping',
             style: {
-                'background-color': '#1ef313',
+                'background-color': '#4daf4a',
                 'width': 50,
                 'height': 50,
             },

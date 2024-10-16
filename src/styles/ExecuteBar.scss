@@ -1,19 +1,23 @@
 .config {
     position: absolute;
-    left: -1;
-    height: 70px;
-    /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
+    /* Use fixed to ensure it stays at the top and spans the full width */
+    // top: 0;
+    // left: 0;
+    height: 55px;
     width: 100%;
-    /* Ocupará todo el ancho de la pantalla */
     background-color: #333333;
-    /* Hacemos el fondo más oscuro */
     box-sizing: border-box;
-    padding: 8px;
+    padding: 8px 0;
+    /* Adjusted padding to avoid shifting */
     color: #fff;
     overflow: auto;
+    /* Adjust overflow to handle any excess */
     z-index: 1;
     margin-top: -8px;
+    /* Adjusted margin to avoid shifting */
+    margin-left: -8px;
     display: flex;
+    align-items: center;
     flex-direction: row;
 }
 

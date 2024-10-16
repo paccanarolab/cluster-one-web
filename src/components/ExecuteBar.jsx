@@ -45,7 +45,7 @@ const ExecuteBar = () => {
             fontSize: "15px",
           }}
         >
-          Organism: <strong>{organismName}</strong>
+		<strong>Organism: </strong>{organismName}
         </div>
       )}
 
@@ -57,7 +57,7 @@ const ExecuteBar = () => {
             fontSize: "15px",
           }}
         >
-          PPI: <strong>{ppiLabel}</strong>
+		<strong>PPI: </strong>{ppiLabel}
         </div>
       )}
       
@@ -92,7 +92,8 @@ const ExecuteBar = () => {
       <div
         style={{
           position: "absolute",
-          right: "20px",
+          right: "5px",
+		  marginTop: "10px",
         }}
       >
         <InitialView
