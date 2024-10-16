@@ -5,18 +5,18 @@
     /* Centra verticalmente los elementos */
     justify-content: center;
     /* Centra horizontalmente los elementos */
-    position: absolute;
-    /* Posiciona el contenedor en el centro de la ventana/pantalla */
     transform: translate(-50%, -50%);
     z-index: 1000;
 }
 
 .proteinLabel {
-    margin-right: 10px;
+    margin-bottom: 5px;
     /* Espacio entre la etiqueta y el desplegable */
-    color: black;
+    color: white;
     // font-weight: bold;
     /* Puedes ajustar esto según tus necesidades */
+    display: block;
+    /* Hace que la etiqueta ocupe toda la línea, posicionándola arriba del desplegable */
 }
 
 .proteinDropdown {
@@ -49,10 +49,18 @@
 }
 
 .dropdown-icon {
-    position: absolute;
-    right: 10px;
+    margin-left: -30px;
     pointer-events: none;
-    /* Allows clicks to pass through to the select element */
     color: black;
     font-size: 18px;
+}
+
+/* ProteinFilter.scss */
+
+.proteinFilterInput {
+    width: 200px;
+}
+
+.proteinFilterInput .MuiOutlinedInput-root {
+    height: 40px;
 }

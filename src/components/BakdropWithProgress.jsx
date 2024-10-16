@@ -37,7 +37,7 @@ function CircularProgressWithLabel({ value }) {
 }
 
 
-const BackdropWithProgress = ({ showMenu, loadingMessage, progressInterval }) => {
+const BackdropWithProgress = ({ loadingMessage, progressInterval }) => {
   const [progress, setProgress] = useState(0);
   
   useEffect(() => {
@@ -77,7 +77,7 @@ const BackdropWithProgress = ({ showMenu, loadingMessage, progressInterval }) =>
         style={{
           position: 'absolute',
           top: '60%',
-          left: showMenu ? '51.5%' : '50%',
+          left: '50%',
           transform: 'translate(-50%, -50%)',
         }}
       >

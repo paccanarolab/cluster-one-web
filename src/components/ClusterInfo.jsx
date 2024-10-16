@@ -1,13 +1,17 @@
 import React, { useState, useEffect }  from "react";
 import { AppContext } from "./AppContext.jsx";
 import { Enrichment } from "./Enrichment.jsx";
+import { ClusterFilterButton } from "./ClusterFilterButton.jsx";
+import { ClusterFilter } from "./ClusterFilter.jsx";
+import zIndex from "@mui/material/styles/zIndex.js";
 
 const ClusterInfo = ({left, top}) => {
 	const {
 		cyGraph,
 		complexList,
 		setCyGraph,
-		goaFileName
+		goaFileName,
+		showClusterFilter,
 	} = React.useContext(AppContext);
 	const [selectedClusterCode, setSelectedClusterCode] = useState("");
 	const handleClusterCodeChange = (event) => {
@@ -34,6 +38,7 @@ const ClusterInfo = ({left, top}) => {
 				left: left,
 				zIndex: 10,
 				alignItems: "left",
+				padding: "10px",
 			}}
 		>
 			<div
@@ -107,6 +112,16 @@ const ClusterInfo = ({left, top}) => {
 				</ul>
 			</div>
 			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
+			{/* ClusterFilterButton */}
+            {cyGraph.code && (
+                <ClusterFilterButton  style={{zIndex: 1100, position: 'relative', marginBottom: "50px"}}
+                />
+            )}
+            {
+                showClusterFilter && 
+                <ClusterFilter style={{zIndex: 1100, position: 'relative', marginBottom: "50px"}}   
+                />
+            }
 		</div>
 	);
 };

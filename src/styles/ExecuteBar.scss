@@ -1,54 +1,43 @@
 .config {
     position: absolute;
-    left: 0;
-    height: 100%;
+    left: -1;
+    height: 70px;
     /* Usaremos esta propiedad para que ocupe todo el alto de la pantalla */
-    width: 340px;
+    width: 100%;
     /* Ocupará todo el ancho de la pantalla */
-    background: rgba(0, 0, 0, 0.8);
+    background-color: #333333;
     /* Hacemos el fondo más oscuro */
     box-sizing: border-box;
-    padding: 1em;
+    padding: 8px;
     color: #fff;
-    transition-property: opacity;
-    transition-duration: 250ms;
-    transition-timing-function: ease-out;
     overflow: auto;
     z-index: 1;
     margin-top: -8px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.config-link {
-    // display: block;
-    margin-top: 10px;
-    color: #9ed0fa;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    // position: absolute;
-    /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
-    bottom: 10px;
-    /* Posición desde la parte inferior */
-    left: 23px;
-    /* Posición desde la izquierda */
-
-    &:hover {
-        color: #7fbbe2;
-    }
+.config>div {
+    margin-right: 20px;
 }
 
-.config-ppi {
-    display: block;
-    // position: absolute;
-    /* Esto posiciona el link de forma absoluta dentro del contenedor relativo */
-    bottom: 40px;
-    /* Posición desde la parte inferior */
-    left: 20px;
-    /* Posición desde la derecha */
-    color: #47ab36;
-    font-size: 0.9em;
-    /* Reduce el tamaño de fuente */
+.initialbutton {
+    background-color: #444444;
+    color: #FFFFFF;
+    border: 1px solid #666666;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.initialbutton:hover {
+    background-color: #555555;
+}
+
+
+.initialbutton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
 .config-dropdown {

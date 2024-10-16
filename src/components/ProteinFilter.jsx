@@ -1,53 +1,69 @@
-import React from "react";
-import { AppContext } from "./AppContext.jsx";
-import "../styles/ProteinFilter.scss";
+import React from 'react';
+import { AppContext } from './AppContext.jsx';
+import { TextField, MenuItem } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const ProteinFilter = ({ top, left }) => {
-    // Los componentes son capaces de almacenar un estado interno mediante el uso del estado de React.
-    const {
-        complexProteinList,
-        showComplexList,
-        setProteinId
-    } = React.useContext(AppContext);
-    
-    const handleProteinChange = (event) => {
-        if (event.target.value === "0") {
-            return;
-        }
-        setProteinId(event.target.value);
+const ProteinFilter = () => {
+  const {
+    complexProteinList,
+    showComplexList,
+    setProteinId,
+  } = React.useContext(AppContext);
+
+  const [proteinId, setLocalProteinId] = React.useState('');
+
+  const handleProteinChange = (event) => {
+    const selectedProteinId = event.target.value;
+    if (selectedProteinId === '0') {
+      return;
     }
-    
-    return (
-        <div
-            style={{
-                top: top,
-                left: left,
-            }} 
-            className={"proteinContainer"}>
-            <label htmlFor="proteinSelect" className={"proteinLabel"}>Complex Proteins</label>
-            <select 
-                id="proteinSelect"
-                onChange={handleProteinChange} 
-                className={"proteinDropdown"}
-            >
-                <option disabled selected>Protein</option>
-                {
-                    showComplexList ?
-                        complexProteinList.map((protein) => (
-                            <option value={protein.id} key={protein.id}>
-                                {protein.name}
-                            </option>
-                        ))
-                    :
-                        <option value={0} key={0}>
-                            NO PROTEINS
-                        </option>
-                }    
-            </select>
-            <i className={"fa fa-search dropdown-icon"}></i>
-        </div>
-        
-    );
-}
+    setLocalProteinId(selectedProteinId);
+    setProteinId(selectedProteinId);
+  };
+
+  return (
+    <TextField
+      select
+      variant="outlined"
+      size="small"
+      label="Complex Proteins"
+      value={proteinId}
+      onChange={handleProteinChange}
+      style={{
+        width: '200px',
+        zIndex: 1100,
+        position: 'relative',
+        backgroundColor: '#444444', // Darker input background
+        borderRadius: '5px',
+      }}
+      InputProps={{
+        startAdornment: (
+          <SearchIcon style={{ marginRight: '8px', color: '#FFFFFF' }} />
+        ),
+        style: {
+          color: '#FFFFFF', // White text inside the input
+        },
+      }}
+      InputLabelProps={{
+        style: { color: '#FFFFFF' }, // White label text
+      }}
+    >
+      <MenuItem value="" disabled>
+        Select Protein
+      </MenuItem>
+      {showComplexList ? (
+        complexProteinList.map((protein) => (
+          <MenuItem value={protein.id} key={protein.id}>
+            {protein.name}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem value="0" disabled>
+          NO PROTEINS
+        </MenuItem>
+      )}
+    </TextField>
+  );
+};
 
 export { ProteinFilter };
