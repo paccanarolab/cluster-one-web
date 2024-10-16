@@ -3,7 +3,7 @@ import { AppContext } from './AppContext';
 import { IconButton, Typography } from '@mui/material';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
-const ClusterFilterButtom = ({ top, left }) => {
+const ClusterFilterButton = ({ top, left }) => {
     const { handleShowClusterFilter } = React.useContext(AppContext);
     return (
         <IconButton
@@ -32,4 +32,4 @@ const ClusterFilterButtom = ({ top, left }) => {
     );
 };
 
-export { ClusterFilterButtom };
+export { ClusterFilterButton };

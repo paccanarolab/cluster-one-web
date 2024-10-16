@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { Divider } from '@mui/material';
 import { AppContext } from './AppContext';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -56,11 +57,12 @@ const AboutModal= () => {
               <Typography gutterBottom>
                 <b>
                   ClusterONE
-                </b> is a clustering algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper. 
+                </b> is a clustering algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper. Also, click <a href="https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html" target="_blank">HERE</a> to see the command line version. 
               </Typography>
               <Typography gutterBottom>
                 <b>ClusterONE Web</b> is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
               </Typography>
+              <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom>
                 Developed by: <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://github.com/rubjim" target="_blank">Ruben Jimenez</a>
               </Typography>

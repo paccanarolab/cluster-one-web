@@ -36,7 +36,7 @@ const DownloadGraph = ({ cy, name}) => {
         onClick={handleDownload} 
         className={`graphDownloadButton ${isDisabled ? 'disabled' : ''}`}
     >
-        Download Graph
+        Download Complex Graph
       </button>
     );
   };
