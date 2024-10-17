@@ -113,6 +113,7 @@ const ExecuteBar = () => {
           cursor: 'pointer',
           right: '5px',
           position: 'absolute',
+          'fontFamily': 'Century Gothic',
         }}
         onClick={() => {
           window.open(`https://www.paccanarolab.org/`, '_blank');
