@@ -662,6 +662,27 @@ function AppContextProvider ({ children }) {
         } catch (error) {
             console.error("There was an error fetching the data:", error);
             setEnrichmentLoading(false);
+            let biologicalProcessDatasetParsed = [
+                {
+                    go_id: "No overrepresented terms",
+                    bar_charge: 0,
+                }
+            ];
+            let molecularFunctionDatasetParsed = [
+                {
+                    go_id: "No overrepresented terms",
+                    bar_charge: 0,
+                }
+            ];
+            let cellularComponentDatasetParsed = [
+                {
+                    go_id: "No overrepresented terms",
+                    bar_charge: 0,
+                }
+            ];
+            setBiologicalProcessDataset(biologicalProcessDatasetParsed.slice(0, 20));
+            setMolecularFunctionDataset(molecularFunctionDatasetParsed.slice(0, 20));
+            setCellularComponentDataset(cellularComponentDatasetParsed.slice(0, 20));
         }
     }
 
