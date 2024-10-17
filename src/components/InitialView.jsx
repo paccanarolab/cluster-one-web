@@ -11,6 +11,7 @@ import { ClusterOneParams } from "./ClusterOneParams.jsx";
 import { Grid, Divider, Box, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import UploadIcon from '@mui/icons-material/Upload';
+import { LabImage } from "./LabImage.jsx";
 
 const InitialView = ({label, icon, classname }) => {
     const [selectedOrOption, setSelectedOrOption] = React.useState(null);
@@ -33,6 +34,8 @@ const InitialView = ({label, icon, classname }) => {
         loadingIntervalClusterOne,
         uploadFilePpi,
 		uploadGoaFile,
+        fundacionImage,
+        royalHollowayImage,
         goaFileName,
         ppiId
     } = React.useContext(AppContext);
@@ -106,10 +109,22 @@ const InitialView = ({label, icon, classname }) => {
                     }
                 }}
             >
-                <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web 🧬</DialogTitle>
+                <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web</DialogTitle>
+                {/* LabImage */}
+                <LabImage 
+                    image={fundacionImage.image}
+                    url={fundacionImage.url}
+                    classname={fundacionImage.classname}
+                />
+                {/*Royal Holloway*/}
+                <LabImage
+                    image={royalHollowayImage.image}
+                    url={royalHollowayImage.url}
+                    classname={royalHollowayImage.classname}
+                />
                 <DialogContent style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "20px" }}>
                     <p style={{ fontSize: "1.5em", lineHeight: "1.5em", textAlign: "center" }}>
-                        ClusterONE Web is a web-based tool for the identification of protein complexes in protein-protein interaction networks.
+                        ClusterONE Web is a web-based tool for the identification of protein complexes in protein-protein interaction (PPI) networks.
                         It is based on the ClusterONE algorithm, which is a graph clustering algorithm that identifies dense regions in networks. 
                         Developed by PaccanaroLab
                     </p>
@@ -126,7 +141,7 @@ const InitialView = ({label, icon, classname }) => {
                             height="100%"
                         >
                             <Typography variant="subtitle1" gutterBottom>
-                            Main options. Please select an Organism, and a Protein-Protein Interaction from the lists below to proceed
+                               <strong>Main options.</strong> Please select an organism, and a PPI from the lists below
                             </Typography>
                             <Box>
                             {/* First Autocomplete */}
@@ -156,7 +171,7 @@ const InitialView = ({label, icon, classname }) => {
                                 renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    label="Protein-Protein Interactions"
+                                    label="PPI Databases"
                                     variant="outlined"
                                     margin="none"
                                     fullWidth
@@ -290,9 +305,9 @@ const InitialView = ({label, icon, classname }) => {
                         </Box>
                         </Grid>*/}
                     </Grid>
-                    <p style={{ fontSize: "1em", lineHeight: "1.2em", alignContent: 'center' }}>
-                        (once you have made your selections, you can either run a quick analysis (Using the default parameters) or a full analysis (Setup your parameters) using ClusterONE)
-                    </p>
+                    <Typography variant="subtitle1" gutterBottom>
+                    Once you have made your selections, you can either use the "Quick Run" option to use the default parameters, or select "Run ClusterONE" to customize them.
+                    </Typography>
                 </DialogContent>
                 <Divider orientation='horizontal'/>
                 <DialogActions style={{ justifyContent: 'center' }}>

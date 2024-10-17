@@ -179,11 +179,17 @@ function AppContextProvider ({ children }) {
     };
     
     const fundacionImage = {
-        image: "https://portal.fgv.br/sites/portal.fgv.br/themes/portalfgv/logo.png",
-        url: "https://portal.fgv.br/en",
+        image: "https://emap.fgv.br/sites/default/themes/custom/emap/logo.svg",
+        url: "https://emap.fgv.br/en",
         classname: "fundacionImage"
     };
     
+    const royalHollowayImage = {
+        image: "https://www.royalholloway.ac.uk/images/logoRoyalHolloway2x.png",
+        url: "https://www.royalholloway.ac.uk/",
+        classname: "royalHollowayImage"
+    };
+
     const clusterOneManual = {
         href: "https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html",
         label: "ClusterONE Command Line Manual"
@@ -943,6 +949,7 @@ function AppContextProvider ({ children }) {
             molecularFunctionDataset,
             cellularComponentDataset,
             loadingMessage,
+            royalHollowayImage,
             oraScore,
             openEnrichment,
             setOpenEnrichment,
