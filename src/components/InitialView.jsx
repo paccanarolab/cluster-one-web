@@ -84,7 +84,7 @@ const InitialView = ({label, icon, classname }) => {
             <IconButton
                 className={classname}
                 onClick={handleOpen}
-                style={{ marginBottom: "15px" }}
+                // style={{ marginBottom: "15px" }}
             >
                 <MenuIcon style={{ color: 'white' }} />
             </IconButton>

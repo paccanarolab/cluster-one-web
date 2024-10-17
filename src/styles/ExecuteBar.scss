@@ -1,24 +1,23 @@
 .config {
-    position: absolute;
-    /* Use fixed to ensure it stays at the top and spans the full width */
-    // top: 0;
-    // left: 0;
+    position: fixed;
+    /* Keeps the nav bar fixed at the top */
+    top: -8px;
+    left: -8px;
     height: 55px;
+    /* Ensure all elements align to this height */
     width: 100%;
     background-color: #333333;
     box-sizing: border-box;
-    padding: 8px 0;
-    /* Adjusted padding to avoid shifting */
+    padding: 0 10px;
+    /* Adjusted padding */
     color: #fff;
-    overflow: auto;
-    /* Adjust overflow to handle any excess */
     z-index: 1;
-    margin-top: -8px;
-    /* Adjusted margin to avoid shifting */
-    margin-left: -8px;
     display: flex;
     align-items: center;
+    /* Vertically centers all items */
     flex-direction: row;
+    overflow: hidden;
+    /* Prevents any scrollbars */
 }
 
 .config>div {
