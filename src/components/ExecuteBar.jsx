@@ -41,13 +41,28 @@ const ExecuteBar = () => {
       {/* ClusterONE Web */}
       <div
         style={{
-          fontSize: "30px",
+          fontSize: "25px",
+          marginRight: "20px",
+          lineHeight: "55px", // Ensures the text is vertically centered
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          window.open(`https://www.paccanarolab.org/`, '_blank');
+        }}
+      >
+        PaccanaroLab
+      </div>
+      {/* ClusterONE Web */}
+      <div
+        style={{
+          fontSize: "20px",
           marginRight: "20px",
           lineHeight: "55px", // Ensures the text is vertically centered
         }}
       >
         ClusterONE Web
       </div>
+
 
       {/* Organism */}
       {organismName && (
@@ -56,6 +71,7 @@ const ExecuteBar = () => {
             marginRight: "20px",
             fontSize: "15px",
             lineHeight: "55px", // Ensures the text is vertically centered
+            borderLeft: "2px solid #000",
           }}
         >
           <strong>Organism: </strong>{organismName}
