@@ -44,10 +44,25 @@ const ExecuteBar = () => {
           fontSize: "30px",
           marginRight: "20px",
           lineHeight: "55px", // Ensures the text is vertically centered
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          window.open(`https://www.paccanarolab.org/`, '_blank');
+        }}
+      >
+        PaccanaroLab
+      </div>
+      {/* ClusterONE Web */}
+      <div
+        style={{
+          fontSize: "20px",
+          marginRight: "20px",
+          lineHeight: "55px", // Ensures the text is vertically centered
         }}
       >
         ClusterONE Web
       </div>
+
 
       {/* Organism */}
       {organismName && (

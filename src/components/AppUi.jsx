@@ -44,12 +44,13 @@ const AppUi = () => {
                     top={"58px"}
                     left={"1.5%"}
                 />
-            }   
+            }
+            {/* LabImage 
             <LabImage 
                 image={paccaLabImage.image}
                 url={paccaLabImage.url}
                 classname={paccaLabImage.classname}
-            />
+            />*/}
             {/* Cytoscape graph */}
             <div
                 style={{
