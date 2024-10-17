@@ -2,7 +2,6 @@ import React from "react";
 import { ExecuteBar } from "./ExecuteBar.jsx";
 import { DownloadButton } from "./DownloadButton.jsx";
 import { InfoButton } from "./InfoButton.jsx";
-import { LabImage } from "./LabImage.jsx";
 import CytoscapeComponent from 'react-cytoscapejs'
 import { AppContext } from "./AppContext.jsx";
 import { AboutModal } from "./AboutModal.jsx";

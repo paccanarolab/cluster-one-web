@@ -17,16 +17,30 @@
 
 .fundacionImage {
     position: absolute;
-    top: 140px;
-    right: 25px;
+    top: 20px;
+    right: 30px;
     /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
     overflow: hidden;
-    // border: 1px solid #000;
+    border: 1px solid #d3d1d1;
     z-index: 1000;
     background-color: #ffffff;
+}
+
+.royalHollowayImage {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
+    width: 5cm;
+    height: 2.5cm;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1.25px solid #d3d1d1;
+    z-index: 1000;
+    background-color: #d3d1d1;
 }
 
 /* Para pantallas medianas y pequeñas */
