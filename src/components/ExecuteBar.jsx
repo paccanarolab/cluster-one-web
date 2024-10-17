@@ -22,16 +22,28 @@ const ExecuteBar = () => {
       style={{
         display: "flex",
         alignItems: "center",
-        flexWrap: "wrap",
-        padding: "10px",
-		position: "relative",
+        padding: "0 10px", // Adjusted padding to center vertically and horizontally
+        position: "relative",
+        height: "55px",
       }}
     >
+      {/* InitialView - Positioned on the left */}
+      <div
+        style={{
+          marginRight: "15px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <InitialView classname={"initialbutton"} />
+      </div>
+
       {/* ClusterONE Web */}
       <div
         style={{
-          fontSize: "35px",
-          marginRight: "24px",
+          fontSize: "30px",
+          marginRight: "20px",
+          lineHeight: "55px", // Ensures the text is vertically centered
         }}
       >
         ClusterONE Web
@@ -43,9 +55,10 @@ const ExecuteBar = () => {
           style={{
             marginRight: "20px",
             fontSize: "15px",
+            lineHeight: "55px", // Ensures the text is vertically centered
           }}
         >
-		<strong>Organism: </strong>{organismName}
+          <strong>Organism: </strong>{organismName}
         </div>
       )}
 
@@ -55,15 +68,16 @@ const ExecuteBar = () => {
           style={{
             marginRight: "20px",
             fontSize: "15px",
+            lineHeight: "55px", // Ensures the text is vertically centered
           }}
         >
-		<strong>PPI: </strong>{ppiLabel}
+          <strong>PPI: </strong>{ppiLabel}
         </div>
       )}
-      
-	  {/* Protein Filter */}
+
+      {/* Protein Filter */}
       {cyGraph.code && (
-        <div style={{ marginRight: "20px"}}>
+        <div style={{ marginRight: "20px" }}>
           <ProteinFilter />
         </div>
       )}
@@ -71,9 +85,11 @@ const ExecuteBar = () => {
       {/* HighLightCheckboxLabels */}
       {cyGraph.code && (
         <div
-			key={cyGraph.code}
+          key={cyGraph.code}
           style={{
             marginRight: "20px",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <HighLightCheckboxLabels label={"Highlight overlapping proteins"} />
@@ -82,24 +98,10 @@ const ExecuteBar = () => {
 
       {/* Layout */}
       {cyGraph.code && (
-		<div style={{ marginRight: "20px"}}>
-		  <Layout />
-		</div>
-	  )}
-
-
-      {/* InitialView - Positioned on the right */}
-      <div
-        style={{
-          position: "absolute",
-          right: "5px",
-		  marginTop: "10px",
-        }}
-      >
-        <InitialView
-          classname={"initialbutton"}
-        />
-      </div>
+        <div style={{ marginRight: "20px", display: "flex", alignItems: "center" }}>
+          <Layout />
+        </div>
+      )}
     </div>
   );
 };
