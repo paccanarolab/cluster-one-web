@@ -14,7 +14,7 @@ const DownloadGraph = ({ cy, name}) => {
         // Create a temporary link element
         const downloadLink = document.createElement('a');
         downloadLink.href = pngDataUrl;
-        downloadLink.download = `cl1_${name}_graph.png`;
+        downloadLink.download = `cl1_${cyGraph.file_id}_graph.png`;
   
         // Append the link to the body
         document.body.appendChild(downloadLink);
