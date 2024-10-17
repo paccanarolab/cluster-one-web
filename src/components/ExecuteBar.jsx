@@ -22,7 +22,7 @@ const ExecuteBar = () => {
       style={{
         display: "flex",
         alignItems: "center",
-        padding: "0 10px", // Adjusted padding to center vertically and horizontally
+        padding: "0 15px", // Adjusted padding to center vertically and horizontally
         position: "relative",
         height: "55px",
       }}
@@ -41,20 +41,6 @@ const ExecuteBar = () => {
       {/* ClusterONE Web */}
       <div
         style={{
-          fontSize: "25px",
-          marginRight: "20px",
-          lineHeight: "55px", // Ensures the text is vertically centered
-          cursor: 'pointer',
-        }}
-        onClick={() => {
-          window.open(`https://www.paccanarolab.org/`, '_blank');
-        }}
-      >
-        PaccanaroLab
-      </div>
-      {/* ClusterONE Web */}
-      <div
-        style={{
           fontSize: "20px",
           marginRight: "20px",
           lineHeight: "55px", // Ensures the text is vertically centered
@@ -70,8 +56,7 @@ const ExecuteBar = () => {
           style={{
             marginRight: "20px",
             fontSize: "15px",
-            lineHeight: "55px", // Ensures the text is vertically centered
-            borderLeft: "2px solid #000",
+            lineHeight: "55px",
           }}
         >
           <strong>Organism: </strong>{organismName}
@@ -118,6 +103,24 @@ const ExecuteBar = () => {
           <Layout />
         </div>
       )}
+
+      {/* PaccanaroLab */}
+      <div
+        style={{
+          fontSize: "25px",
+          marginRight: "20px",
+          lineHeight: "55px", // Ensures the text is vertically centered
+          cursor: 'pointer',
+          right: '5px',
+          position: 'absolute',
+        }}
+        onClick={() => {
+          window.open(`https://www.paccanarolab.org/`, '_blank');
+        }}
+      >
+        PaccanaroLab
+      </div>
+
     </div>
   );
 };
