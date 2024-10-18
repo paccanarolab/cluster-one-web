@@ -216,6 +216,7 @@ const InitialView = ({label, icon, classname }) => {
                                         startIcon={<UploadIcon />}
                                         onClick={() => {
                                             setOrganismName("");
+                                            setGoaFileName("");
                                             const fileInput = document.createElement('input');
                                             fileInput.type = 'file';
                                             fileInput.accept = '.csv, .txt';
@@ -234,6 +235,7 @@ const InitialView = ({label, icon, classname }) => {
                                         color="primary"
                                         startIcon={<UploadIcon />}
                                         onClick={() => {
+                                            setGoaFileName("");
                                             const fileInput = document.createElement('input');
                                             fileInput.type = 'file';
                                             fileInput.accept = '.gaf';
