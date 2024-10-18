@@ -59,14 +59,26 @@ const ResultsTable = () => {
       overlappingComplexes = overlappingComplexes.sort((a, b) => a - b);
       // I need all overlappingComplexes to be string
       overlappingComplexes = overlappingComplexes.map((complex) => complex.toString());
-      rows.push({
+      let row = {
         id: graph.file_id,
         overlapping_complexes: overlappingComplexes,
         size: graph.size,
         density: graph.density,
         quality: graph.quality,
         proteins: proteins,
-      });
+      };
+      // If row not in rows, then add it
+      if (!rows.find((r) => r.id === row.id)) {
+        rows.push(row);
+      }
+      // rows.push({
+      //   id: graph.file_id,
+      //   overlapping_complexes: overlappingComplexes,
+      //   size: graph.size,
+      //   density: graph.density,
+      //   quality: graph.quality,
+      //   proteins: proteins,
+      // });
     })
   }
   // Order row by id
