@@ -137,10 +137,6 @@ function AppContextProvider ({ children }) {
                 // 'line-color': '#C65151',
                 width: 3,
                 'label': 'data(label)',
-                'text-outline-color': '#e41a1c',
-                // 'text-outline-color': '#C65151',
-                'text-outline-width': 2,
-                color: '#fff',
                 'z-index': 9999, // Ensure highlighted edges appear above others
             },
         },

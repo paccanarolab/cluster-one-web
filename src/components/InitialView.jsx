@@ -16,6 +16,7 @@ import { LabImage } from "./LabImage.jsx";
 const InitialView = ({label, icon, classname }) => {
     const [selectedOrOption, setSelectedOrOption] = React.useState(null);
     const [selectedPPOption, setSelectedPPOption] = React.useState(null);
+    const [disabled, setDisabled] = React.useState(true);
     const [open, setOpen] = React.useState(true);
     const {
         setPpiId,
@@ -48,6 +49,7 @@ const InitialView = ({label, icon, classname }) => {
         setPpiId(newValue.id);
         setPpiLabel(newValue.name);
         setIsPpiWeighted(newValue.weighted);
+        setDisabled(false);
     };
 
     const handleSelectionOR = (event, newValue) => {
@@ -78,9 +80,14 @@ const InitialView = ({label, icon, classname }) => {
         setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
-        quickRunClusterOne(selectedPPOption.id, 8000000); 
+        quickRunClusterOne(ppiId, 8000000); 
         handleConfirm();
     }
+
+    React.useEffect(() => {
+        ppiId && setDisabled(false);
+    }, [ppiId]);
+
 
     return (
         <div>
@@ -314,13 +321,13 @@ const InitialView = ({label, icon, classname }) => {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleQuickRun} color='primary' disabled={!selectedPPOption}> 
+                    <Button onClick={handleQuickRun} color='primary' disabled={disabled}> 
                         Quick Run ClusterONE
                     </Button>
                     <ClusterOneParams
                         label="Run ClusterONE"
                         onClick={() => handleConfirm()}
-                        disabled={!selectedPPOption}
+                        disabled={disabled}
                         initialView={true}
                     />
                 </DialogActions>
