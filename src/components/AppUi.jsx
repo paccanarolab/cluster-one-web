@@ -44,12 +44,6 @@ const AppUi = () => {
                     left={"1.5%"}
                 />
             }
-            {/* LabImage 
-            <LabImage 
-                image={paccaLabImage.image}
-                url={paccaLabImage.url}
-                classname={paccaLabImage.classname}
-            />*/}
             {/* Cytoscape graph */}
             <div
                 style={{
@@ -131,15 +125,17 @@ const AppUi = () => {
                             // Mouseover event
                             cy.on('mouseover', 'node', evt => {
                                 const node = evt.target;
-                                const connectedElements = node.closedNeighborhood(); // Includes the node and its connected edges and nodes
-                                connectedElements.addClass('showlabel');
+                                node.addClass('showlabel');
+                                // const connectedElements = node.closedNeighborhood(); // Includes the node and its connected edges and nodes
+                                // connectedElements.addClass('showlabel');
                             });
                             
                             // Mouseout event
                             cy.on('mouseout', 'node', evt => {
                                 const node = evt.target;
-                                const connectedElements = node.closedNeighborhood();
-                                connectedElements.removeClass('showlabel');
+                                node.removeClass('showlabel');
+                                // const connectedElements = node.closedNeighborhood();
+                                // connectedElements.removeClass('showlabel');
                             });
                         }
                     }
