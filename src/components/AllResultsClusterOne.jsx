@@ -44,16 +44,11 @@ const AllResultsClusterOne = () => {
                 onClose={handleClose}
                 TransitionComponent={Transition}
                 fullScreen={true}
-                // PaperProps={{
-                //     style: { 
-                //         width: "90%",
-                //         height: "auto",
-                //         padding: "20px",
-                //         maxWidth: "1200px",
-                //         maxHeight: "90vh",
-                //         margin: "auto",
-                //     }
-                // }}
+                PaperProps={{
+                    style: { 
+                        overflow: "hidden",
+                    }
+                }}
             >
                 {/* Barra superior */}
                 <AppBar sx={{ position: 'relative' }}>
