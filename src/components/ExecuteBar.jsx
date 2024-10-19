@@ -51,19 +51,23 @@ const ExecuteBar = () => {
 
 
       {/* Organism */}
-      {organismName && (
-        <div
-          style={{
-            marginRight: "20px",
-            fontSize: "15px",
-            lineHeight: "55px",
-          }}
-        >
-          <strong>Organism: </strong>{organismName}
-        </div>
-      )}
+        {organismName && (
+          <div
+            style={{
+          marginRight: "20px",
+          fontSize: "15px",
+          lineHeight: "55px",
+          position: "relative",
+            }}
+          >
+            <strong>Organism: </strong>
+            <span title={organismName}>
+              {organismName.substring(0, 20) + "..."}
+            </span>
+          </div>
+        )}
 
-      {/* PPI */}
+        {/* PPI */}
       {ppiId && (
         <div
           style={{

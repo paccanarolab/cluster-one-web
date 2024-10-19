@@ -192,6 +192,7 @@ function AppContextProvider ({ children }) {
     };
 
     // Graph States
+    const [initialViewOpen, setInitialViewopen] = React.useState(true);
     const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
     const [complexCounter, setComplexCounter] = React.useState(0); // Cluster List
     const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
@@ -964,6 +965,8 @@ function AppContextProvider ({ children }) {
             quickRunClusterOne,
             setLayout,
             setPpiId,
+            initialViewOpen,
+            setInitialViewopen,
             handleShowMenu,
             getAllPpi,
             getAllOrganismsByDb,

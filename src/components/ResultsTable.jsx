@@ -193,11 +193,10 @@ const ResultsTable = () => {
   ];
 
   return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div style={{ height: '93%', width: '100%',}}>
         <DataGrid
           rows={rows}
           columns={columns}
-          pagination={false}
           getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {

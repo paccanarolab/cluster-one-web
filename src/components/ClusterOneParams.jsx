@@ -19,6 +19,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
     handleShowMenu,
     setLoadingInterval,
     loadingIntervalClusterOne,
+    setInitialViewopen
   } = React.useContext(AppContext);
 
   // Definir estados para los campos del formulario
@@ -49,6 +50,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
     setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
     setLoading(true);
     handleShowMenu();
+    setInitialViewopen(false);
     runClusterOneParams(ppiId, formData);
   };
 

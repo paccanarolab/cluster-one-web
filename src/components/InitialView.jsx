@@ -37,8 +37,9 @@ const InitialView = ({label, icon, classname }) => {
 		uploadGoaFile,
         fundacionImage,
         royalHollowayImage,
-        goaFileName,
-        ppiId
+        ppiId,
+        initialViewOpen,
+        setInitialViewopen,
     } = React.useContext(AppContext);
 
     const handleSelectionPP = (event, newValue) => {
@@ -88,7 +89,20 @@ const InitialView = ({label, icon, classname }) => {
         ppiId && setDisabled(false);
     }, [ppiId]);
 
+    React.useEffect(() => {
+        if (!initialViewOpen) {
+            setOpen(false);
+        }
+    }
+    , [initialViewOpen]);
 
+    React.useEffect(() => {
+        if (open) {
+            setInitialViewopen(true);
+        }
+    }, [open]);
+    
+    
     return (
         <div>
             <IconButton
