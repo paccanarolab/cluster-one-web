@@ -41,7 +41,7 @@ const ClusterInfo = ({left, top}) => {
 				padding: "10px",
 			}}
 		>
-			<div
+			{/*<div
 				style={{
 					display: "flex",
 					marginTop: "15px",
@@ -51,7 +51,7 @@ const ClusterInfo = ({left, top}) => {
 				}}>
 				Selected Complex Data: 
 			</div>
-			<select
+			<select			
 					value={selectedClusterCode}
 					onChange={handleClusterCodeChange}
 					style={{ marginBottom: "15px", width: "90%" }}
@@ -68,7 +68,7 @@ const ClusterInfo = ({left, top}) => {
 						</option>
 					))
 				}
-			</select>
+			</select>*/}
 			<div
 				style={{
 					display: "flex",
@@ -80,10 +80,10 @@ const ClusterInfo = ({left, top}) => {
 				}}>
 				{cyGraph && (
 					<ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
-						<li>Size: {cyGraph.size}</li>
-						<li>Density: {cyGraph.density}</li>
-						<li>Cohesiveness: {cyGraph.quality}</li>
-						{/* Añade aquí cualquier otra propiedad de cyGraph que quieras mostrar */}
+						<li><b>Complex:</b>{" #" + `${cyGraph.file_id}`}</li>
+						<li><b>Size: </b>{cyGraph.size}</li>
+						<li><b>Density: </b> {cyGraph.density}</li>
+						<li><b>Cohesiveness: </b> {cyGraph.quality}</li>
 					</ul>
 				)}
 			</div>
@@ -112,16 +112,6 @@ const ClusterInfo = ({left, top}) => {
 				</ul>
 			</div>
 			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
-			{/* ClusterFilterButton */}
-            {cyGraph.code && (
-                <ClusterFilterButton  style={{zIndex: 1100, position: 'relative', marginBottom: "50px"}}
-                />
-            )}
-            {
-                showClusterFilter && 
-                <ClusterFilter style={{zIndex: 1100, position: 'relative', marginBottom: "50px"}}   
-                />
-            }
 		</div>
 	);
 };
