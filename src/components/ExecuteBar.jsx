@@ -5,7 +5,6 @@ import { ProteinFilter } from "./ProteinFilter.jsx";
 import { AppContext } from "./AppContext.jsx";
 import { HighLightCheckboxLabels } from "./HighLightCheckboxLabels.jsx";
 import "../styles/ExecuteBar.scss";
-import "../styles/RunFunctionButton.scss";
 
 const ExecuteBar = () => {
   const {
@@ -17,128 +16,64 @@ const ExecuteBar = () => {
   } = React.useContext(AppContext);
 
   return (
-    <div
-      className="config"
-      id="config"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "0 15px", // Adjusted padding to center vertically and horizontally
-        position: "relative",
-        height: "55px",
-      }}
-    >
-      {/* InitialView - Positioned on the left */}
-      <div
-        style={{
-          marginRight: "15px",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <InitialView classname={"initialbutton"} />
+    <div className="config" id="config">
+      <div className="initialbutton-container">
+        <InitialView classname="initialbutton" />
       </div>
 
-      {/* ClusterONE Web */}
-      <div
-        style={{
-          fontSize: "20px",
-          marginRight: "20px",
-          lineHeight: "55px", // Ensures the text is vertically centered
-        }}
-      >
+      <div className="cluster-label">
         ClusterONE Web
       </div>
 
+      {organismName && (
+        <div className="organism">
+          <strong>Organism: </strong>
+          <span title={organismName}>
+            {organismName.substring(0, 20) + "..."}
+          </span>
+        </div>
+      )}
 
-      {/* Organism */}
-        {organismName && (
-          <div
-            style={{
-          marginRight: "20px",
-          fontSize: "15px",
-          lineHeight: "55px",
-          position: "relative",
-            }}
-          >
-            <strong>Organism: </strong>
-            <span title={organismName}>
-              {organismName.substring(0, 20) + "..."}
-            </span>
-          </div>
-        )}
-
-        {/* PPI */}
       {ppiId && (
-        <div
-          style={{
-            marginRight: "20px",
-            fontSize: "15px",
-            lineHeight: "55px", // Ensures the text is vertically centered
-          }}
-        >
+        <div className="ppi">
           <strong>PPI: </strong>{ppiLabel}
         </div>
       )}
-      {/*Number of complexes*/}
+
       {cyGraph.code && (
-        <div
-          style={{
-            marginRight: "20px",
-            fontSize: "15px",
-            lineHeight: "55px", // Ensures the text is vertically centered
-          }}
-        >
+        <div className="complex-counter">
           <strong># Complexes: </strong>{complexCounter}
         </div>
       )}
 
-      {/* Protein Filter */}
       {cyGraph.code && (
-        <div style={{ marginRight: "20px" }}>
+        <div className="protein-filter">
           <ProteinFilter />
         </div>
       )}
 
-      {/* HighLightCheckboxLabels */}
       {cyGraph.code && (
-        <div
-          key={cyGraph.code}
-          style={{
-            marginRight: "20px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <HighLightCheckboxLabels label={"Highlight overlapping proteins"} />
+        <div className="highlight-checkbox">
+          <HighLightCheckboxLabels label="Highlight overlapping proteins" />
         </div>
       )}
 
-      {/* Layout */}
       {cyGraph.code && (
-        <div style={{ marginRight: "20px", display: "flex", alignItems: "center" }}>
+        <div className="layout-selector">
           <Layout />
         </div>
       )}
 
-      {/* PaccanaroLab */}
+      {/* PaccanaroLab: Keep this aligned to the far right */}
       <div
-        style={{
-          fontSize: "25px",
-          marginRight: "20px",
-          lineHeight: "55px", // Ensures the text is vertically centered
-          cursor: 'pointer',
-          right: '5px',
-          position: 'absolute',
-          'fontFamily': 'Century Gothic',
-        }}
+        className="paccanarolab"
+        style={{ marginLeft: 'auto', cursor: 'pointer' }}
         onClick={() => {
-          window.open(`https://www.paccanarolab.org/`, '_blank');
+          window.open("https://www.paccanarolab.org/", "_blank");
         }}
       >
         PaccanaroLab
       </div>
-
     </div>
   );
 };

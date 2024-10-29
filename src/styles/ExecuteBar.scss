@@ -1,81 +1,82 @@
 .config {
     position: fixed;
-    /* Keeps the nav bar fixed at the top */
-    top: -8px;
-    left: -8px;
-    height: 55px;
-    /* Ensure all elements align to this height */
+    top: -2px;
+    left: -4px;
+    height: auto; // Changed from fixed height to allow wrapping
+    min-height: 55px;
     width: 100%;
     background-color: #333333;
     box-sizing: border-box;
     padding: 0 10px;
-    /* Adjusted padding */
     color: #fff;
     z-index: 1;
     display: flex;
     align-items: center;
-    /* Vertically centers all items */
-    flex-direction: row;
+    flex-wrap: wrap; // Allows items to wrap to a new line
     overflow: hidden;
-    /* Prevents any scrollbars */
+
+    /* Media query for small screens */
+    @media (max-width: 768px) {
+        padding: 5px;
+    }
 }
 
 .config>div {
     margin-right: 20px;
+
+    /* Adjusting margin for small screens */
+    @media (max-width: 768px) {
+        margin-right: 10px;
+    }
 }
 
-.initialbutton {
-    background-color: #444444;
-    color: #FFFFFF;
-    border: 1px solid #666666;
-    border-radius: 5px;
-    padding: 5px 10px;
-    transition: background-color 0.3s ease;
-}
+/* Smaller screens: Hide or reduce less essential items */
+@media (max-width: 768px) {
 
-.initialbutton:hover {
-    background-color: #555555;
-}
-
-
-.initialbutton:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-}
-
-.config-dropdown {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    /* Reduce el ancho al 80% de su contenedor */
-    background: rgba(50, 50, 50, 0.75);
-    /* Fondo más claro */
-    color: #fff;
-    /* Color de letra blanco */
-    border: 1px solid #fff;
-    /* Bordes blancos */
-    border-radius: 5px;
-    /* Bordes ligeramente redondeados */
-    padding: 8px;
-    /* Reduce el espaciado interno para el texto/dropdown */
-    font-size: 0.9em;
-    /* Reduce el tamaño de fuente */
-    transition: background-color 0.3s ease;
-    /* Transición suave para el cambio de fondo en hover */
-    margin: auto;
-    /* Centra el dropdown en su contenedor */
-    text-align: center;
-
-    &:hover {
-        background-color: rgba(60, 60, 60, 0.85);
-        /* Cambia el fondo al pasar el cursor */
+    .organism,
+    .ppi,
+    .complex-counter {
+        display: none; // Hide less important items
     }
 
-    /* Estilo para las opciones del dropdown */
-    option {
-        background: rgba(50, 50, 50, 0.75);
-        /* Fondo igual que el dropdown */
-        color: #fff;
-        /* Color de letra blanco */
+    /* Reduce font size and margin for small screens */
+    .cluster-label {
+        font-size: 18px;
+        margin-right: 5px;
+    }
+}
+
+/* Additional responsive styles */
+.cluster-label,
+.organism,
+.ppi,
+.complex-counter {
+    font-size: 1rem;
+    line-height: 55px;
+}
+
+/* Hide less essential elements on smaller screens */
+@media (max-width: 768px) {
+
+    .organism,
+    .ppi,
+    .complex-counter {
+        display: none;
+    }
+
+    .cluster-label {
+        font-size: 18px;
+        margin-right: 10px;
+    }
+}
+
+.paccanarolab {
+    font-size: 25px;
+    line-height: 55px; // Ensures text is vertically centered
+    font-family: 'Century Gothic', sans-serif;
+
+    /* Responsive styling */
+    @media (max-width: 768px) {
+        font-size: 20px;
     }
 }
