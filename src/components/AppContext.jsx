@@ -249,7 +249,7 @@ function AppContextProvider ({ children }) {
     const [density, setDensity] = React.useState("");
     const [quality, setQuality] = React.useState("");
     const [openResults, setOpenResults] = React.useState(false);
-    const [filterModel, setFilterModel] = React.useState({});
+    const [filterModel, setFilterModel] = React.useState({items: []});
 
     // Cluster One Execution Params
     const [clusterOneParams, setClusterOneParams] = React.useState({
