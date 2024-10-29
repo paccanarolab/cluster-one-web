@@ -13,6 +13,7 @@ const ExecuteBar = () => {
     organismName,
     ppiLabel,
     cyGraph,
+    complexCounter,
   } = React.useContext(AppContext);
 
   return (
@@ -77,6 +78,18 @@ const ExecuteBar = () => {
           }}
         >
           <strong>PPI: </strong>{ppiLabel}
+        </div>
+      )}
+      {/*Number of complexes*/}
+      {cyGraph.code && (
+        <div
+          style={{
+            marginRight: "20px",
+            fontSize: "15px",
+            lineHeight: "55px", // Ensures the text is vertically centered
+          }}
+        >
+          <strong># Complexes: </strong>{complexCounter}
         </div>
       )}
 

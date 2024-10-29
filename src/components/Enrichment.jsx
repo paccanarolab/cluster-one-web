@@ -134,7 +134,7 @@ const Enrichment = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            Enrichment Complex #{cyGraph.file_id}
+                            Enrichment Complex #{cyGraph.file_id} (Only top-20 GO terms show)
                         </Typography>
                         <IconButton
                             edge="end"
