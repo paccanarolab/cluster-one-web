@@ -105,13 +105,13 @@ const AppUi = () => {
                                 connectedNodes.forEach(connectedNode => {
                                     connectedNode.addClass('highlighted');
                                 });
-                                node.on("dblclick", function(evt) {
+                                // Prevent multiple tabs with a debounce
+                                node.one("dblclick", function(evt) {
                                     if (node.data('type') !== "proteinComplex") {
                                         window.open(`https://www.uniprot.org/uniprotkb/${node.data('label')}`, '_blank');
-                                        // remove the existing listener
-                                        console.log("Opening uniprot");
+                                        console.log("Opening UniProt link");
                                     } else {
-                                        var node_id = node.data('id');
+                                        const node_id = node.data('id');
                                         cyGraphList.forEach((graph) => {
                                             if (graph.code === node_id) {
                                                 setCyGraph(graph);

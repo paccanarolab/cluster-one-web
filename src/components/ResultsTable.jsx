@@ -192,11 +192,14 @@ const ResultsTable = () => {
     }
   ];
 
+  
   return (
       <div style={{ height: '93%', width: '100%',}}>
         <DataGrid
           rows={rows}
           columns={columns}
+          filterModel={filterModel}
+          onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
           getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {
@@ -209,10 +212,6 @@ const ResultsTable = () => {
               py: 1,
             },
           }}
-          // filterModel={filterModel}
-          // onFilterModelChange={(newFilterModel) => {
-          //   setFilterModel(newFilterModel);
-          // }}
         />
       </div>
   );
