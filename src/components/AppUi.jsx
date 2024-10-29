@@ -105,8 +105,22 @@ const AppUi = () => {
                                 connectedNodes.forEach(connectedNode => {
                                     connectedNode.addClass('highlighted');
                                 });
-                                // Prevent multiple tabs with a debounce
-                                node.one("dblclick", function(evt) {
+                                // Use a debounce with timestamp and flag to prevent multiple pop-ups
+                                let lastClickTime = 0;
+                                let isClickInProgress = false;
+
+                                node.on("dblclick", function(evt) {
+                                    const now = Date.now();
+                                    
+                                    // Check if a click is in progress or if the last click was recent (within 1 second)
+                                    if (isClickInProgress || now - lastClickTime < 1000) {
+                                        return;
+                                    }
+
+                                    // Mark click as in progress and update last click time
+                                    isClickInProgress = true;
+                                    lastClickTime = now;
+
                                     if (node.data('type') !== "proteinComplex") {
                                         window.open(`https://www.uniprot.org/uniprotkb/${node.data('label')}`, '_blank');
                                         console.log("Opening UniProt link");
@@ -119,6 +133,11 @@ const AppUi = () => {
                                             }
                                         });
                                     }
+
+                                    // Reset click in progress after a short delay to allow new interactions
+                                    setTimeout(() => {
+                                        isClickInProgress = false;
+                                    }, 1000); // Adjust this delay if needed
                                 });
                             });
 
