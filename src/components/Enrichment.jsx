@@ -35,6 +35,9 @@ const Enrichment = () => {
         openEnrichment,
         setOpenEnrichment,
         getEnrichmentData,
+        organismName,
+        ppiLabel,
+        clusterOneParams,
     } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
@@ -64,7 +67,17 @@ const Enrichment = () => {
                 const pdf = new jsPDF('portrait', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.setFontSize(10);
+                pdf.text(`Enrichment Analysis Report - Complex ${cyGraph.file_id}`, 10, 10);
+                pdf.text(`Organism: ${organismName}`, 10, 15);
+                pdf.text(`PPI: ${ppiLabel}`, 10, 20);
+                pdf.text("ClusterONE Params: ", 10, 30);
+                pdf.text(`- Min. Density: ${clusterOneParams.minDensity || 0.3}`, 10, 35);
+                pdf.text(`- Min. Size: ${clusterOneParams.minSize || 3}`, 10, 40);
+                pdf.text(`- Max. Overlap: ${clusterOneParams.maxOverlap}`, 10, 45);
+                pdf.text(`- Penalty: ${clusterOneParams.penalty}`, 10, 50);
+                pdf.text("GOA File Version: 2024-10-21", 10, 60);
+                pdf.addImage(imageData, 'PNG', 10, 65, pdfWidth, pdfHeight);
                 pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`);
             } catch (error) {
                 console.error('Failed to download the charts:', error);
