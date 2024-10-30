@@ -19,12 +19,9 @@ import DownloadIcon from '@mui/icons-material/Download';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
-
-
 
 const Enrichment = () => {
     const { 
@@ -42,7 +39,7 @@ const Enrichment = () => {
 
     const handleClickOpen = () => {
         setEnrichmentLoading(true);
-        getEnrichmentData(cyGraph.code)
+        getEnrichmentData(cyGraph.code);
         setOpenEnrichment(true);
     };
 
@@ -52,40 +49,37 @@ const Enrichment = () => {
     };
 
     const handleDownload = async () => {
-        // Select the part of the DOM that contains all the charts
         const element = document.querySelector('.enrichment-chart');
-    
         if (element) {
             try {
-                // Scroll the entire content into view before capturing it
                 element.scrollIntoView();
-    
-                // Use html2canvas to capture the content as an image
                 const canvas = await html2canvas(element, {
                     scrollX: 0,
-                    scrollY: -window.scrollY, // Ensure scrolling is adjusted
-                    useCORS: true, // To handle cross-origin content, if necessary
-                    windowWidth: element.scrollWidth, // Capture the full width of the element
-                    windowHeight: element.scrollHeight, // Capture the full height of the element
+                    scrollY: -window.scrollY,
+                    useCORS: true,
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight,
                 });
-    
-                // Get image data from the canvas
                 const imageData = canvas.toDataURL('image/png');
-    
-                // Create a PDF document using jsPDF
                 const pdf = new jsPDF('portrait', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    
-                // Add the captured image to the PDF
                 pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`); // Save the PDF with all the plots
+                pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`);
             } catch (error) {
                 console.error('Failed to download the charts:', error);
             }
         } else {
             console.error('No charts to download.');
         }
+    };
+
+    // Helper function to render either a HorizontalBar or a message if empty
+    const renderContent = (dataset) => {
+        if (dataset.length === 1 && dataset[0].go_id === "No overrepresented terms") {
+            return <Typography variant="body1" style={{ color: 'red' }}>No Overrepresented Terms</Typography>;
+        }
+        return <HorizontalBar dataset={dataset} />;
     };
 
     return (
@@ -106,12 +100,12 @@ const Enrichment = () => {
             </Button>
             <Dialog
                 fullScreen
-                maxWidth="lg" 
+                maxWidth="lg"
                 PaperProps={{
                     style: {
-                    margin: 'auto', // Center the dialog
-                    width: '80%', // Set dialog width as a percentage of screen (adjust as needed)
-                    maxHeight: '95vh', // Limit the dialog's height to 90% of the viewport height
+                        margin: 'auto',
+                        width: '80%',
+                        maxHeight: '95vh',
                     },
                 }}
                 open={openEnrichment}
@@ -119,120 +113,71 @@ const Enrichment = () => {
                 TransitionComponent={Transition}
                 >
                 <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar 
-                        style={{
-                            backgroundColor: "#323232",
-                            color: "white",
-                        }}
-                    >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            aria-label="close"
-                        >
+                    <Toolbar style={{ backgroundColor: "#323232", color: "white" }}>
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             Enrichment Complex #{cyGraph.file_id} (Only top-20 GO terms show)
                         </Typography>
-                        <IconButton
-                            edge="end"
-                            color="inherit"
-                            onClick={handleDownload}
-                            aria-label="download"
-                        >
+                        <IconButton edge="end" color="inherit" onClick={handleDownload} aria-label="download">
                             <DownloadIcon />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                
-                {/* Enrichment Content */}
-                {enrichmentLoading && 
+                {enrichmentLoading && (
                     <Backdrop
-                    sx={{ 
-                        color: '#fff',
-                        zIndex: 1 
-                    }}
-                    open={enrichmentLoading}
-                    >
-                    <CircularProgress color="inherit" style={{
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        marginTop: -12,
-                        marginLeft: -12,
-                    }} />
-                    <Typography 
-                        variant="h6" 
-                        component="div" 
                         sx={{ 
-                        paddingTop: 2, 
-                        textAlign: 'center',
+                            color: '#fff',
+                            zIndex: (theme) => theme.zIndex.drawer + 1,
+                            position: 'fixed',  // Ensures it covers the entire screen
                         }}
-                        style={{
-                        position: 'absolute',
-                        top: '60%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        }}
+                        open={enrichmentLoading}
+                        onClick={handleClose}
                     >
-                        Waiting for enrichment analysis...
-                    </Typography>
+                        <CircularProgress color="inherit" style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            marginTop: '-20px',
+                            marginLeft: '-20px',
+                        }}/>
+                        <Typography 
+                            variant="h6" 
+                            component="div" 
+                            sx={{ mt: 2, textAlign: 'center' }}
+                            style={{
+                                position: 'absolute',
+                                top: '60%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                            }}
+                        >
+                            Waiting for enrichment analysis...
+                        </Typography>
                     </Backdrop>
-                }
-
-                {enrichmentDataBase && 
-                    <List
-                    style={{
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                    }}
-                    className='enrichment-chart'
-                    >
-                    <ListItem
-                        style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        }}
-                    >
-                        <ListItemText primary="Biological Process" />
-                        {biologicalProcessDataset && (
-                        <HorizontalBar dataset={biologicalProcessDataset}/>
-                        )}
-                    </ListItem>
-                    <Divider orientation="horizontal" flexItem />
-                    <ListItem
-                        style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        }}
-                    >
-                        <ListItemText primary="Molecular Function" />
-                        {molecularFunctionDataset && (
-                        <HorizontalBar dataset={molecularFunctionDataset}/>
-                        )}
-                    </ListItem>
-                    <Divider orientation="horizontal" flexItem />
-                    <ListItem
-                        style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        }}
-                    >
-                        <ListItemText primary="Cellular Component" />
-                        {cellularComponentDataset && (
-                        <HorizontalBar dataset={cellularComponentDataset}/>
-                        )}
-                    </ListItem>
-                    </List>
-                }
-                </Dialog>
+                )}
+                {/* Enrichment Content */}
+                {enrichmentDataBase && (
+                        <List style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }} className='enrichment-chart'>
+                            <ListItem style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <ListItemText primary="Biological Process" />
+                                {renderContent(biologicalProcessDataset)}
+                            </ListItem>
+                            <Divider orientation="horizontal" flexItem />
+                            <ListItem style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <ListItemText primary="Molecular Function" />
+                                {renderContent(molecularFunctionDataset)}
+                            </ListItem>
+                            <Divider orientation="horizontal" flexItem />
+                            <ListItem style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <ListItemText primary="Cellular Component" />
+                                {renderContent(cellularComponentDataset)}
+                            </ListItem>
+                        </List>
+                )}
+                
+            </Dialog>
         </div>
     );
 }

@@ -32,6 +32,12 @@ const AppUi = () => {
 
     React.useEffect(() => {
         getAllOrganismsByDb(-1);
+        // cy.on("dblclick", "node", handleDoubleClick);
+      
+        // // Clean up the event listener when the component unmounts or re-renders
+        // return () => {
+        //   cy.off("dblclick", "node", handleDoubleClick);
+        // };
     }, []);
 
     return (
@@ -79,6 +85,7 @@ const AppUi = () => {
                                   cy.elements('.highlighted').removeClass('highlighted');
                                 }
                             });
+                            
                             cy.on("tap", "node", evt => {
                                 var node = evt.target;
                                 node.addClass('highlighted');
@@ -109,7 +116,7 @@ const AppUi = () => {
                                 let lastClickTime = 0;
                                 let isClickInProgress = false;
 
-                                node.on("dblclick", function(evt) {
+                                node.one("dblclick", function(evt) {
                                     const now = Date.now();
                                     
                                     // Check if a click is in progress or if the last click was recent (within 1 second)

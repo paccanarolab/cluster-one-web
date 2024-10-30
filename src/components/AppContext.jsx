@@ -590,104 +590,46 @@ function AppContextProvider ({ children }) {
     }
 
     const getEnrichmentData = async (clusterId) => {
-        // Get all information about all PPIs in the database
         try {
             const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/complex/${clusterId}/?cluster_id=${clusterId}`, {
                 method: 'GET'
             });
             let data = await response.json();
-            let _biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP');
-            let _molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF');
-            let _cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC');
-
-            // Sort the data
-            // .slice().sort((a, b) => b.bar_charge - a.bar_charge)
-            let biologicalProcessDataset = _biologicalProcessDataset.sort((a, b) => b.bar_charge - a.bar_charge);
-            let molecularFunctionDataset = _molecularFunctionDataset.sort((a, b) => b.bar_charge - a.bar_charge);
-            let cellularComponentDataset = _cellularComponentDataset.sort((a, b) => b.bar_charge - a.bar_charge);
-            
-            let biologicalProcessDatasetParsed = biologicalProcessDataset.map(
-                (item) => {
-                    return {
-                        go_id: item.go_term.go_id,
-                        term: item.go_term.term,
-                        bar_charge: item.bar_charge,
-                    }
-                }
-            );
-            let molecularFunctionDatasetParsed = molecularFunctionDataset.map(
-                (item) => {
-                    return {
-                        go_id: item.go_term.go_id,
-                        term: item.go_term.term,
-                        bar_charge: item.bar_charge,
-                    }
-                }
-            );
-            let cellularComponentDatasetParsed = cellularComponentDataset.map(
-                (item) => {
-                    return {
-                        go_id: item.go_term.go_id,
-                        term: item.go_term.term,
-                        bar_charge: item.bar_charge,
-                    }
-                }
-            );
             setEnrichmentDataBase(true);
-            if (biologicalProcessDatasetParsed.length === 0) {
-                biologicalProcessDatasetParsed = [
-                    {
-                        go_id: "No overrepresented terms",
-                        bar_charge: 0,
-                    }
-                ];
-            }
-            if (molecularFunctionDatasetParsed.length === 0) {
-                molecularFunctionDatasetParsed = [
-                    {
-                        go_id: "No overrepresented terms",
-                        bar_charge: 0,
-                    }
-                ];
-            }
-            if (cellularComponentDatasetParsed.length === 0) {
-                cellularComponentDatasetParsed = [
-                    {
-                        go_id: "No overrepresented terms",
-                        bar_charge: 0,
-                    }
-                ];
-            }
-            setBiologicalProcessDataset(biologicalProcessDatasetParsed.slice(0, 20));
-            setMolecularFunctionDataset(molecularFunctionDatasetParsed.slice(0, 20));
-            setCellularComponentDataset(cellularComponentDatasetParsed.slice(0, 20));
-            setEnrichmentLoading(false);
+    
+            // Filter and sort datasets
+            let _biologicalProcessDataset = data.filter((item) => item.go_term.domain === 'BP').sort((a, b) => b.bar_charge - a.bar_charge);
+            let _molecularFunctionDataset = data.filter((item) => item.go_term.domain === 'MF').sort((a, b) => b.bar_charge - a.bar_charge);
+            let _cellularComponentDataset = data.filter((item) => item.go_term.domain === 'CC').sort((a, b) => b.bar_charge - a.bar_charge);
+    
+            // Map datasets to parsed versions with message if empty
+            const parseDataset = (dataset) => {
+                return dataset.length > 0
+                    ? dataset.slice(0, 20).map(item => ({
+                        go_id: item.go_term.go_id,
+                        term: item.go_term.term,
+                        bar_charge: item.bar_charge,
+                    }))
+                    : [{ go_id: "No overrepresented terms", term: "", bar_charge: 0 }];
+            };
+    
+            setBiologicalProcessDataset(parseDataset(_biologicalProcessDataset));
+            setMolecularFunctionDataset(parseDataset(_molecularFunctionDataset));
+            setCellularComponentDataset(parseDataset(_cellularComponentDataset));
+            
+            setEnrichmentLoading(false);  // Set loading to false once data is fully set
         } catch (error) {
             console.error("There was an error fetching the data:", error);
-            setEnrichmentLoading(false);
-            let biologicalProcessDatasetParsed = [
-                {
-                    go_id: "No overrepresented terms",
-                    bar_charge: 0,
-                }
-            ];
-            let molecularFunctionDatasetParsed = [
-                {
-                    go_id: "No overrepresented terms",
-                    bar_charge: 0,
-                }
-            ];
-            let cellularComponentDatasetParsed = [
-                {
-                    go_id: "No overrepresented terms",
-                    bar_charge: 0,
-                }
-            ];
-            setBiologicalProcessDataset(biologicalProcessDatasetParsed.slice(0, 20));
-            setMolecularFunctionDataset(molecularFunctionDatasetParsed.slice(0, 20));
-            setCellularComponentDataset(cellularComponentDatasetParsed.slice(0, 20));
+            setEnrichmentLoading(true);  // Ensure loading is set to false on error
+            setEnrichmentDataBase(false);
+    
+            // Set empty message for each dataset on error
+            const emptyMessage = [{ go_id: "No overrepresented terms", term: "", bar_charge: 0 }];
+            setBiologicalProcessDataset(emptyMessage);
+            setMolecularFunctionDataset(emptyMessage);
+            setCellularComponentDataset(emptyMessage);
         }
-    }
+    };
 
     const getOraScore = async (executionId) => {
         // Get ORA Score by execution id
