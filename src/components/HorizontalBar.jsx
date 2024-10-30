@@ -2,7 +2,9 @@ import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
 const HorizontalBar = ({ dataset }) => {
-  const height = dataset.length < 15 ? dataset.length * 50 : dataset.length * 25;
+  // Set minimum height to ensure adequate bar size for small datasets
+  const height = dataset.length < 15 ? Math.max(dataset.length * 50, 150) : dataset.length * 25;
+
   const getDataByIndex = (index) => {
     return dataset[index];
   }
@@ -37,9 +39,6 @@ const HorizontalBar = ({ dataset }) => {
         (event, item) => {
           window.open(`https://www.ebi.ac.uk/QuickGO/GTerm?id=${getDataByIndex(item.dataIndex).go_id}`, '_blank');
         }}
-      // barLabel={(item, context) => {
-      //   return getDataByIndex(item.dataIndex).term;
-      // }}
       bottomAxis={null}
       topAxis={{
         label: '-log(p_value)',
