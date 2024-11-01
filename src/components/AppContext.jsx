@@ -443,12 +443,10 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
-            console.log("ClusterOneParams", data[0].params_id);
             setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
-            console.error("There was an error fetching the data:", error);
-            window.alert(`There was an error fetching the data: ${error.message}`);
+            window.alert(`There was an error fetching the data: Not results found`);
             setLoading(false);
         }
     };
@@ -499,11 +497,10 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
-            console.log("ClusterOneParams", data[0].params_id);
             setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
-            console.error("There was an error fetching the data:", error);
+            window.alert(`There was an error fetching the data: Not results found`);
             setLoading(false);
         }
     }
