@@ -7,6 +7,7 @@ import { AppContext } from "./AppContext.jsx";
 import { AboutModal } from "./AboutModal.jsx";
 import { ClusterInfo } from "./ClusterInfo.jsx";
 import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
+import { SearchByGoTerm } from "./SearchByGoTerm.jsx";
 import { BackdropWithProgress } from "./BakdropWithProgress.jsx";
 import { DownloadGraph } from "./DownloadGraph.jsx";
 import "../styles/global.scss";
@@ -50,6 +51,38 @@ const AppUi = () => {
                     left={"1.5%"}
                 />
             }
+            { /*
+                cyGraph.code &&
+                    <div
+                        style={{
+                            display: "flex",
+                            marginTop: "15px",
+                            marginBottom: "15px",
+                            justifyContent: "left",
+                            fontSize: "15px",
+                            flexDirection: "column",
+                            bottom: "0",
+                            left: "1.5%",
+                        }}
+                    >
+                        <ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
+                            <li>
+                                <b>* Double click on Complex: </b> you can go to the corresponding graph
+                            </li>
+                            <li>
+                                <b>* Double click on Protein: </b> open a new tab with the corresponding UniProt page
+                            </li>
+                            <li>
+                                <b>* Single click on Protein: </b> highlights the protein and its interactions
+                            </li>
+                            <li>
+                                <b>* Single click on Background: </b> Resets all edges and nodes
+                            </li>
+                        </ul>
+                    </div>
+                */
+            }
+
             {/* Cytoscape graph */}
             <div
                 style={{
@@ -169,6 +202,7 @@ const AppUi = () => {
             </div>
             {loading && <BackdropWithProgress loadingMessage={loadingMessage} progressInterval={loadingInterval} />}
             {cyGraph.code && <AllResultsClusterOne/>}
+            {cyGraph.code && <SearchByGoTerm/>}
             <DownloadGraph cy={cyEvent} name={cyGraph.code}/>
             <DownloadButton />
             <AboutModal />

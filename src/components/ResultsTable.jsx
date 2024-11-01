@@ -9,7 +9,6 @@ const ResultsTable = () => {
     cyGraphList,
     setOpenResults,
     setOpenEnrichment,
-    goaFileName,
     filterModel,
     setFilterModel,
   } = React.useContext(AppContext);

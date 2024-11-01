@@ -1,9 +1,36 @@
 .resultButton {
-    display: inline-block;
-    width: 1.5cm; // Width should be double the height for a perfect semi-circle
-    height: 3cm; // Set height
+    display: flex; // Use flex to align icon and text
+    align-items: center;
+    justify-content: center;
+    width: 4cm; // Adjusted width to fit icon and text
+    height: 1.5cm; // Reduced height
     background-color: rgb(194, 194, 194);
-    border-radius: 2cm 0 0 2cm; // Apply border-radius to top-left and top-right corners
+    border-radius: 0.75cm 0 0 0.75cm; // Adjusted border-radius for new height
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 42.5%;
+    right: 1px;
+    overflow: hidden;
+    z-index: 1000;
+    padding-left: 0.5cm; // Add padding for spacing between edge and content
+    font-size: 0.3cm; // Adjust font size
+    color: black; // Text color for "ClusterONE Results"
+    gap: 0.5cm; // Space between icon and text
+}
+
+.resultButton:hover {
+    background-color: rgb(159, 159, 159); // Change background color on hover
+}
+
+.searchButton {
+    display: flex; // Use flex to align icon and text
+    align-items: center;
+    justify-content: center;
+    width: 4cm; // Adjusted width to fit icon and text
+    height: 1.5cm; // Reduced height
+    background-color: rgb(194, 194, 194);
+    border-radius: 0.75cm 0 0 0.75cm; // Adjusted border-radius for new height
     border: none;
     cursor: pointer;
     position: fixed;
@@ -11,24 +38,12 @@
     right: 1px;
     overflow: hidden;
     z-index: 1000;
+    padding-left: 0.5cm; // Add padding for spacing between edge and content
+    font-size: 0.3cm; // Adjust font size
+    color: black; // Text color for "ClusterONE Results"
+    gap: 0.5cm; // Space between icon and text
 }
 
-.resultButton:before {
-    content: '\2190'; // Unicode for a leftward arrow
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); // Center the arrow
-    font-size: 1.2cm;
-    font-weight: bold;
-}
-
-.resultButton:hover {
+.searchButton:hover {
     background-color: rgb(159, 159, 159); // Change background color on hover
-}
-
-.multiline-cell {
-    overflow: hidden;
-    white-space: normal;
-    word-wrap: break-word;
 }
