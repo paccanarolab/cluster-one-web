@@ -41,34 +41,6 @@ const ClusterInfo = ({left, top}) => {
 				padding: "10px",
 			}}
 		>
-			{/*<div
-				style={{
-					display: "flex",
-					marginTop: "15px",
-					marginBottom: "15px",
-					justifyContent: "left",
-					fontSize: "15px"
-				}}>
-				Selected Complex Data: 
-			</div>
-			<select			
-					value={selectedClusterCode}
-					onChange={handleClusterCodeChange}
-					style={{ marginBottom: "15px", width: "90%" }}
-					className="config-dropdown"
-				>
-				{
-					complexList.map((graphData, index) => (
-						<option key={index} value={graphData.code}>
-							{
-								graphData.code ? 
-								("Complex #" + graphData.file_id + " (" + graphData.size + ")") 
-								: "NO COMPLEX"
-							}
-						</option>
-					))
-				}
-			</select>*/}
 			<div
 				style={{
 					display: "flex",
@@ -87,6 +59,7 @@ const ClusterInfo = ({left, top}) => {
 					</ul>
 				)}
 			</div>
+			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
 			<div
 				style={{
 					display: "flex",
@@ -94,7 +67,9 @@ const ClusterInfo = ({left, top}) => {
 					marginBottom: "15px",
 					justifyContent: "left",
 					fontSize: "15px",
-					flexDirection: "column"
+					flexDirection: "column",
+					bottom: "0",
+					left: "0",
 				}}>
 				<ul style={{ padding: "0", margin: "0", listStyleType: "none" }}>
 					<li>
@@ -111,7 +86,7 @@ const ClusterInfo = ({left, top}) => {
 					</li>
 				</ul>
 			</div>
-			{(goaFileName !== "" && cyGraph.code) && <Enrichment/>}
+			
 		</div>
 	);
 };
