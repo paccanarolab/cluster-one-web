@@ -29,20 +29,14 @@ const ExecuteBar = () => {
         <div className="organism">
           <strong>Organism: </strong>
           <span title={organismName}>
-            {organismName.substring(0, 20) + "..."}
+            {organismName.substring(0, 30) + "..."}
           </span>
         </div>
       )}
 
       {ppiId && (
         <div className="ppi">
-          <strong>PPI: </strong>{ppiLabel}
-        </div>
-      )}
-
-      {cyGraph.code && (
-        <div className="complex-counter">
-          <strong># Complexes: </strong>{complexCounter}
+          <strong>PPI: </strong>{ppiLabel} {complexCounter} complexes found
         </div>
       )}
 

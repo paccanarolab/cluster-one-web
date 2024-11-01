@@ -250,7 +250,9 @@ function AppContextProvider ({ children }) {
     const [quality, setQuality] = React.useState("");
     const [openResults, setOpenResults] = React.useState(false);
     const [filterModel, setFilterModel] = React.useState({items: []});
-
+    const [openGoSeach, setOpenGoSearch] = React.useState(false);
+    const [filterModelGo, setFilterModelGo] = React.useState({items: []});
+    
     // Cluster One Execution Params
     const [clusterOneParams, setClusterOneParams] = React.useState({
         minSize: "",
@@ -274,6 +276,7 @@ function AppContextProvider ({ children }) {
     const [biologicalProcessDataset, setBiologicalProcessDataset] = React.useState([]);
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
     const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
+    const [goTermComplexes, setGoTermComplexes] = React.useState([]);
 
     // Clear functions
     const clearClusterFilter = () => {
@@ -440,6 +443,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            console.log("ClusterOneParams", data[0].params_id);
             setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
@@ -495,6 +499,7 @@ function AppContextProvider ({ children }) {
             setCyGraphList(data);
             setComplexCounter(data.length);
             setCyGraph(data[0]);
+            console.log("ClusterOneParams", data[0].params_id);
             setExecutionParams(data[0].params_id);
             setLoading(false);
         } catch (error) {
@@ -631,14 +636,14 @@ function AppContextProvider ({ children }) {
         }
     };
 
-    const getOraScore = async (executionId) => {
-        // Get ORA Score by execution id
+    const getGoTermComplexesByParams = async (param) => {
         try {
-            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/params/?param_id=${executionId}`, {
+            console.log("The Cluster ONE Execution param is: ", param);
+            const response = await fetch(`https://paccanarolab.org/clusteroneweb/api/v1/api/enrichment/params/?param_id=${param}`, {
                 method: 'GET'
             });
             const data = await response.json();
-            setOraScore(data);
+            setGoTermComplexes(data);
         } catch (error) {
             console.error("There was an error fetching the data:", error);
         }
@@ -817,14 +822,6 @@ function AppContextProvider ({ children }) {
     }, [goaFileName]);
 
     React.useEffect(() => {
-        if (executionParams === "") {
-            return;
-        }
-        // let delayfromEp = 0;
-        getOraScore(executionParams);
-    }, [executionParams]);
-
-    React.useEffect(() => {
         if (showPPILoadedMessage === false) {
             return;
         }
@@ -866,6 +863,11 @@ function AppContextProvider ({ children }) {
             cyGraphList,
             minsize,
             loadingIntervalClusterOne,
+            getGoTermComplexesByParams,
+            filterModelGo,
+            setFilterModelGo,
+            goTermComplexes,
+            executionParams,
             maxsize,
             minDensity,
             maxDensity,
@@ -893,6 +895,8 @@ function AppContextProvider ({ children }) {
             openEnrichment,
             setOpenEnrichment,
             dbList,
+            openGoSeach,
+            setOpenGoSearch,
             organismList,
             showMenu,
             showClusterFilter,
