@@ -7,7 +7,7 @@ const Instructions = ({left}) => {
 				width: "10%",
 				height: "10%",
 				position: "fixed",
-				bottom: "22.5%",
+				bottom: "18%",
 				left: left,
 				zIndex: 10,
 				alignItems: "left",
