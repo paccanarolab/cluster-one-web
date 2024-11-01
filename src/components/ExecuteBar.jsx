@@ -29,7 +29,7 @@ const ExecuteBar = () => {
         <div className="organism">
           <strong>Organism: </strong>
           <span title={organismName}>
-            {organismName.substring(0, 30) + "..."}
+            {organismName.substring(0, 20) + "..."}
           </span>
         </div>
       )}
