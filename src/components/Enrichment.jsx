@@ -38,6 +38,7 @@ const Enrichment = () => {
         organismName,
         ppiLabel,
         clusterOneParams,
+        complexProteinList,
     } = React.useContext(AppContext);
 
     const handleClickOpen = () => {
@@ -77,7 +78,16 @@ const Enrichment = () => {
                 pdf.text(`- Max. Overlap: ${clusterOneParams.maxOverlap}`, 10, 45);
                 pdf.text(`- Penalty: ${clusterOneParams.penalty}`, 10, 50);
                 pdf.text("GOA File Version: 2024-10-21", 10, 60);
-                pdf.addImage(imageData, 'PNG', 10, 65, pdfWidth, pdfHeight);
+                pdf.text("Proteins in Complex:", 10, 70);
+                complexProteinList.forEach((protein, index) => {
+                    const rowIndex = Math.floor(index / 6);
+                    const colIndex = index % 6;
+                    const yPosition = 75 + (rowIndex * 5);
+                    const xPosition = 10 + (colIndex * 30);
+                    pdf.textWithLink(protein.name, xPosition, yPosition, { url: `https://www.uniprot.org/uniprotkb/${protein.name}` });
+                });
+                const lastProteinYPosition = 75 + (complexProteinList.length * 5);
+                pdf.addImage(imageData, 'PNG', 10, lastProteinYPosition + 5, pdfWidth, pdfHeight);
                 pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`);
             } catch (error) {
                 console.error('Failed to download the charts:', error);
