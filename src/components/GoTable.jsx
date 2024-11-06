@@ -33,7 +33,11 @@ const GoTable = () => {
   // Build rows from goTermComplexes, ensuring only strings or numbers in each row field
   const rows = goTermComplexes.map((graph) => ({
     id: graph.go_term.toString(),  // Make sure `id` is a string
-    complexes: graph.complexes.map((complex) => complex.file_id.toString()),  // Ensure complexes are strings
+    // complexes: graph.complexes.map((complex) => complex.file_id.toString()),  // Ensure complexes are strings
+    complexes: graph.complexes.map((complex) => ({
+      file_id: complex.file_id.toString(),
+      in_top20: complex.in_top20,
+    })),
   }));
 
   const columns = [
@@ -65,20 +69,20 @@ const GoTable = () => {
       sortable: false,
       renderCell: (params) => (
         <div style={{ whiteSpace: 'normal', padding: '5px' }}>
-          {params.value.map((complexId, index) => (
-            <React.Fragment key={complexId}> {/* Ensure each complexId is used as a key */}
-              <span 
-                style={{
-                  color: 'blue',
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleChangeGraph({field: 'id', value: parseInt(complexId)})}
-              >
-                {complexId} {/* Render complexId directly */}
-              </span>
-              {index !== params.value.length - 1 && ', '}
-            </React.Fragment>
+          {params.value.map((complex, index) => (
+          <React.Fragment key={complex.file_id}>
+            <span 
+            style={{
+              color: complex.in_top20 ? 'blue' : 'red',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleChangeGraph({field: 'id', value: parseInt(complex.file_id)})}
+            >
+            #{complex.file_id}
+            </span>
+            {index !== params.value.length - 1 && ', '}
+          </React.Fragment>
           ))}
         </div>
       ),

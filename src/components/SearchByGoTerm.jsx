@@ -77,7 +77,7 @@ const SearchByGoTerm = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            Search complex by GO term
+                            Search complex by All GO terms Over-represented (blue - in top 20, red - not in top 20)
                         </Typography>
                     </Toolbar>
                 </AppBar>
