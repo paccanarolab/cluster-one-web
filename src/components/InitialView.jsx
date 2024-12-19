@@ -347,6 +347,9 @@ const InitialView = ({label, icon, classname }) => {
                         initialView={true}
                     />
                 </DialogActions>
+                <Typography variant="subtitle1" gutterBottom style={{ textAlign: "center", marginBottom: "20px" }}>
+                    This tool is freely accessible to all users, including commercial users
+                </Typography>
             </Dialog>
         </div>
     );
