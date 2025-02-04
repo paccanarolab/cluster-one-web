@@ -79,15 +79,17 @@ const Enrichment = () => {
                 pdf.text(`- Penalty: ${clusterOneParams.penalty}`, 10, 50);
                 pdf.text("GOA File Version: 2024-10-21", 10, 60);
                 pdf.text("Proteins in Complex:", 10, 70);
+                let lastYPosition = 0;
                 complexProteinList.forEach((protein, index) => {
                     const rowIndex = Math.floor(index / 6);
                     const colIndex = index % 6;
                     const yPosition = 75 + (rowIndex * 5);
                     const xPosition = 10 + (colIndex * 30);
                     pdf.textWithLink(protein.name, xPosition, yPosition, { url: `https://www.uniprot.org/uniprotkb/${protein.name}` });
+                    lastYPosition = yPosition;
                 });
-                const lastProteinYPosition = 75 + (complexProteinList.length * 5);
-                pdf.addImage(imageData, 'PNG', 10, lastProteinYPosition + 1, pdfWidth, pdfHeight);
+                const lastProteinYPosition = lastYPosition + 10;
+                pdf.addImage(imageData, 'PNG', 5, lastProteinYPosition, pdfWidth, pdfHeight);
                 pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`);
             } catch (error) {
                 console.error('Failed to download the charts:', error);
