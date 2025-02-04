@@ -9,7 +9,7 @@ const DownloadGraph = ({ cy, name}) => {
     } = React.useContext(AppContext);
     const handleDownload = () => {
       if (cy) {
-        const pngDataUrl = cy.png({ full: true, scale: 1, bg: 'white' });
+        const pngDataUrl = cy.png({ full: true, scale: 8.3333, bg: 'white' });
   
         // Create a temporary link element
         const downloadLink = document.createElement('a');

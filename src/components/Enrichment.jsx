@@ -87,7 +87,7 @@ const Enrichment = () => {
                     pdf.textWithLink(protein.name, xPosition, yPosition, { url: `https://www.uniprot.org/uniprotkb/${protein.name}` });
                 });
                 const lastProteinYPosition = 75 + (complexProteinList.length * 5);
-                pdf.addImage(imageData, 'PNG', 10, lastProteinYPosition + 5, pdfWidth, pdfHeight);
+                pdf.addImage(imageData, 'PNG', 10, lastProteinYPosition + 1, pdfWidth, pdfHeight);
                 pdf.save(`enrichment_chart_complex_${cyGraph.file_id}.pdf`);
             } catch (error) {
                 console.error('Failed to download the charts:', error);
