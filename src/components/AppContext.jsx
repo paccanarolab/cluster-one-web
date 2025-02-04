@@ -445,6 +445,7 @@ function AppContextProvider ({ children }) {
             setCyGraph(data[0]);
             setExecutionParams(data[0].params_id);
             setLoading(false);
+            setOpenResults(true);
         } catch (error) {
             window.alert(`There was an error fetching the data: Not results found`);
             setLoading(false);
@@ -499,6 +500,7 @@ function AppContextProvider ({ children }) {
             setCyGraph(data[0]);
             setExecutionParams(data[0].params_id);
             setLoading(false);
+            setOpenResults(true);
         } catch (error) {
             window.alert(`There was an error fetching the data: Not results found`);
             setLoading(false);
@@ -534,7 +536,6 @@ function AppContextProvider ({ children }) {
         }
     }
     
-
     const getAllDatabases = async () => {
         // Get all information about all PPIs in the database
         try {
