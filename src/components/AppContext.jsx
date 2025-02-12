@@ -750,16 +750,10 @@ function AppContextProvider ({ children }) {
         setComplexCounter(0);
         setCyGraph(initialGraphData);
         setComplexProteinList([initialProteinData]);
-        setOraScore({
-            bp_score: 0,
-            mf_score: 0,
-            cc_score: 0,
-        });
         setLoadingMessage("Processing PPI.. Wait a moment please, the time depends on PPI size. You can go for a coffee 🧬☕️");
         updateRedis(ppiId).then((data) => {
             try {
                 var delayfromEp = data.size / 20;
-                // console.log(data);
                 if (data.size === 0) {
                     var delayfromEp = 60000;
                     setLoadingInterval(delayfromEp);
@@ -947,6 +941,7 @@ function AppContextProvider ({ children }) {
             downloadCsvFile,
             setMinSize,
             setMaxSize,
+            setPpiList,
         }}>
             {children}
         </AppContext.Provider>
