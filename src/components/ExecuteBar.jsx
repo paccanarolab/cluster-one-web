@@ -48,7 +48,10 @@ const ExecuteBar = () => {
 
       {cyGraph.code && (
         <div className="highlight-checkbox">
-          <HighLightCheckboxLabels label="Highlight overlapping proteins" />
+          <HighLightCheckboxLabels 
+            key={cyGraph.code}
+            label="Highlight overlapping proteins" 
+          />
         </div>
       )}
 

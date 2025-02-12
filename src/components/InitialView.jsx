@@ -40,6 +40,7 @@ const InitialView = ({label, icon, classname }) => {
         ppiId,
         initialViewOpen,
         setInitialViewopen,
+        setPpiList,
     } = React.useContext(AppContext);
 
     const handleSelectionPP = (event, newValue) => {
@@ -82,6 +83,32 @@ const InitialView = ({label, icon, classname }) => {
         setLoading(true);
         handleShowMenu();
         quickRunClusterOne(ppiId, 8000000); 
+        handleConfirm();
+    }
+
+    const handleRunExample = () => {
+        // PPI part
+        setOrganismName("Saccharomyces cerevisiae");
+        setGoaFileName("/app/app/media/enrichment/goa_yeast.gaf");
+        setPpiList([
+            {
+                id: 3,
+                name: "collins2007",
+                file_name: "collins2007.txt",
+                weighted: true,
+            },
+        ]);
+        setPpiId(3);
+        setPpiLabel("collins2007");
+        setIsPpiWeighted(true);
+        // ClusterONE part
+        setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️")       
+        setLoading(true);
+        // Put a timeout
+        setTimeout(() => {
+        }, 1000);
+        handleShowMenu();
+        quickRunClusterOne(3, 8000000);
         handleConfirm();
     }
 
@@ -268,65 +295,6 @@ const InitialView = ({label, icon, classname }) => {
                                 </Grid>
                             </Box>
                         </Grid>
-
-                        {/* Right Column 
-                        <Grid item xs={12} sm={6}>
-                        <Box
-                            border={1}
-                            borderColor="grey.300"
-                            bgcolor="grey.100"
-                            p={2}
-                            borderRadius={4}
-                            height="100%"
-                        >
-                            <Typography variant="subtitle1" gutterBottom>
-                            Alternatively, you can upload your PPI and run your own experiments. If you want the functional enrichment analysis, upload the corresponding GOA file (this step is optional).
-                            </Typography>
-                            <Grid container spacing={2} alignItems='center'>
-                                    <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Button
-                                            variant="outlined"
-                                            color="primary"
-                                            startIcon={<UploadIcon />}
-                                            onClick={() => {
-                                                setOrganismName("");
-                                                const fileInput = document.createElement('input');
-                                                fileInput.type = 'file';
-                                                fileInput.accept = '.csv, .txt';
-                                                fileInput.onchange = () => uploadFilePpi(fileInput);
-                                                fileInput.click();
-                                            }}
-                                            style={{
-                                                height: '30px', // Adjusted height for smaller button
-                                                width: '110px',
-                                            }}
-                                        >
-                                            PPI
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Button
-                                            variant="outlined"
-                                            color="primary"
-                                            startIcon={<UploadIcon />}
-                                            onClick={() => {
-                                                const fileInput = document.createElement('input');
-                                                fileInput.type = 'file';
-                                                fileInput.accept = '.gaf';
-                                                fileInput.onchange = () => uploadGoaFile(fileInput);
-                                                fileInput.click();
-                                            }}
-                                            style={{
-                                                height: '30px', // Adjusted height for smaller button
-                                                width: '110px',
-                                            }}
-                                        >
-                                            GOA
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                        </Box>
-                        </Grid>*/}
                     </Grid>
                     <Typography variant="subtitle1" gutterBottom>
                     Once you have made your selections, you can either use the "Quick Run" option to use the default parameters, or select "Run ClusterONE" to customize them.
@@ -336,6 +304,9 @@ const InitialView = ({label, icon, classname }) => {
                 <DialogActions style={{ justifyContent: 'center' }}>
                     <Button onClick={handleClose} color="primary">
                         Cancel
+                    </Button>
+                    <Button onClick={handleRunExample} color='primary'>
+                        Run Example
                     </Button>
                     <Button onClick={handleQuickRun} color='primary' disabled={disabled}> 
                         Quick Run ClusterONE

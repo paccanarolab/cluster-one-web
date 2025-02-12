@@ -14,13 +14,11 @@ import { Instructions } from "./Instructions.jsx";
 import "../styles/global.scss";
 import "../styles/ClusterFilter.scss";
 
-// El metodo map() crea un nuevo array con los resultados de la llamada a la funcion indicada aplicados a cada uno de sus elementos.
+
 const AppUi = () => {
     const {
         layout, 
         stylesheet, 
-        paccaLabImage,
-        fundacionImage,
         cyGraph,
         cyGraphList,
         loading,
@@ -34,12 +32,6 @@ const AppUi = () => {
 
     React.useEffect(() => {
         getAllOrganismsByDb(-1);
-        // cy.on("dblclick", "node", handleDoubleClick);
-      
-        // // Clean up the event listener when the component unmounts or re-renders
-        // return () => {
-        //   cy.off("dblclick", "node", handleDoubleClick);
-        // };
     }, []);
 
     return (
