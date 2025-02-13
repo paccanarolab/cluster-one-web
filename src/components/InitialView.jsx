@@ -306,7 +306,7 @@ const InitialView = ({label, icon, classname }) => {
                         Cancel
                     </Button>
                     <Button onClick={handleRunExample} color='primary'>
-                        Run Example
+                        Quick Run Example
                     </Button>
                     <Button onClick={handleQuickRun} color='primary' disabled={disabled}> 
                         Quick Run ClusterONE
