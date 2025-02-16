@@ -81,7 +81,7 @@ const SearchByGoTerm = () => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                {goTermComplexes.length > 0 ? <GoTable/>  : <Typography variant="body1" style={{ color: 'red' }}>No GO terms found found</Typography>}
+                {goTermComplexes.length > 0 ? <GoTable/>  : <Typography variant="body1" style={{ color: 'red' }}>No GO terms found</Typography>}
                 
             </Dialog>
         </div>
