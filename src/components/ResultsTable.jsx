@@ -14,7 +14,6 @@ const ResultsTable = () => {
   } = React.useContext(AppContext);
   
   const handleChangeGraph = (params) => {
-    console.log("Handle change", params);
     if (params.field === 'id') {
       let _cyGraph = cyGraphList.find((graph) => graph.file_id === params.value);
       setCyGraph(_cyGraph);
@@ -34,29 +33,27 @@ const ResultsTable = () => {
     }
   }
 
-
+  // Creating the rows
   let rows = [];
-  // I want to get the rows from the cyGraphlist
   if (cyGraphList.length > 1) {
     cyGraphList.forEach((graph) => {
       let proteins = [];
       let overlappingComplexes = [];
       graph.nodes.forEach((protein) => {
         if (protein.data.type === 'protein'){
-          proteins.push(protein.data.label);
+          proteins.push({
+            id: protein.data.id,
+            label: protein.data.label,
+          });
         } else if (protein.data.type === 'proteinComplex') {
           let complexFileId = protein.data.label.split('#')[1];
-          // I need to make sure this complex is not in the list
           if (!overlappingComplexes.includes(complexFileId)) {
             overlappingComplexes.push(complexFileId);
           }
         }
       });
-      // I need to order by alphabet
-      proteins = proteins.sort((a, b) => a.localeCompare(b));
-      // I need to order by id
+      proteins = proteins.sort((a, b) => a.label.localeCompare(b.label));
       overlappingComplexes = overlappingComplexes.sort((a, b) => a - b);
-      // I need all overlappingComplexes to be string
       overlappingComplexes = overlappingComplexes.map((complex) => complex.toString());
       let row = {
         id: graph.file_id,
@@ -66,18 +63,9 @@ const ResultsTable = () => {
         quality: graph.quality,
         proteins: proteins,
       };
-      // If row not in rows, then add it
       if (!rows.find((r) => r.id === row.id)) {
         rows.push(row);
       }
-      // rows.push({
-      //   id: graph.file_id,
-      //   overlapping_complexes: overlappingComplexes,
-      //   size: graph.size,
-      //   density: graph.density,
-      //   quality: graph.quality,
-      //   proteins: proteins,
-      // });
     })
   }
   // Order row by id
@@ -100,21 +88,7 @@ const ResultsTable = () => {
             onClick={() => handleChangeGraph(params)}
           >
             #{params.value}
-          </span>
-          {/*
-            goaFileName !== "" && <span
-              style={{
-                color: 'blue',
-                cursor: 'pointer',
-                marginLeft: '10px',
-                textDecoration: 'underline',
-                alignContent: 'center',
-              }}
-              onClick={() => handleShowEnrichment(params)}
-            >
-              Show Enrichment
-            </span>
-          */} 
+          </span> 
         </div>
       ),
       description: 'Click to see the graph',   
@@ -139,9 +113,9 @@ const ResultsTable = () => {
                 }
                 onClick={() => handleChangeGraph({field: 'id', value: parseInt(complexId)})}
               >
-                {complexId}
+                #{complexId}
               </span>
-              {index !== params.value.length - 1 && ', '}
+              {index !== params.value.length - 1 && ' '}
             </React.Fragment>
           ))}
         </div>
@@ -176,12 +150,12 @@ const ResultsTable = () => {
           {params.value.map((protein, index) => (
             <React.Fragment key={index}>
               <a 
-                href={`https://www.uniprot.org/uniprotkb/${protein}`} 
+                href={`https://www.uniprot.org/uniprotkb/${protein.id}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'underline', color: 'inherit', cursor: 'pointer' }}
               >
-                {protein}
+                {protein.label}
               </a>
               {index !== params.value.length - 1 && ' '}
             </React.Fragment>
@@ -202,10 +176,10 @@ const ResultsTable = () => {
           getRowHeight={() => 'auto'}
           sx={{
             '& .MuiDataGrid-cell': {
-              fontSize: '1.5rem', // Set the desired font size here
+              fontSize: '1.5rem',
             },
             '& .MuiDataGrid-columnHeaders': {
-              fontSize: '1.2rem', // Customize header font size
+              fontSize: '1.2rem',
             },
             [`& .${gridClasses.cell}`]: {
               py: 1,

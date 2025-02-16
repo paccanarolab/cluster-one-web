@@ -54,13 +54,14 @@ const AppUi = () => {
             {/* Cytoscape graph */}
             <div
                 style={{
-                width: "100%",
-                height: "100vh",
-                position: "absolute",
-                top: "58px",
-                left: "0px",
-                backgroundColor: "white"
-            }}>
+                    width: "100%",
+                    height: "100vh",
+                    position: "absolute",
+                    top: "58px",
+                    left: "0px",
+                    backgroundColor: "white"
+                }}
+            >
                 <CytoscapeComponent
                     elements={
                         CytoscapeComponent.normalizeElements(cyGraph)
@@ -92,7 +93,6 @@ const AppUi = () => {
                                 node.addClass('highlighted');
                                 const connectedEdges = node.connectedEdges();
                                 const connectedNodes = [];
-                                // const connectedElements = node.closedNeighborhood();
                                 // Get connected nodes
                                 connectedEdges.forEach(edge => {
                                     const source = edge.source();
@@ -130,7 +130,7 @@ const AppUi = () => {
                                     lastClickTime = now;
 
                                     if (node.data('type') !== "proteinComplex") {
-                                        window.open(`https://www.uniprot.org/uniprotkb/${node.data('label')}`, '_blank');
+                                        window.open(`https://www.uniprot.org/uniprotkb/${node.data('id')}`, '_blank');
                                         console.log("Opening UniProt link");
                                     } else {
                                         const node_id = node.data('id');
@@ -153,16 +153,12 @@ const AppUi = () => {
                             cy.on('mouseover', 'node', evt => {
                                 const node = evt.target;
                                 node.addClass('showlabel');
-                                // const connectedElements = node.closedNeighborhood(); // Includes the node and its connected edges and nodes
-                                // connectedElements.addClass('showlabel');
                             });
                             
                             // Mouseout event
                             cy.on('mouseout', 'node', evt => {
                                 const node = evt.target;
                                 node.removeClass('showlabel');
-                                // const connectedElements = node.closedNeighborhood();
-                                // connectedElements.removeClass('showlabel');
                             });
                         }
                     }

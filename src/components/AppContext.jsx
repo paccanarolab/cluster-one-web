@@ -664,7 +664,7 @@ function AppContextProvider ({ children }) {
                         id: node.data.id,
                         name: node.data.label,
                         description: "Automatic node created from PPI file",
-                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.data.label}`,
+                        url_info: `www.ebi.ac.uk/proteins/api/proteins/${node.data.id}`,
                     });
                 }
             }

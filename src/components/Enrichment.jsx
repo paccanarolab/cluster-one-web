@@ -85,7 +85,7 @@ const Enrichment = () => {
                     const colIndex = index % 6;
                     const yPosition = 75 + (rowIndex * 5);
                     const xPosition = 10 + (colIndex * 30);
-                    pdf.textWithLink(protein.name, xPosition, yPosition, { url: `https://www.uniprot.org/uniprotkb/${protein.name}` });
+                    pdf.textWithLink(protein.name, xPosition, yPosition, { url: `https://www.uniprot.org/uniprotkb/${protein.id}` });
                     lastYPosition = yPosition;
                 });
                 const lastProteinYPosition = lastYPosition + 10;
