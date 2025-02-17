@@ -158,7 +158,7 @@ const InitialView = ({label, icon, classname }) => {
                 }}
             >
                 <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web</DialogTitle>
-                {/* LabImage */}
+                {/* FGV Emap*/}
                 <LabImage 
                     image={fundacionImage.image}
                     url={fundacionImage.url}

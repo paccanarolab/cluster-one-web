@@ -33,7 +33,7 @@ const GoTable = () => {
   // Build rows from goTermComplexes, ensuring only strings or numbers in each row field
   const rows = goTermComplexes.map((graph) => ({
     id: graph.go_term.toString(),  // Make sure `id` is a string
-    // complexes: graph.complexes.map((complex) => complex.file_id.toString()),  // Ensure complexes are strings
+    term: graph.name,
     complexes: graph.complexes.map((complex) => ({
       file_id: complex.file_id.toString(),
       in_top20: complex.in_top20,
@@ -43,7 +43,7 @@ const GoTable = () => {
   const columns = [
     { 
       field: 'id', 
-      headerName: 'GO TERM', 
+      headerName: 'GO ID', 
       width: 170,
       renderCell: (params) => (
         <div>
@@ -60,6 +60,11 @@ const GoTable = () => {
         </div>
       ),
       description: 'Click to see more information about the GO term',   
+    },
+    {
+      field: 'term',
+      headerName: 'Term',
+      width: 200,
     },
     {
       field: 'complexes',
