@@ -320,7 +320,7 @@ const InitialView = ({label, icon, classname }) => {
                 </DialogActions>
                 <Typography variant="subtitle1" gutterBottom style={{ textAlign: "center", marginBottom: "20px" }}>
                     This tool is freely accessible to all users, including commercial users.
-                    <span style={{ color: "red" }}> We use cookies to improve your experience.</span>
+                    <span> We use cookies to improve your experience.</span>
                 </Typography>
             </Dialog>
         </div>
