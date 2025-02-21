@@ -173,8 +173,9 @@ const InitialView = ({label, icon, classname }) => {
                 <DialogContent style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "20px" }}>
                     <p style={{ fontSize: "1.5em", lineHeight: "1.5em", textAlign: "center" }}>
                         ClusterONE Web is a web-based tool for the identification of protein complexes in protein-protein interaction (PPI) networks.
-                        It is based on the ClusterONE algorithm, which is a graph clustering algorithm that identifies dense regions in networks. 
-                        Developed by PaccanaroLab
+                        It is based on the ClusterONE algorithm, which is a graph clustering algorithm that identifies dense regions in networks.
+                        The official documentation can be found <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a> 
+                        . Developed by PaccanaroLab
                     </p>
                     <Divider orientation='horizontal'/>
                     <Grid container spacing={2} alignItems="flex-start" style={{ marginTop: "20px" }}>

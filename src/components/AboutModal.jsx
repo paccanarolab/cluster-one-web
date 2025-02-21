@@ -61,6 +61,7 @@ const AboutModal= () => {
               </Typography>
               <Typography gutterBottom>
                 <b>ClusterONE Web</b> is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
+                The official documentation can be found <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a> 
               </Typography>
               <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom>
