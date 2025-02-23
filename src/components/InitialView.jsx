@@ -135,7 +135,6 @@ const InitialView = ({label, icon, classname }) => {
             <IconButton
                 className={classname}
                 onClick={handleOpen}
-                // style={{ marginBottom: "15px" }}
             >
                 <MenuIcon style={{ color: 'white' }} />
             </IconButton>
@@ -149,7 +148,7 @@ const InitialView = ({label, icon, classname }) => {
                         height: "auto",
                         padding: "20px",
                         maxWidth: "1200px",
-                        maxHeight: "150vh",
+                        // maxHeight: "150vh",
                         margin: "auto",
                         display: 'flex', 
                         flexDirection: 'column', 
@@ -157,19 +156,21 @@ const InitialView = ({label, icon, classname }) => {
                     }
                 }}
             >
-                <DialogTitle style={{ fontSize: "3em", textAlign: "center" }}>Welcome to ClusterONE Web</DialogTitle>
-                {/* FGV Emap*/}
-                <LabImage 
-                    image={fundacionImage.image}
-                    url={fundacionImage.url}
-                    classname={fundacionImage.classname}
-                />
-                {/*Royal Holloway*/}
-                <LabImage
-                    image={royalHollowayImage.image}
-                    url={royalHollowayImage.url}
-                    classname={royalHollowayImage.classname}
-                />
+                <div className="headerContainer">
+                    <LabImage
+                        image={royalHollowayImage.image}
+                        url={royalHollowayImage.url}
+                        classname="royalHollowayImage"
+                    />
+                    <DialogTitle className="dialogTitle" style={{ fontSize: "3em", textAlign: "center" }}>
+                        Welcome to ClusterONE Web
+                    </DialogTitle>
+                    <LabImage 
+                        image={fundacionImage.image}
+                        url={fundacionImage.url}
+                        classname="fundacionImage"
+                    />
+                </div>
                 <DialogContent style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "20px" }}>
                     <p style={{ fontSize: "1.5em", lineHeight: "1.5em", textAlign: "center" }}>
                         ClusterONE Web is a web-based tool for the identification of protein complexes in protein-protein interaction (PPI) networks.
