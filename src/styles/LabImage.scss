@@ -1,25 +1,26 @@
-.labImage {
+.headerContainer {
+    position: relative;
+    min-height: 150px;
+    margin-bottom: 5px;
+}
+
+.royalHollowayImage {
     position: absolute;
-    top: 58px;
-    right: 25px;
-    /* Originalmente estaba a 10px de la derecha */
+    top: 20px;
+    left: 30px;
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
-    object-fit: cover;
     overflow: hidden;
-    // border: 1px solid #000;
+    border: 1px solid #d3d1d1;
     z-index: 1000;
-    object-fit: cover;
-    object-position: center;
-    background-color: #ffffff;
+    background-color: #d3d1d1;
 }
 
 .fundacionImage {
     position: absolute;
     top: 20px;
     right: 30px;
-    /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
     width: 5cm;
     height: 2.5cm;
     border-radius: 15px;
@@ -29,35 +30,40 @@
     background-color: #ffffff;
 }
 
-.royalHollowayImage {
+.dialogTitle {
     position: absolute;
     top: 20px;
-    left: 30px;
-    /* Ancho de labImage (5cm) + 10px original de labImage + 20px de espacio = 5cm + 30px */
-    width: 5cm;
-    height: 2.5cm;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1.25px solid #d3d1d1;
-    z-index: 1000;
-    background-color: #d3d1d1;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3em;
+    margin: 0;
+    z-index: 1001;
 }
 
-/* Para pantallas medianas y pequeñas */
-@media (max-width: 768px) {
-
-    .labImage,
-    .fundacionImage {
-        width: 50%;
-        /* Se reducirá el ancho de las imágenes a la mitad */
-        height: auto;
-        /* Se ajustará la altura automáticamente basándose en el ancho */
-        right: 5%;
-        /* Ajuste al margen derecho */
+/* ----- Responsive for smaller screens (e.g., iPad portrait) ----- */
+@media (max-width: 820px) {
+    .headerContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+        margin-bottom: 5px;
     }
 
+    .royalHollowayImage,
     .fundacionImage {
-        right: calc(55% + 20px);
-        /* Se suman 55% del ancho (que es el ancho de labImage) y 20px de espacio */
+        position: static;
+        width: 40%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .dialogTitle {
+        position: static;
+        transform: none;
+        font-size: 2em;
+        margin: 10px 0;
+        order: 3;
+        text-align: center;
     }
 }
