@@ -43,7 +43,7 @@ const SearchByGoTerm = () => {
                 onClick={handleClickOpen}    
             >
                 <SearchIcon style={{ fontSize: '1.2cm', color: 'black' }} />
-                Search by GO term
+                <span>Search by GO term</span>
             </button>
             <Dialog
                 open={openGoSeach}

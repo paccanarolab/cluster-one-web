@@ -92,32 +92,30 @@ const AvailableLayouts = [
     },
   },
   {
-    name: "cose",
-    idealEdgeLength: function (edge) {
-      if (
-        edge.data("source").type === "proteinComplex" ||
-        edge.data("target").type === "proteinComplex"
-      ) {
-        return 500;
-      }
-      return 200;
-    },
-    refresh: 20,
-    fit: true,
-    padding: 40,
-    randomize: false,
-    componentSpacing: 300,
-    nodeRepulsion: 8000000,
-    edgeElasticity: 100,
-    nestingFactor: 5,
-    gravity: 80,
-    numIter: 1000,
-    initialTemp: 200,
-    coolingFactor: 0.95,
-    minTemp: 1.0,
-    animate: true,
-    minNodeSpacing: 100,
-    avoidOverlap: true,
+    name: 'cose',
+        idealEdgeLength: function(edge){
+            if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
+                return 5300;
+            }
+            return 200; // o cualquier otro valor por defecto que desees.
+        },
+        animate: true,
+        animationDuration: 1000,
+        refresh: 20,
+        fit: true,
+        padding: 40,
+        randomize: false,
+        componentSpacing: 300,
+        nodeRepulsion: 8000000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0,
+        minNodeSpacing: 100,
+        avoidOverlap: true,
   },
 ];
 

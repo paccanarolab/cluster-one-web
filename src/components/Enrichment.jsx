@@ -113,6 +113,7 @@ const Enrichment = () => {
                 variant="outlined"
                 onClick={handleClickOpen}
                 style={{
+                    top: "10px",
                     borderRadius: "20px",
                     backgroundColor: "#323232",
                     color: "white",

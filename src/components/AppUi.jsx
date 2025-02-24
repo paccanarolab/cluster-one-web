@@ -10,7 +10,8 @@ import { AllResultsClusterOne } from "./AllResultsClusterOne.jsx";
 import { SearchByGoTerm } from "./SearchByGoTerm.jsx";
 import { BackdropWithProgress } from "./BakdropWithProgress.jsx";
 import { DownloadGraph } from "./DownloadGraph.jsx";
-import { Instructions } from "./Instructions.jsx";
+import { InstructionsBotton } from "./InstructionsBotton.jsx";
+import { InstructionsModal } from "./InstructionsModal.jsx";
 import "../styles/global.scss";
 import "../styles/ClusterFilter.scss";
 
@@ -39,16 +40,7 @@ const AppUi = () => {
             <ExecuteBar/>
             {
                 cyGraph.code &&
-                <ClusterInfo
-                    top={"58px"}
-                    left={"1.5%"}
-                />
-            }
-            { 
-                cyGraph.code &&
-                <Instructions
-                    left={"1.5%"}
-                />
+                <ClusterInfo/>
             }
 
             {/* Cytoscape graph */}
@@ -170,6 +162,8 @@ const AppUi = () => {
             <DownloadGraph cy={cyEvent} name={cyGraph.code}/>
             <DownloadButton />
             <AboutModal />
+            <InstructionsModal />
+            <InstructionsBotton />
             <InfoButton />
         </React.Fragment>
     );

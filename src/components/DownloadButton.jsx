@@ -22,7 +22,7 @@ const DownloadButton = () => {
             className={`cl1DownloadButton ${isDisabled ? 'disabled' : ''}`}
             disabled={isDisabled}
         >
-        ClusterONE Results CSV
+        Download Results CSV
         </button>
     );
 }

@@ -1,0 +1,61 @@
+.cluster-info-container {
+    position: fixed;
+    top: 7%;
+    left: 1.5%;
+    z-index: 1;
+    background-color: transparent;
+    color: #000000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.cluster-info-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 820px) {
+    .cluster-info-container {
+        top: 15%;
+    }
+}
+
+@media (max-width: 768px) {
+    .cluster-info-container {
+        top: 19%;
+    }
+
+    .cluster-info-list {
+        display: flex;
+        /* Put items on one row */
+        align-items: center;
+        gap: 8px;
+        /* Spacing between items */
+    }
+
+    .cluster-info-list li {
+        margin-bottom: 0;
+    }
+
+    .cluster-info-list li:not(:last-child)::after {
+        margin-left: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cluster-info-container {
+        top: 22%;
+    }
+}
+
+@media (max-width: 425px) {
+    .cluster-info-container {
+        top: 25%;
+    }
+}
