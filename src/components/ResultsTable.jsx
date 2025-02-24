@@ -74,7 +74,7 @@ const ResultsTable = () => {
     { 
       field: 'id', 
       headerName: 'Complex ID', 
-      width: 170,
+      width: 150,
       renderCell: (params) => (
         <div>
           <span 
@@ -97,7 +97,7 @@ const ResultsTable = () => {
       field: 'overlapping_complexes',
       headerName: 'Overlapping Complexes',
       description: 'This column has a value getter and is not sortable.',
-      width: 300,
+      width: 250,
       sortable: false,
       renderCell: (params) => (
         <div style={{ whiteSpace: 'normal', padding: '5px' }}>
@@ -144,7 +144,7 @@ const ResultsTable = () => {
       headerName: 'Proteins',
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
-      width: "100%",
+      width: 1000,
       renderCell: (params) => (
         <div style={{ whiteSpace: 'normal', padding: '5px' }}>
           {params.value.map((protein, index) => (
