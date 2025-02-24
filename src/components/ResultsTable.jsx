@@ -167,7 +167,6 @@ const ResultsTable = () => {
 
   
   return (
-      <div style={{ height: '93%', width: '100%',}}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -186,7 +185,6 @@ const ResultsTable = () => {
             },
           }}
         />
-      </div>
   );
 }
 export { ResultsTable };
