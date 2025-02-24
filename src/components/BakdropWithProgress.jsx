@@ -76,7 +76,7 @@ const BackdropWithProgress = ({ loadingMessage, progressInterval }) => {
         }}
         style={{
           position: 'absolute',
-          top: '60%',
+          top: '65%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
         }}
