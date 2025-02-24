@@ -72,55 +72,29 @@ const AppUi = () => {
                     cy={
                         cy => {
                             setCyEvent(cy);
+                            cy.off("tap");
+                            cy.off("tap", "node");
+                            cy.off("mouseover", "node");
+                            cy.off("mouseout", "node");
+                            
                             cy.on('tap', function(evt) {
                                 if (evt.target === cy) {
                                   console.log("Clicked on background");
-                                  // Reset styles
                                   cy.elements('.highlighted').removeClass('highlighted');
                                 }
                             });
-                            
+
+
+                            let lastTapTime = 0;
+                            let lastTapNodeId = null;
+
                             cy.on("tap", "node", evt => {
-                                var node = evt.target;
-                                node.addClass('highlighted');
-                                const connectedEdges = node.connectedEdges();
-                                const connectedNodes = [];
-                                // Get connected nodes
-                                connectedEdges.forEach(edge => {
-                                    const source = edge.source();
-                                    const target = edge.target();
-                                    
-                                    // Avoid duplicates
-                                    if (!connectedNodes.includes(source)) {
-                                        connectedNodes.push(source);
-                                    }
-                                    if (!connectedNodes.includes(target)) {
-                                        connectedNodes.push(target);
-                                    }
+                                const node = evt.target;
+                                const now = Date.now();
 
-                                    edge.addClass('highlighted');
-                                });
-                            
-                                // Highlight connected nodes
-                                connectedNodes.forEach(connectedNode => {
-                                    connectedNode.addClass('highlighted');
-                                });
-                                // Use a debounce with timestamp and flag to prevent multiple pop-ups
-                                let lastClickTime = 0;
-                                let isClickInProgress = false;
-
-                                node.one("dblclick", function(evt) {
-                                    const now = Date.now();
-                                    
-                                    // Check if a click is in progress or if the last click was recent (within 1 second)
-                                    if (isClickInProgress || now - lastClickTime < 1000) {
-                                        return;
-                                    }
-
-                                    // Mark click as in progress and update last click time
-                                    isClickInProgress = true;
-                                    lastClickTime = now;
-
+                                // Check if this tap qualifies as a double-tap on the same node
+                                if (lastTapNodeId === node.id() && now - lastTapTime < 300) {
+                                    // Double-tap detected
                                     if (node.data('type') !== "proteinComplex") {
                                         window.open(`https://www.uniprot.org/uniprotkb/${node.data('id')}`, '_blank');
                                         console.log("Opening UniProt link");
@@ -133,11 +107,21 @@ const AppUi = () => {
                                             }
                                         });
                                     }
-
-                                    // Reset click in progress after a short delay to allow new interactions
-                                    setTimeout(() => {
-                                        isClickInProgress = false;
-                                    }, 1000); // Adjust this delay if needed
+                                    // Reset so it doesn’t trigger again
+                                    lastTapTime = 0;
+                                    lastTapNodeId = null;
+                                } else {
+                                    // Not a double-tap; update last tap info
+                                    lastTapTime = now;
+                                    lastTapNodeId = node.id();
+                                }
+                                
+                                node.addClass('highlighted');
+                                node.connectedEdges().forEach(edge => {
+                                    edge.addClass('highlighted');
+                                    [edge.source(), edge.target()].forEach(connectedNode => {
+                                    connectedNode.addClass('highlighted');
+                                    });
                                 });
                             });
 
