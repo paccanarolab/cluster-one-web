@@ -30,6 +30,15 @@
     }
 }
 
+@media (max-width: 1589px) {
+
+    .organism,
+    .ppi,
+    .complex-counter {
+        font-size: 0.8rem;
+    }
+}
+
 /* Smaller screens: Hide or reduce less essential items */
 @media (max-width: 768px) {
 
@@ -44,6 +53,10 @@
         font-size: 18px;
         margin-right: 5px;
     }
+
+    .highlight-checkbox {
+        font-size: 0.8rem;
+    }
 }
 
 /* Additional responsive styles */
@@ -55,28 +68,13 @@
     line-height: 55px;
 }
 
-/* Hide less essential elements on smaller screens */
-@media (max-width: 768px) {
-
-    .organism,
-    .ppi,
-    .complex-counter {
-        display: none;
-    }
-
-    .cluster-label {
-        font-size: 18px;
-        margin-right: 10px;
-    }
-}
-
 .paccanarolab {
     font-size: 25px;
     line-height: 55px; // Ensures text is vertically centered
     font-family: 'Century Gothic', sans-serif;
 
     /* Responsive styling */
-    @media (max-width: 768px) {
-        font-size: 20px;
+    @media (max-width: 1589px) {
+        font-size: 18px;
     }
 }

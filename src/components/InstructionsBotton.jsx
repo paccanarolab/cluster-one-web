@@ -3,23 +3,23 @@ import { AppContext } from './AppContext';
 import "../styles/InfoButton.scss";
 
 
-const InfoButton = () => {
+const InstructionsBotton = () => {
     const {
-        setOpenAboutModal,
+        setOpenAboutModalInstruction,
     } = React.useContext(AppContext);
 
     const handleOpen = () => {
-        setOpenAboutModal(true);
+        setOpenAboutModalInstruction(true);
     };
     
     return (
             <button 
                 onClick={handleOpen} 
-                className={'cl1InfoButton'}
+                className={'quickHelpButton'}
             >
-            About ClusterONE Web
+            Quick Help
             </button>
     );
 
                 }
-export { InfoButton };
+export { InstructionsBotton };

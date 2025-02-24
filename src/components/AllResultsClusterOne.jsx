@@ -40,7 +40,7 @@ const AllResultsClusterOne = () => {
                 onClick={handleClickOpen}    
             >
                 <ArrowBackIosNewIcon style={{ fontSize: '1.2cm', color: 'black' }} />
-                All Results
+                <span>All Results</span>
             </button>
             <Dialog
                 open={openResults}

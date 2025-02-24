@@ -8,11 +8,12 @@ function AppContextProvider ({ children }) {
         name: 'cose',
         idealEdgeLength: function(edge){
             if(edge.data('source').type === 'proteinComplex' || edge.data('target').type === 'proteinComplex') {
-                return 5300; // Aumenta este valor para dar más espacio entre los nodos proteinComplex
+                return 5300;
             }
             return 200; // o cualquier otro valor por defecto que desees.
         },
-        // nodeOverlap: 4, 
+        animate: true,
+        animationDuration: 1000,
         refresh: 20,
         fit: true,
         padding: 40,
@@ -193,10 +194,11 @@ function AppContextProvider ({ children }) {
 
     // Graph States
     const [initialViewOpen, setInitialViewopen] = React.useState(true);
-    const [complexList, setComplexList] = React.useState([initialGraphData]); // Cluster List
-    const [complexCounter, setComplexCounter] = React.useState(0); // Cluster List
-    const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]); // Cluster List
+    const [complexList, setComplexList] = React.useState([initialGraphData]);
+    const [complexCounter, setComplexCounter] = React.useState(0);
+    const [cyGraphList, setCyGraphList] = React.useState([initialGraphData]);
 
+    // PPI States
     const [ppiList, setPpiList] = React.useState([]); // PPI List Uses in selected our ppi
     const [dbList, setDbList] = React.useState([]); // PPI List Uses in selected our ppi
     const [organismList, setOrganismList] = React.useState([]); // PPI List Uses in selected our ppi
@@ -207,6 +209,7 @@ function AppContextProvider ({ children }) {
     const [layout, setLayout] = React.useState(initiallayout);
     const [loadingMessage, setLoadingMessage] = React.useState("Loading..."); // Loading message
     const [openAboutModal, setOpenAboutModal] = React.useState(false); // About modal state
+    const [openAboutModalInstruction, setOpenAboutModalInstruction] = React.useState(false); // About modal state
     const [showMenu, setShowMenu] = React.useState(true); // Show or hide menu
     const [showPPILoadedMessage, setShowPPILoadedMessage] = React.useState(false); // Show or hide menu
     const [isPpiWeighted, setIsPpiWeighted] = React.useState(false);
@@ -277,6 +280,7 @@ function AppContextProvider ({ children }) {
     const [molecularFunctionDataset, setMolecularFunctionDataset] = React.useState([]);
     const [cellularComponentDataset, setCellularComponentDataset] = React.useState([]);
     const [goTermComplexes, setGoTermComplexes] = React.useState([]);
+    const [executeBarHeight, setExecuteBarHeight] = React.useState(0);
 
     // Clear functions
     const clearClusterFilter = () => {
@@ -935,6 +939,8 @@ function AppContextProvider ({ children }) {
             setOpenProteinInfo,
             setProteinInfo,
             setOpenAboutModal,
+            setOpenAboutModalInstruction,
+            openAboutModalInstruction,
             setEnrichmentLoading,
             getEnrichmentData,
             setIsPpiWeighted,
@@ -942,6 +948,8 @@ function AppContextProvider ({ children }) {
             setMinSize,
             setMaxSize,
             setPpiList,
+            setExecuteBarHeight,
+            executeBarHeight,
         }}>
             {children}
         </AppContext.Provider>

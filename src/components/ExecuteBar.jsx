@@ -13,10 +13,24 @@ const ExecuteBar = () => {
     ppiLabel,
     cyGraph,
     complexCounter,
+    setExecuteBarHeight,
   } = React.useContext(AppContext);
 
+  const barRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function updateBarHeight() {
+      if (barRef.current) {
+        setExecuteBarHeight(barRef.current.offsetHeight);
+      }
+    }
+    updateBarHeight();
+    window.addEventListener("resize", updateBarHeight);
+    return () => window.removeEventListener("resize", updateBarHeight);
+  }, [setExecuteBarHeight]);
+
   return (
-    <div className="config" id="config">
+    <div className="config" id="config" ref={barRef}>
       <div className="initialbutton-container">
         <InitialView classname="initialbutton" />
       </div>
@@ -29,7 +43,7 @@ const ExecuteBar = () => {
         <div className="organism">
           <strong>Organism: </strong>
           <span title={organismName}>
-            {organismName.substring(0, 20) + "..."}
+            {organismName.substring(0, 15) + "..."}
           </span>
         </div>
       )}
@@ -39,19 +53,18 @@ const ExecuteBar = () => {
           <strong>PPI: </strong>{ppiLabel} {complexCounter} complexes found
         </div>
       )}
-
-      {cyGraph.code && (
-        <div className="protein-filter">
-          <ProteinFilter />
-        </div>
-      )}
-
+      
       {cyGraph.code && (
         <div className="highlight-checkbox">
           <HighLightCheckboxLabels 
             key={cyGraph.code}
             label="Highlight overlapping proteins" 
           />
+        </div>
+      )}
+      {cyGraph.code && (
+        <div className="protein-filter">
+          <ProteinFilter />
         </div>
       )}
 
@@ -61,7 +74,6 @@ const ExecuteBar = () => {
         </div>
       )}
 
-      {/* PaccanaroLab: Keep this aligned to the far right */}
       <div
         className="paccanarolab"
         style={{ marginLeft: 'auto', cursor: 'pointer' }}

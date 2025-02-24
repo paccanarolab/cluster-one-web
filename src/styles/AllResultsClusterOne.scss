@@ -30,7 +30,7 @@
     width: 4cm; // Adjusted width to fit icon and text
     height: 1.5cm; // Reduced height
     background-color: rgb(194, 194, 194);
-    border-radius: 0.75cm 0 0 0.75cm; // Adjusted border-radius for new height
+    border-radius: 0.75cm 0 0 0.75cm;
     border: none;
     cursor: pointer;
     position: fixed;
@@ -38,12 +38,29 @@
     right: 1px;
     overflow: hidden;
     z-index: 1000;
-    padding-left: 0.5cm; // Add padding for spacing between edge and content
-    font-size: 0.3cm; // Adjust font size
-    color: black; // Text color for "ClusterONE Results"
-    gap: 0.5cm; // Space between icon and text
+    padding-left: 0.5cm;
+    font-size: 0.3cm;
+    color: black;
+    gap: 0.5cm;
 }
 
 .searchButton:hover {
     background-color: rgb(159, 159, 159); // Change background color on hover
+}
+
+@media (max-width: 600px) {
+
+    .resultButton,
+    .searchButton {
+        width: 2cm; // Adjusted width to fit icon and text
+        border-radius: 0.5cm 0 0 0.5cm; // Adjusted border-radius for new height
+        padding-left: 0.25cm; // Add padding for spacing between edge and content
+        font-size: 0.2cm; // Adjust font size
+        gap: 0.25cm; // Space between icon and text
+    }
+
+    .resultButton span,
+    .searchButton span {
+        display: none;
+    }
 }
