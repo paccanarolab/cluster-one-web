@@ -46,10 +46,14 @@ const AllResultsClusterOne = () => {
                 open={openResults}
                 onClose={handleClose}
                 TransitionComponent={Transition}
-                fullScreen={true}
+                fullScreen={false}
                 PaperProps={{
-                    style: { 
-                        overflow: "hidden",
+                    style: {
+                        width: "100%",
+                        height: "90%",
+                        maxWidth: "1200px",
+                        maxHeight: "150vh",
+                        padding: "20px",
                     }
                 }}
             >
