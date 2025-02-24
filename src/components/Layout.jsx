@@ -149,7 +149,7 @@ const Layout = () => {
       value={layoutSelected}
       onChange={handleChangeLayout}
       style={{
-        width: '200px',
+        width: '125px',
         zIndex: 1100,
         position: 'relative',
         backgroundColor: '#444444', // Darker input background
