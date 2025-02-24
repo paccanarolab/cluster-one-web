@@ -19,6 +19,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const AllResultsClusterOne = () => {
     const { 
         ppiLabel,
+        organismName,
         openResults,
         setOpenResults,
     } = React.useContext(AppContext);
@@ -40,7 +41,7 @@ const AllResultsClusterOne = () => {
                 onClick={handleClickOpen}    
             >
                 <ArrowBackIosNewIcon style={{ fontSize: '1.2cm', color: 'black' }} />
-                <span>All Results</span>
+                <span>ClusterONE Results</span>
             </button>
             <Dialog
                 open={openResults}
@@ -74,7 +75,7 @@ const AllResultsClusterOne = () => {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            ClusterONE Results - {ppiLabel}
+                            ClusterONE Results - {organismName} {ppiLabel}
                         </Typography>
                     </Toolbar>
                 </AppBar>
