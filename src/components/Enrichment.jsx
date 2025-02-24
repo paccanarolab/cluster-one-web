@@ -179,7 +179,7 @@ const Enrichment = () => {
                                 transform: 'translate(-50%, -50%)',
                             }}
                         >
-                            Waiting for enrichment analysis...
+                            Waiting for enrichment analysis can take several minutes...
                         </Typography>
                     </Backdrop>
                 )}
