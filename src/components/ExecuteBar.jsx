@@ -50,7 +50,7 @@ const ExecuteBar = () => {
 
       {ppiId && (
         <div className="ppi">
-          <strong>PPI: </strong>{ppiLabel} {complexCounter} complexes found
+          <strong>PPI: </strong>{ppiLabel} | {complexCounter} complexes
         </div>
       )}
       
