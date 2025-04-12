@@ -30,7 +30,7 @@ const GoTable = () => {
     }
   };
 
-  // Build rows from goTermComplexes, ensuring only strings or numbers in each row field
+
   const rows = goTermComplexes.map((graph) => ({
     id: graph.go_term.toString(),  // Make sure `id` is a string
     term: graph.name,
@@ -55,7 +55,7 @@ const GoTable = () => {
             }} 
             onClick={() => handleOpenGoTerm(params)}
           >
-            {params.value} {/* Render id value directly */}
+            {params.value}
           </span>
         </div>
       ),
@@ -69,8 +69,8 @@ const GoTable = () => {
     {
       field: 'complexes',
       headerName: 'Complexes',
-      description: 'This column has a value getter and is not sortable.',
-      width: 1000,
+      description: 'This column is not sortable.',
+      width: 500,
       sortable: false,
       renderCell: (params) => (
         <div style={{ whiteSpace: 'normal', padding: '5px' }}>
