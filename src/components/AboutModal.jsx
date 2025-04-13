@@ -39,7 +39,7 @@ const AboutModal= () => {
               sx={{ m: 1, p: 3 }} 
               id="customized-dialog-title"
             >
-              ClusterONE Web - About
+              About
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -55,12 +55,13 @@ const AboutModal= () => {
             </IconButton>
             <DialogContent dividers>
               <Typography gutterBottom>
-                <b>
+                <h3>
                   ClusterONE
-                </b> is a clustering algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper. Also, click <a href="https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html" target="_blank">HERE</a> to see the command line version. 
+                </h3> Clustering with overlapping neighborhood expansion is an algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper.
               </Typography>
+              <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom>
-                <b>ClusterONE Web</b> is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
+                <h3>ClusterONE Web</h3> It is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
                 The official documentation can be found <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a> 
               </Typography>
               <Divider orientation="horizontal" flexItem />
