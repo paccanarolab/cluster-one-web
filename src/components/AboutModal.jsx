@@ -64,9 +64,12 @@ const AboutModal= () => {
                 <h3>ClusterONE Web</h3> It is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
                 The official documentation can be found <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a> 
               </Typography>
-              <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom>
-                Developed by: <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://github.com/rubjim" target="_blank">Ruben Jimenez</a>
+                <b>Database version information: </b> GOA files 2025-03-08, BioGRID version 4.4.237, and IntAct, MINT, and DIP were downloaded in September 2024.
+              </Typography>
+              <Divider orientation="horizontal" flexItem />
+              <Typography gutterBottom sx={{ mt: 2 }}>
+                Developed by: <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://www.linkedin.com/in/ruben-jimenez-franco/" target="_blank">Ruben Jimenez</a>
               </Typography>
             </DialogContent>
         </BootstrapDialog>

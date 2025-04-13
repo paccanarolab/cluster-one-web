@@ -77,7 +77,7 @@ const Enrichment = () => {
                 pdf.text(`- Min. Size: ${clusterOneParams.minSize || 3}`, 10, 40);
                 pdf.text(`- Max. Overlap: ${clusterOneParams.maxOverlap}`, 10, 45);
                 pdf.text(`- Penalty: ${clusterOneParams.penalty}`, 10, 50);
-                pdf.text("GOA File Version: 2024-10-21", 10, 60);
+                pdf.text("GOA File Version: 2025-03-08", 10, 60);
                 pdf.text("Proteins in Complex:", 10, 70);
                 let lastYPosition = 0;
                 complexProteinList.forEach((protein, index) => {

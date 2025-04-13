@@ -48,7 +48,7 @@ const GoTable = () => {
       file_id: complex.file_id.toString(),
       in_top20: complex.in_top20,
     })),
-    complexes_string: graph.complexes.map((complex) => complex.file_id).join(', '),
+    complexes_string: graph.complexes.map((complex) => complex.file_id).join(', #'),
   }));
 
   const columns = [
@@ -124,6 +124,11 @@ const GoTable = () => {
         slots={{
           toolbar: CustomToolbar,
         }}
+        localeText={
+          {
+            toolbarFilters: 'Filter',
+          }
+        }
         initialState={{
           columns: {
             columnVisibilityModel: {
