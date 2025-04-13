@@ -1,6 +1,17 @@
 import * as React from 'react';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, gridClasses, GridToolbarContainer, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
+
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
+
 
 const GoTable = () => {
   const {
@@ -38,6 +49,7 @@ const GoTable = () => {
       file_id: complex.file_id.toString(),
       in_top20: complex.in_top20,
     })),
+    complexes_string: graph.complexes.map((complex) => complex.file_id).join(', '),
   }));
 
   const columns = [
@@ -70,27 +82,36 @@ const GoTable = () => {
       field: 'complexes',
       headerName: 'Complexes',
       description: 'This column is not sortable.',
-      width: 500,
+      width: 800,
       sortable: false,
+      filterable: false,
       renderCell: (params) => (
-        <div style={{ whiteSpace: 'normal', padding: '5px' }}>
-          {params.value.map((complex, index) => (
-          <React.Fragment key={complex.file_id}>
-            <span 
-            style={{
-              color: complex.in_top20 ? 'blue' : 'red',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-            onClick={() => handleChangeGraph({field: 'id', value: parseInt(complex.file_id)})}
-            >
-            #{complex.file_id}
-            </span>
-            {index !== params.value.length - 1 && ', '}
-          </React.Fragment>
-          ))}
-        </div>
+          <div style={{ whiteSpace: 'normal', padding: '5px' }}>
+            {
+              params.value.map((complex, index) => (
+                <React.Fragment key={complex.file_id}>
+                  <span 
+                    style={{
+                      color: complex.in_top20 ? 'blue' : 'red',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleChangeGraph({field: 'id', value: parseInt(complex.file_id)})}
+                  >
+                    #{complex.file_id}
+                  </span>
+                    {index !== params.value.length - 1 && ', '}
+                </React.Fragment>
+              ))
+            }
+          </div>
       ),
+    },
+    {
+      field: 'complexes_string',
+      headerName: 'Complexes',
+      width: 0,
+      hide: true,
     },
   ];
 
@@ -101,6 +122,16 @@ const GoTable = () => {
         filterModel={filterModelGo}
         onFilterModelChange={(newFilterModel) => setFilterModelGo(newFilterModel)}
         getRowHeight={() => 'auto'}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+        initialState={{
+          columns: {
+            columnVisibilityModel: {
+              complexes_string: false,
+            },
+          },
+        }}
         sx={{
           '& .MuiDataGrid-cell': {
             fontSize: '1.5rem',
@@ -112,6 +143,7 @@ const GoTable = () => {
             py: 1,
           },
         }}
+
       />
   );
 };
