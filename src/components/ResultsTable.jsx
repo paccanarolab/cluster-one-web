@@ -1,13 +1,35 @@
 import * as React from 'react';
-import { DataGrid, gridClasses,  GridToolbarContainer, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
+import { DataGrid, gridClasses,  GridToolbarContainer, GridToolbarFilterButton} from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
-
+import Button from '@mui/material/Button';
+import DownloadIcon from '@mui/icons-material/Download';
+import Tooltip from '@mui/material/Tooltip';
 
 const CustomToolbar = () => {
+  const {
+      cyGraph,
+  } = React.useContext(AppContext);
+  const openLinkInNewTab = () => {
+      const url = `https://paccanarolab.org/clusteroneweb/api/v1/api/cluster_one/${cyGraph.code}/csv/?cluster_id=${cyGraph.code}`;
+      window.open(url, '_blank');
+  }
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer
+    sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '2 10px',
+    }}>
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      <Tooltip title="Download all of the results in CSV" arrow>
+      <Button
+        variant="outlined"
+        startIcon={<DownloadIcon />}
+        onClick={openLinkInNewTab}
+      >
+        CSV
+      </Button>
+      </Tooltip>
     </GridToolbarContainer>
   );
 };

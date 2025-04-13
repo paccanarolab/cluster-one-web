@@ -17,7 +17,7 @@ const InfoButton = () => {
                 onClick={handleOpen} 
                 className={'cl1InfoButton'}
             >
-            About ClusterONE Web
+            About
             </button>
     );
 
