@@ -87,7 +87,7 @@ const ResultsTable = () => {
       });
       proteins = proteins.sort((a, b) => a.label.localeCompare(b.label));
       overlappingComplexes = overlappingComplexes.sort((a, b) => a - b);
-      overlappingComplexes = overlappingComplexes.map((complex) => complex.toString());
+      overlappingComplexes = overlappingComplexes.map((complex) => "#"+complex.toString());
       let row = {
         id: graph.file_id,
         overlapping_complexes: overlappingComplexes,
@@ -145,9 +145,9 @@ const ResultsTable = () => {
                     cursor: 'pointer',
                   }
                 }
-                onClick={() => handleChangeGraph({field: 'id', value: parseInt(complexId)})}
+                onClick={() => handleChangeGraph({field: 'id', value: parseInt(complexId.replace('#', ''))})}
               >
-                #{complexId}
+                {complexId}
               </span>
               {index !== params.value.length - 1 && ' '}
             </React.Fragment>
@@ -221,6 +221,11 @@ const ResultsTable = () => {
                   proteins_string: false,
                 },
               },
+            }
+          }
+          localeText={
+            {
+              toolbarFilters: 'Filter',
             }
           }
           slots={{
