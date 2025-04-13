@@ -1,7 +1,16 @@
 import * as React from 'react';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, gridClasses,  GridToolbarContainer, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
 
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
 
 const ResultsTable = () => {
   const {
@@ -38,6 +47,7 @@ const ResultsTable = () => {
   if (cyGraphList.length > 1) {
     cyGraphList.forEach((graph) => {
       let proteins = [];
+      let proteins_string = '';
       let overlappingComplexes = [];
       graph.nodes.forEach((protein) => {
         if (protein.data.type === 'protein'){
@@ -45,6 +55,7 @@ const ResultsTable = () => {
             id: protein.data.id,
             label: protein.data.label,
           });
+          proteins_string += protein.data.label + ', ';
         } else if (protein.data.type === 'proteinComplex') {
           let complexFileId = protein.data.label.split('#')[1];
           if (!overlappingComplexes.includes(complexFileId)) {
@@ -62,6 +73,7 @@ const ResultsTable = () => {
         density: graph.density,
         quality: graph.quality,
         proteins: proteins,
+        proteins_string: proteins_string,
       };
       if (!rows.find((r) => r.id === row.id)) {
         rows.push(row);
@@ -96,7 +108,7 @@ const ResultsTable = () => {
     {
       field: 'overlapping_complexes',
       headerName: 'Overlapping Complexes',
-      description: 'This column has a value getter and is not sortable.',
+      description: 'This column is not sortable.',
       width: 250,
       sortable: false,
       renderCell: (params) => (
@@ -142,9 +154,10 @@ const ResultsTable = () => {
     {
       field: 'proteins',
       headerName: 'Proteins',
-      description: 'This column has a value getter and is not sortable.',
+      description: 'This column is not sortable.',
       sortable: false,
-      width: 1000,
+      filterable: false,
+      width: 380,
       renderCell: (params) => (
         <div style={{ whiteSpace: 'normal', padding: '5px' }}>
           {params.value.map((protein, index) => (
@@ -162,6 +175,12 @@ const ResultsTable = () => {
           ))}
         </div>
       ),
+    },
+    {
+      field: 'proteins_string',
+      headerName: 'Proteins',
+      with:0,
+      hide: true,
     }
   ];
 
@@ -173,6 +192,18 @@ const ResultsTable = () => {
           filterModel={filterModel}
           onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
           getRowHeight={() => 'auto'}
+          initialState={
+            {
+              columns: {
+                columnVisibilityModel: {
+                  proteins_string: false,
+                },
+              },
+            }
+          }
+          slots={{
+            toolbar: CustomToolbar,
+          }}
           sx={{
             '& .MuiDataGrid-cell': {
               fontSize: '1.5rem',
