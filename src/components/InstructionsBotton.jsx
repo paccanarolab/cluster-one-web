@@ -17,7 +17,7 @@ const InstructionsBotton = () => {
                 onClick={handleOpen} 
                 className={'quickHelpButton'}
             >
-            Quick Help
+            Help
             </button>
     );
 

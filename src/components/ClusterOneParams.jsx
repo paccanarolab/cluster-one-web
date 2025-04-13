@@ -47,7 +47,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
     setClusterOneParams(formData);
     setOpen(false);
     setLoadingInterval(loadingIntervalClusterOne);
-    setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
+    setLoadingMessage("Rendering the results on screen, this make a few minutes. You can go for a coffee 🧬☕️");
     setLoading(true);
     handleShowMenu();
     setInitialViewopen(false);
@@ -122,6 +122,9 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
             value={penalty}
             onChange={e => setPenalty(e.target.value)}
           />
+          <p style={{ color: "gray", fontSize: "12px" }}>
+            * Click <a href="https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html" target="_blank">HERE</a> for more information about the customisable parameters. 
+          </p>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

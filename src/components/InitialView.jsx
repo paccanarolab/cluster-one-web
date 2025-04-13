@@ -79,7 +79,7 @@ const InitialView = ({label, icon, classname }) => {
 
     const handleQuickRun = () => {
         setLoadingInterval(loadingIntervalClusterOne);
-        setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️");
+        setLoadingMessage("Rendering the results on screen, this make a few minutes. You can go for a coffee 🧬☕️");
         setLoading(true);
         handleShowMenu();
         quickRunClusterOne(ppiId, 8000000); 
@@ -102,7 +102,7 @@ const InitialView = ({label, icon, classname }) => {
         setPpiLabel("collins2007");
         setIsPpiWeighted(true);
         // ClusterONE part
-        setLoadingMessage("Running ClusterONE and rendering the results on screen. The time depends on PPI size. You can go for a coffee 🧬☕️")       
+        setLoadingMessage("Rendering the results on screen, this make a few minutes. You can go for a coffee 🧬☕️")       
         setLoading(true);
         // Put a timeout
         setTimeout(() => {

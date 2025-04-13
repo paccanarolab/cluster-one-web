@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
 import { AppContext } from './AppContext';
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(3),
@@ -36,10 +37,10 @@ const InstructionsModal= () => {
             open={openAboutModalInstruction}
         >
             <DialogTitle 
-              sx={{ m: 1, p: 3 }} 
+              sx={{ m: 1, p: 2}} 
               id="customized-dialog-title"
             >
-              Quick Help
+              Help
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -54,6 +55,14 @@ const InstructionsModal= () => {
               <CloseIcon />
             </IconButton>
             <DialogContent dividers>
+              <h3>How to use the tool?</h3>
+              <Typography gutterBottom>
+                Look at the documentation <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank"> HERE</a> 
+              </Typography>
+              <Divider orientation="horizontal" flexItem />
+              <Typography gutterBottom>
+                <h3>Navigation</h3>
+              </Typography>
               <Typography gutterBottom>
                 <ul>
                   <li>

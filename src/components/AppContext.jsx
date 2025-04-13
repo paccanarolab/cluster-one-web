@@ -342,7 +342,7 @@ function AppContextProvider ({ children }) {
                     setLoadingInterval(delayfromEp);
                     setLoadingIntervalClusterOne(60000 * 3);
                 }    
-                setLoadingMessage("Processing PPI.. Wait a moment please, the time depends on PPI size. You can go for a coffee 🧬☕️");
+                setLoadingMessage("Processing PPI.. Please wait a moment, the time depends on PPI size");
                 setIsPpiWeighted(data.weighted);
                 setLoading(true);
                 
@@ -754,7 +754,7 @@ function AppContextProvider ({ children }) {
         setComplexCounter(0);
         setCyGraph(initialGraphData);
         setComplexProteinList([initialProteinData]);
-        setLoadingMessage("Processing PPI.. Wait a moment please, the time depends on PPI size. You can go for a coffee 🧬☕️");
+        setLoadingMessage("Processing PPI.. Please wait a moment, the time depends on PPI size");
         updateRedis(ppiId).then((data) => {
             try {
                 var delayfromEp = data.size / 20;

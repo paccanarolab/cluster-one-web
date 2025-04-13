@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid, gridClasses, GridToolbarContainer, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
+import { DataGrid, gridClasses, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
 
 
@@ -7,7 +7,6 @@ const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
     </GridToolbarContainer>
   );
 };
