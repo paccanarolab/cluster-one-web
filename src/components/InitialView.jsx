@@ -12,6 +12,7 @@ import { Grid, Divider, Box, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import UploadIcon from '@mui/icons-material/Upload';
 import { LabImage } from "./LabImage.jsx";
+import "../styles/InitialView.scss";
 
 const InitialView = ({label, icon, classname }) => {
     const [selectedOrOption, setSelectedOrOption] = React.useState(null);
@@ -137,6 +138,9 @@ const InitialView = ({label, icon, classname }) => {
                 onClick={handleOpen}
             >
                 <MenuIcon style={{ color: 'white' }} />
+                <div className="cluster-label">
+                    ClusterONE Web
+                </div>
             </IconButton>
             
             <Dialog 

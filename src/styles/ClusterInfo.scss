@@ -1,6 +1,6 @@
 .cluster-info-container {
     position: fixed;
-    top: 7%;
+    top: 8%;
     left: 1.5%;
     z-index: 1;
     background-color: transparent;
@@ -17,6 +17,12 @@
 
     li {
         margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cluster-info-container {
+        top: 15%;
     }
 }
 
@@ -41,11 +47,5 @@
 
     .cluster-info-list li:not(:last-child)::after {
         margin-left: 8px;
-    }
-}
-
-@media (max-width: 600px) {
-    .cluster-info-container {
-        top: 15%;
     }
 }
