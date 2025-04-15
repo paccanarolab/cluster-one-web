@@ -35,11 +35,12 @@ const AboutModal= () => {
             aria-labelledby="customized-dialog-title"
             open={openAboutModal}
         >
-            <DialogTitle 
-              sx={{ m: 1, p: 3 }} 
+            <DialogTitle
               id="customized-dialog-title"
             >
-              About
+              <Typography variant="h4" component="h2">
+                About
+              </Typography>
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -55,21 +56,37 @@ const AboutModal= () => {
             </IconButton>
             <DialogContent dividers>
               <Typography gutterBottom>
-                <h3>
-                  ClusterONE
-                </h3> Clustering with overlapping neighborhood expansion is an algorithm developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a> that identifies protein complexes in protein-protein interaction networks click <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">HERE</a> to see the paper.
+                <h3>ClusterONE</h3> 
+                ClusterONE (Clustering with Overlapping Neighborhood Expansion) is an algorithm
+                developed by <a href='https://paccanarolab.org/' target="_blank"> PaccanaroLab </a>  for detecting protein complexes in protein-protein interaction
+                networks. For details, see:  <a href="https://www.nature.com/articles/nmeth.1938" target="_blank">Nepusz, Yu, Paccanaro, Nature Methods (2012)</a>
               </Typography>
               <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom>
-                <h3>ClusterONE Web</h3> It is a web application that allows users to find protein complexes in a network using ClusterONE, also visualize the results, and perform a functional enrichment analysis of the protein complexes found.
-                The official documentation can be found <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a> 
+                <h3>ClusterONE Web</h3> 
+                ClusterONE Web is a web application that allows users to identify protein complexes in a
+                network using the ClusterONE algorithm, visualize the results interactively, and perform
+                functional enrichment analysis on the detected complexes. The official documentation is
+                available <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank">HERE</a>.
               </Typography>
               <Typography gutterBottom>
-                <b>Database version information: </b> GOA files 2025-03-08, BioGRID version 4.4.237, and IntAct, MINT, and DIP were downloaded in September 2024.
+                <h3>Database version information: </h3> 
+                <ul>
+                  <li>
+                    <b>GOA files:</b> 2025-03-08
+                  </li>
+                  <li>
+                    <b>BioGRID:</b> 4.4.237
+                  </li>
+                  <li>
+                    <b>IntAct, MINT, and DIP:</b> downloaded in September 2024
+                  </li>
+                </ul>
               </Typography>
               <Divider orientation="horizontal" flexItem />
               <Typography gutterBottom sx={{ mt: 2 }}>
-                Developed by: <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://www.linkedin.com/in/ruben-jimenez-franco/" target="_blank">Ruben Jimenez</a>
+                <h3>Developed by:</h3>
+                <a href="https://github.com/Mbaez97" target="_blank">Marcelo Baez</a> and <a href="https://www.linkedin.com/in/ruben-jimenez-franco/" target="_blank">Ruben Jimenez</a>
               </Typography>
             </DialogContent>
         </BootstrapDialog>
