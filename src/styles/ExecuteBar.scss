@@ -48,11 +48,6 @@
         display: none; // Hide less important items
     }
 
-    /* Reduce font size and margin for small screens */
-    .cluster-label {
-        font-size: 18px;
-        margin-right: 5px;
-    }
 
     .highlight-checkbox {
         font-size: 0.8rem;
@@ -60,7 +55,7 @@
 }
 
 /* Additional responsive styles */
-.cluster-label,
+
 .organism,
 .ppi,
 .complex-counter {

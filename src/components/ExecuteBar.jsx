@@ -35,9 +35,7 @@ const ExecuteBar = () => {
         <InitialView classname="initialbutton" />
       </div>
 
-      <div className="cluster-label">
-        ClusterONE Web
-      </div>
+      
 
       {organismName && (
         <div className="organism">
