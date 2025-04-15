@@ -123,7 +123,7 @@ const ClusterOneParams = ({classname, message, icon, label, disabled, initialVie
             onChange={e => setPenalty(e.target.value)}
           />
           <p style={{ color: "gray", fontSize: "12px" }}>
-            * Click <a href="https://paccanarolab.org/static_content/clusterone/cl1-cmdline-1.0.html#basic-command-line-options" target="_blank">HERE</a> for more information about the customisable parameters. 
+            * Click <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html#running-clusterone" target="_blank">HERE</a> for more information about the customisable parameters. 
           </p>
         </DialogContent>
         <DialogActions>

@@ -36,11 +36,12 @@ const InstructionsModal= () => {
             aria-labelledby="customized-dialog-title"
             open={openAboutModalInstruction}
         >
-            <DialogTitle 
-              sx={{ m: 1, p: 2}} 
+            <DialogTitle
               id="customized-dialog-title"
             >
-              Help
+              <Typography variant="h4" component="h2">
+                Help
+              </Typography>
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -54,12 +55,7 @@ const InstructionsModal= () => {
             >
               <CloseIcon />
             </IconButton>
-            <DialogContent dividers>
-              <h3>How to use the tool?</h3>
-              <Typography gutterBottom>
-                Look at the documentation <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank"> HERE</a> 
-              </Typography>
-              <Divider orientation="horizontal" flexItem />
+            <DialogContent dividers>             
               <Typography gutterBottom>
                 <h3>Navigation</h3>
               </Typography>
@@ -78,6 +74,11 @@ const InstructionsModal= () => {
                       <b>Single click on Background: </b> Resets all edges and nodes
                   </li>
                 </ul>
+              </Typography>
+              <Divider orientation="horizontal" flexItem />
+              <h3>How to use the tool?</h3>
+              <Typography gutterBottom>
+                Look at the documentation <a href="https://paccanarolab.org/clusteroneweb/doc/cl1web-docs.html" target="_blank"> HERE</a> 
               </Typography>
             </DialogContent>
         </BootstrapDialog>
