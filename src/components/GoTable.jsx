@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { DataGrid, gridClasses, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
+import { 
+  DataGrid, 
+  gridClasses, 
+  GridToolbarContainer, 
+  GridToolbarFilterButton,
+  GridColumnMenuContainer,
+  GridColumnMenuSortItem,
+  GridColumnMenuColumnsItem 
+} from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
 
 
@@ -11,6 +19,24 @@ const CustomToolbar = () => {
   );
 };
 
+const CustomColumnMenu = (props) => {
+  const {
+    hideMenu,
+    colDef,
+    ...others
+  } = props;
+
+  return (
+    <GridColumnMenuContainer
+      hideMenu={hideMenu}
+      colDef={colDef}
+      {...others}
+    >
+      <GridColumnMenuSortItem onClick={hideMenu} colDef={colDef}/>
+      <GridColumnMenuColumnsItem onClick={hideMenu} colDef={colDef} />
+    </GridColumnMenuContainer>
+  );
+};
 
 const GoTable = () => {
   const {
@@ -123,6 +149,7 @@ const GoTable = () => {
         getRowHeight={() => 'auto'}
         slots={{
           toolbar: CustomToolbar,
+          columnMenu: CustomColumnMenu,
         }}
         localeText={
           {

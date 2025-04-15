@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { DataGrid, gridClasses,  GridToolbarContainer, GridToolbarFilterButton} from '@mui/x-data-grid';
+import { 
+  DataGrid,
+  gridClasses, 
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  GridColumnMenuContainer,
+  GridColumnMenuSortItem,
+  GridColumnMenuColumnsItem
+} from '@mui/x-data-grid';
 import { AppContext } from './AppContext';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -31,6 +39,25 @@ const CustomToolbar = () => {
       </Button>
       </Tooltip>
     </GridToolbarContainer>
+  );
+};
+
+const CustomColumnMenu = (props) => {
+  const {
+    hideMenu,
+    colDef,
+    ...others
+  } = props;
+
+  return (
+    <GridColumnMenuContainer
+      hideMenu={hideMenu}
+      colDef={colDef}
+      {...others}
+    >
+      <GridColumnMenuSortItem onClick={hideMenu} colDef={colDef}/>
+      <GridColumnMenuColumnsItem onClick={hideMenu} colDef={colDef} />
+    </GridColumnMenuContainer>
   );
 };
 
@@ -230,6 +257,7 @@ const ResultsTable = () => {
           }
           slots={{
             toolbar: CustomToolbar,
+            columnMenu: CustomColumnMenu,
           }}
           sx={{
             '& .MuiDataGrid-cell': {
