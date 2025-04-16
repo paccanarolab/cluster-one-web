@@ -73,7 +73,7 @@ const AboutModal= () => {
                 <h3>Database version information: </h3> 
                 <ul>
                   <li>
-                    <b>GOA files:</b> 2025-03-08
+                    <b>GOA files:</b> 2024-10-21
                   </li>
                   <li>
                     <b>BioGRID:</b> 4.4.237

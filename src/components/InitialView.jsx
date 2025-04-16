@@ -90,7 +90,7 @@ const InitialView = ({label, icon, classname }) => {
     const handleRunExample = () => {
         // PPI part
         setOrganismName("Saccharomyces cerevisiae");
-        setGoaFileName("/app/app/media/enrichment/goa_yeast.gaf");
+        setGoaFileName("/app/app/media/enrichment/goa_559292.gaf");
         setPpiList([
             {
                 id: 3,
